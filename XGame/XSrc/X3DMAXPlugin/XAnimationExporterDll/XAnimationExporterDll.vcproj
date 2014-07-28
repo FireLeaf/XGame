@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\IGame&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\CS&quot;"
+				AdditionalIncludeDirectories="&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\IGame&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\CS&quot;;..\XInc\XExporter"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

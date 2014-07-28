@@ -26,6 +26,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XInc", "XInc", "{1EC94008-7A7E-40C8-828F-A4D81F0293ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XExporter", "XExporter", "{3FC806FA-808B-41FF-B2F3-D8D0D9CA0B48}"
+	ProjectSection(SolutionItems) = preProject
+		..\XInc\XExporter\XAnimationKey.h = ..\XInc\XExporter\XAnimationKey.h
+		..\XInc\XExporter\XAnimationMesh.h = ..\XInc\XExporter\XAnimationMesh.h
+		..\XInc\XExporter\XExporterMaterial.h = ..\XInc\XExporter\XExporterMaterial.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
