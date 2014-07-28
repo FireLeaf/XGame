@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XAnimationExporterDll", "..\..\XSrc\X3DMAXPlugin\XAnimationExporterDll\XAnimationExporterDll.vcproj", "{24241A53-84A7-44E5-B75C-720C838D75EA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Example 16-1", "..\..\..\资料\3D游戏\Character Animation With Direct3D源代码\Chapter16\Chapter 16\Example 16.1\Example 16-1.vcproj", "{35F70BA3-A2F7-4234-B048-7721C9F021AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24241A53-84A7-44E5-B75C-720C838D75EA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{24241A53-84A7-44E5-B75C-720C838D75EA}.Debug|Win32.Build.0 = Debug|Win32
+		{24241A53-84A7-44E5-B75C-720C838D75EA}.Release|Win32.ActiveCfg = Release|Win32
+		{24241A53-84A7-44E5-B75C-720C838D75EA}.Release|Win32.Build.0 = Release|Win32
+		{35F70BA3-A2F7-4234-B048-7721C9F021AC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{35F70BA3-A2F7-4234-B048-7721C9F021AC}.Debug|Win32.Build.0 = Debug|Win32
+		{35F70BA3-A2F7-4234-B048-7721C9F021AC}.Release|Win32.ActiveCfg = Release|Win32
+		{35F70BA3-A2F7-4234-B048-7721C9F021AC}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

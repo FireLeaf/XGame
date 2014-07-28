@@ -1,0 +1,240 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\XAnimationExporterDll.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""l.CHS\\afxres.rc""      // 标准组件\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "TODO: <公司名>"
+            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "XAnimationExporterDll.dll"
+            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
+            VALUE "OriginalFilename", "XAnimationExporterDll.dll"
+            VALUE "ProductName", "TODO: <产品名>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG1 DIALOGEX 0, 0, 528, 218
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TREE_SKELTON,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_BORDER | WS_HSCROLL | WS_TABSTOP,20,26,182,172
+    GROUPBOX        "骨骼框架",IDC_STATIC,10,15,289,196
+    GROUPBOX        "导出类型",IDC_STATIC,304,32,165,100
+    CONTROL         "静态模型",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON,333,55,116,20
+    CONTROL         "骨骼动画模型",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,333,89,89,19
+    LTEXT           "骨骼数:",IDC_STATIC,207,31,32,9
+    EDITTEXT        IDC_EDIT_BONE_NUM,243,29,45,12,ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED
+    LTEXT           "挂点数:",IDC_STATIC,207,47,30,12
+    EDITTEXT        IDC_EDIT2,243,46,45,13,ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED
+    CONTROL         "骨骼包括Dummy",IDC_CHECK_INCLUDE_DUMMY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,215,69,74,13
+END
+
+IDD_DIALOG2 DIALOGEX 0, 0, 460, 197
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_ANIMATION,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,19,18,280,159
+    PUSHBUTTON      "添加",IDC_BUTTON_ADD,327,22,71,21
+    LTEXT           "动画采样频率：",IDC_STATIC,306,154,63,9
+    EDITTEXT        IDC_EDIT_FRAME_RATE,377,152,64,13,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "编辑",IDC_BUTTON_EDIT,327,52,73,22
+    PUSHBUTTON      "删除",IDC_BUTTON_DEL,327,82,75,21
+END
+
+IDD_DIALOG3 DIALOGEX 0, 0, 416, 213
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "纹理",IDC_STATIC,13,8,384,186
+    CONTROL         "",IDC_TREE_TEXTURE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | WS_BORDER | WS_HSCROLL | WS_TABSTOP,23,22,173,167
+END
+
+IDD_DIALOG4 DIALOGEX 0, 0, 382, 218
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "模型信息",IDC_STATIC,16,14,346,187
+    CONTROL         "",IDC_LIST_SUBMESH,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,28,26,320,167
+END
+
+IDD_DIALOG_MAIN DIALOGEX 0, 0, 690, 339
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "XGame Ainmation Exporter"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TAB1,"SysTabControl32",WS_BORDER,19,15,648,282
+    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",WS_BORDER,71,308,336,11
+    PUSHBUTTON      "导出",IDC_BUTTON_EXPORT,417,305,45,13
+    PUSHBUTTON      "取消",IDC_BUTTON_CANCEL,469,305,40,13
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 521
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 211
+    END
+
+    IDD_DIALOG2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 453
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 190
+    END
+
+    IDD_DIALOG3, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 409
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 206
+    END
+
+    IDD_DIALOG4, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 375
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 211
+    END
+
+    IDD_DIALOG_MAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 683
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 332
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#pragma code_page(936)
+#include "res\XAnimationExporterDll.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "l.CHS\afxres.rc"      // 标准组件
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
