@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="E:\XGame\XSrc\XEngine\XPlatform\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				AdditionalIncludeDirectories="..\XPlatform\include"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -177,6 +177,10 @@
 		<Filter
 			Name="Win"
 			>
+			<File
+				RelativePath=".\include\XWinType.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="XOS"

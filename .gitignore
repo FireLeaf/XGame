@@ -44,3 +44,16 @@
 /XGame/XSrc/XEngine/XPlatform/XPlatform.vcproj.PYC104815.pc.user
 /XGame/XSrc/XEngine/XRender/XRender.vcproj.PYC104815.pc.user
 /XGame/XSrc/XFile/XFile.vcproj.PYC104815.pc.user
+/XGame/XSrc/X3DMAXPlugin/XAnimationExporter/*.user
+/XGame/XSrc/X3DMAXPlugin/XAnimationExporterDll/*.user
+/XGame/XSrc/XClient/*.user
+/XGame/XSrc/XEngine/XModel/*.user
+/XGame/XSrc/XEngine/XPlatform/Debug/*.htm
+/XGame/XSrc/XEngine/XPlatform/Debug/*.obj
+/XGame/XSrc/XEngine/XPlatform/Debug/*.idb
+/XGame/XSrc/XEngine/XPlatform/Debug/*.pdb
+/XGame/XSrc/XEngine/XPlatform/*.user
+/XGame/XSrc/XEngine/XRender/Debug/*.htm
+/XGame/XSrc/XEngine/XRender/*.user
+/XGame/XSrc/XEngine/XResource/*.user
+/XGame/XSrc/XFile/*.user

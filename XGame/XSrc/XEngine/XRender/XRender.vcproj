@@ -41,6 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\XRender\include;..\XRender\D3D9Render;..\XRender\GLES2Render"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -155,6 +156,14 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\include\XAsset.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\XAssetMonitor.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -165,6 +174,14 @@
 		<Filter
 			Name="D3D9Render"
 			>
+			<File
+				RelativePath=".\D3D9Render\XD3D9Asset.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\D3D9Render\XD3D9Asset.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="GLES2Render"
