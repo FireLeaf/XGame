@@ -11,6 +11,16 @@
 #ifndef __COCONAT_XRII_H_
 #define __COCONAT_XRII_H_
 
+class XRenderViewPort
+{
+	
+};
+
+class XRenderSetting
+{
+	
+};
+
 class XRII
 {
 	
