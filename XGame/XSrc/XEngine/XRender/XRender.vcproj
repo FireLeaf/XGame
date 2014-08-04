@@ -182,6 +182,10 @@
 				RelativePath=".\D3D9Render\XD3D9Asset.h"
 				>
 			</File>
+			<File
+				RelativePath=".\D3D9Render\XD3D9Header.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="GLES2Render"

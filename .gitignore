@@ -57,3 +57,6 @@
 /XGame/XSrc/XEngine/XRender/*.user
 /XGame/XSrc/XEngine/XResource/*.user
 /XGame/XSrc/XFile/*.user
+/XGame/XSrc/XEngine/XRender/Debug/*.idb
+/XGame/XSrc/XEngine/XRender/Debug/*.pdb
+/XGame/XSrc/Debug/*.lib

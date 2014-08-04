@@ -7,4 +7,5 @@
 /*************************************************************************/
 
 #include "XAsset.h"
+#include "XD3D9Header.h"
 #include "XD3D9Asset.h"
