@@ -165,6 +165,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\XRenderEntity.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\XRII.h"
 				>
 			</File>
@@ -196,6 +200,10 @@
 			</File>
 			<File
 				RelativePath=".\D3D9Render\XD3D9Header.h"
+				>
+			</File>
+			<File
+				RelativePath=".\D3D9Render\XD3D9RII.h"
 				>
 			</File>
 		</Filter>
