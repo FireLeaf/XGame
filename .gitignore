@@ -60,3 +60,9 @@
 /XGame/XSrc/XEngine/XRender/Debug/*.idb
 /XGame/XSrc/XEngine/XRender/Debug/*.pdb
 /XGame/XSrc/Debug/*.lib
+/XGame/XSrc/Debug/*.pdb
+/XGame/XSrc/XClient/Debug/*.manifest
+/XGame/XSrc/XClient/Debug/*.res
+/XGame/XSrc/XClient/Debug/*.obj
+/XGame/XSrc/XClient/Debug/*.idb
+/XGame/XSrc/XClient/Debug/*.pdb

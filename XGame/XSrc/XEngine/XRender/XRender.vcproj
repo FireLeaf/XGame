@@ -164,6 +164,10 @@
 				RelativePath=".\include\XAssetMonitor.h"
 				>
 			</File>
+			<File
+				RelativePath=".\include\XRII.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -180,6 +184,14 @@
 			</File>
 			<File
 				RelativePath=".\D3D9Render\XD3D9Asset.h"
+				>
+			</File>
+			<File
+				RelativePath=".\D3D9Render\XD3D9AssetMonitor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\D3D9Render\XD3D9AssetMonitor.h"
 				>
 			</File>
 			<File
