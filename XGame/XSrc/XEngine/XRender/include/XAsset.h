@@ -19,7 +19,7 @@ protected:
 	xuint32 uAssetDataID;//数据的唯一ID
 };
 
-class XAsset
+class XAsset : public XRefObject, public XAssetData
 {
 public:
 	enum ENUM_ASSET_TYPE
@@ -38,6 +38,8 @@ public:
 public:
 	ENUM_ASSET_TYPE GetAssetType(){return m_emAssetType;}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor) {pMonitor->UpdateAsset(this);}
+	virtual bool CreateAsset(XAssetMonitor* pMonitor) {pMonitor->CreateAsset(this);}
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor) {pMonitor->ReleaseAsset(this);}
 public:
 	ENUM_ASSET_TYPE m_emAssetType;
 };
@@ -54,10 +56,38 @@ public:
 	XIndexPool() : XAsset(ASSET_INDEX_POOL){}
 };
 
+struct XTexFormatDesc
+{
+	enum
+	{
+		XTEX_FORMAT_A8R8G8B8,
+		XTEX_FORMAT_A16R16G16B16,
+	};
+	xint32 width;
+	xint32 height;
+	xint32 length;
+	//xint32 
+	xint32 lod;
+	xint32 tex_format;
+};
+
 class XTexture : public XAsset
 {
 public:
+	enum
+	{
+		TEXTURE_LOAD_FROM_FILE,
+		TEXTURE_PEOGRAM_GENERATER,
+	};
+public:
 	XTexture(ENUM_ASSET_TYPE assetType) : XAsset(assetType){}
+public:
+	const XTexFormatDesc& GetFormatDesc(){return m_formatDesc;}
+	const XStl::string& GetTextureFile(){return m_textureFile;}
+	void SetTextureFile(const XStl::string& textureFile){textureFile = m_textureFile;}
+protected:
+	XTexFormatDesc m_formatDesc;
+	XStl::string m_textureFile;
 };
 
 class XTexture2D : public XTexture

@@ -8,6 +8,6 @@
 
 #ifndef __XTYPE_H_
 #define __XTYPE_H_
-
+#include "XMacro.h"
 
 #endif

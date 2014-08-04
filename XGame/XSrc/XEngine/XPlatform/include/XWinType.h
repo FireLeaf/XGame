@@ -20,6 +20,7 @@ typedef __int64 xint64;
 typedef unsigned __int64 xuint64;
 typedef long xlong;
 typedef unsigned long xulong;
+typedef unsigned char xbool;
 #endif
 
 #endif // XWinType
