@@ -8,6 +8,7 @@
 #include "DlgExporterPage2.h"
 #include "DlgExportPage3.h"
 #include "DlgExportPage4.h"
+#include "MeshExporter.h"
 
 // DlgAnimationExporterMain 对话框
 
@@ -44,6 +45,7 @@ void DlgAnimationExporterMain::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(DlgAnimationExporterMain, CDialog)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &DlgAnimationExporterMain::OnTcnSelchangeTab1)
 	ON_WM_MOVE()
+	ON_BN_CLICKED(IDC_BUTTON_EXPORT, &DlgAnimationExporterMain::OnBnClickedButtonExport)
 END_MESSAGE_MAP()
 
 
@@ -133,4 +135,10 @@ void DlgAnimationExporterMain::OnMove(int x, int y)
 			}
 		}
 	}
+}
+
+void DlgAnimationExporterMain::OnBnClickedButtonExport()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	XMeshExporter::Get().ExporterTestModel();
 }

@@ -30,6 +30,8 @@ namespace MeshExporterUtil
 	std::string GetFileExt(std::string& inFileName);//获取文件的后缀
 
 	Modifier * FindModifier(INode *pINode, Class_ID cid);
+
+	Mesh* GetMesh(INode* pNode, int iMaxTime);
 }
 
 #endif // MeshExporterUtil

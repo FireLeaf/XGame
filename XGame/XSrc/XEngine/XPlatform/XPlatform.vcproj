@@ -172,6 +172,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\XTemplate.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\XType.h"
 				>
 			</File>

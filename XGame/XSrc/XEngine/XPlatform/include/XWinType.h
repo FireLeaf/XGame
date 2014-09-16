@@ -21,6 +21,8 @@ typedef unsigned __int64 xuint64;
 typedef long xlong;
 typedef unsigned long xulong;
 typedef unsigned char xbool;
+#include <string>
+#include <vector>
 #endif
 
 #endif // XWinType

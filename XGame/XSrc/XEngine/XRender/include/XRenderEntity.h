@@ -9,6 +9,23 @@
 #ifndef __XRENDERENTITY__H
 #define __XRENDERENTITY__H
 
+struct CommonVertexPos 
+{
+	float x,y,z;
+};
+
+struct CommonVertexPosDiffuse
+{
+	float x,y,z;
+	xuint32 color;
+};
+
+struct CommonVertexPosTex
+{
+	float x, y, z;
+	float u, v;
+};
+
 class XRenderEntity
 {
 public:

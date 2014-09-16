@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "MeshExporterUtil.h"
 #include "Shlwapi.h"
+#include "assert.h"
 
 namespace MeshExporterUtil
 {
@@ -198,6 +199,41 @@ namespace MeshExporterUtil
 			pObject = pDerivedObject->GetObjRef();
 		}
 		return 0;
+	}
+
+	struct NullView : public View
+	{
+		Point2 ViewToScreen(Point3 p)
+		{ return Point2(p.x,p.y); }
+		NullView() {
+			worldToView.IdentityMatrix();
+			screenW=640.0f; screenH = 480.0f;
+		}
+	};
+
+
+	Mesh* GetMesh(INode* pNode, int iMaxTime)
+	{
+		NullView view;
+		BOOL bNeedDelete = FALSE;
+		ObjectState os = pNode->EvalWorldState(iMaxTime);
+		Object* pObj = os.obj;
+		if (pObj)
+		{
+			TriObject* triObject= (TriObject*)pObj->ConvertToType(iMaxTime, Class_ID(TRIOBJ_CLASS_ID, 0));
+			if (!triObject)
+			{
+				assert(0);
+			}
+			if (triObject)
+			{
+				GeomObject* pGeoObj = (GeomObject*)pObj;
+				Mesh* pMesh = pGeoObj->GetRenderMesh(iMaxTime, pNode, view, bNeedDelete);
+				return pMesh;
+			}
+		}
+
+		return NULL;
 	}
 
 }

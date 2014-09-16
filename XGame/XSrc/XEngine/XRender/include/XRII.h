@@ -18,12 +18,14 @@ class XRenderViewPort
 
 class XRenderSetting
 {
-	
+	int mtrl;
+	//int 
 };
 
 class XRII
 {
-	
+public:
+	void Render(XRenderSetting);
 };
 
 #endif

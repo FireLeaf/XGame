@@ -10,7 +10,7 @@
 
 #ifndef __COCONAT_XREFOBJECT_H_
 #define __COCONAT_XREFOBJECT_H_
-
+#include <assert.h>
 class XRefObject
 {
 public:
@@ -21,7 +21,7 @@ public:
 	void Release()
 	{
 		iRefCount--;
-		ASSERT()
+		//ASSERT()
 		if (iRefCount <= 0)
 		{
 			delete this;

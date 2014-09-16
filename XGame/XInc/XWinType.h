@@ -10,6 +10,8 @@
 #define __XWINTYPE__H
 
 #ifdef _WIN_PLATFORM
+
+#include <hash_map>
 typedef char xchar;
 typedef unsigned char xbyte;
 typedef short xshort;
@@ -20,6 +22,9 @@ typedef __int64 xint64;
 typedef unsigned __int64 xuint64;
 typedef long xlong;
 typedef unsigned long xulong;
+typedef unsigned char xbool;
+#include <string>
+#include <vector>
 #endif
 
 #endif // XWinType

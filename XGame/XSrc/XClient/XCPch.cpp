@@ -1,14 +1,9 @@
 /**************************************************************************
-/*		FileName: XD3D9RII.h
-/*		FileDesc: d3d9 äÖÈ¾µÈ½Ó¿Ú
+/*		FileName: XCPch.cpp
+/*		FileDesc: 
 /*		FileAuthor: YangCao
-/*		CreateTime: 2014/08/04 22/06/16
+/*		CreateTime: 2014/09/15 22:51:44
 /*		CopyRight: yc 
 /*************************************************************************/
 
-#ifndef __XD3D9RII__H
-#define __XD3D9RII__H
-
-
-
-#endif // XD3D9RII
+#include "XCPch.h"

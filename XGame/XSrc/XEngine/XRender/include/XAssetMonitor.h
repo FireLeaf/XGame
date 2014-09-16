@@ -9,6 +9,11 @@
 #ifndef __XASSETMONITOR__H
 #define __XASSETMONITOR__H
 
+#include "XMacro.h"
+#include "XType.h"
+#include "XAsset.h"
+#include <hash_map>
+
 class XAssetMonitor
 {
 public:
@@ -19,7 +24,7 @@ public:
 	xint32 GetAssetDataStamp(){return ++m_iCurDataStamp;}
 public:
 	virtual void UpdateAsset(XAsset* pAsset) = 0;
-	virtual bool CreateAsset(XAsset* pAsset) = 0;
+	virtual XAsset* CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic) = 0;
 	virtual void ReleaseAsset(XAsset* pAsset) = 0;
 protected:
 	MapAsset m_mapAsset;
