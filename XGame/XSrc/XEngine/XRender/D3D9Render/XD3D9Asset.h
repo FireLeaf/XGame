@@ -49,8 +49,10 @@ class XD3D9VertexPool : public XVertexPool
 {
 public:
 	XD3D9VertexPool() : XVertexPool(), m_pD3D9VertexBuffer(NULL) {}
+	IDirect3DVertexBuffer9* GetD3D9VertexBuffer(){return m_pD3D9VertexBuffer;}
 public:
 	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DVertexBuffer9* m_pD3D9VertexBuffer;
 };
@@ -59,6 +61,10 @@ class XD3D9IndexPool : public XIndexPool
 {
 public:
 	XD3D9IndexPool() : XIndexPool(), m_pD3D9IndexBuffer(NULL){}
+	IDirect3DIndexBuffer9* GetD3D9IndexBuffer(){return m_pD3D9IndexBuffer;}
+public:
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DIndexBuffer9* m_pD3D9IndexBuffer;
 };
@@ -124,11 +130,26 @@ protected:
 class XD3D9VertexAttribute : public XVertexAttribute
 {
 public:
-public:
 	XD3D9VertexAttribute() : XVertexAttribute(), m_pD3D9VertexDeclaration(NULL){}
 	IDirect3DVertexDeclaration9* GetD3D9VertexDecl(){return m_pD3D9VertexDeclaration;}
+public:
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DVertexDeclaration9* m_pD3D9VertexDeclaration;
+};
+
+class XD3D9VertexShader : public XVertexShader
+{
+public:
+	XD3D9VertexShader() : XVertexShader(), m_pD3D9VertexShader(NULL){}
+	IDirect3DVertexShader9* GetD3D9VertexShader(){return m_pD3D9VertexShader;}
+public:
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void UpdateAsset(XAssetMonitor* pMonitor);
+public:
+	IDirect3DVertexShader9* m_pD3D9VertexShader;
+	ID3DXConstantTable* m_pD3DXConstantTable;
 };
 
 #endif // XD3D9Asset

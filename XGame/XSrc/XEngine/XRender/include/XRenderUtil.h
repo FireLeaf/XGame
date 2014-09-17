@@ -10,4 +10,10 @@ namespace RenderUtil
 {
 	int GetTexFormat(int format);
 	int GetTexStride(int format);
+	int GetAssetManageType(bool bDynamic);
+	int GetIndexBits(int bits);
+	int GetValueTypeSize(int declType);
+	int GetDeclType(int declType);
+	int GetDeclUsage(int declUsage);
+
 }

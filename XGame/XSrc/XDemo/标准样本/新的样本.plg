@@ -1,0 +1,39 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: 新的样本 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\YangCao\AppData\Local\Temp\RSPF736.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/新的样本.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"F:\3D游戏DEMO\3D动画\动画\新的样本\CGame.cpp"
+]
+Creating command line "cl.exe @C:\Users\YangCao\AppData\Local\Temp\RSPF736.tmp" 
+Creating temporary file "C:\Users\YangCao\AppData\Local\Temp\RSPF737.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib d3d9.lib d3dx9.lib dxguid.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/新的样本.pdb" /debug /machine:I386 /out:"Debug/新的样本.exe" /pdbtype:sept 
+".\Debug\CGame.obj"
+".\Debug\CLog.obj"
+".\Debug\main.obj"
+".\Debug\Vertex.obj"
+".\Debug\CDrawText.obj"
+]
+Creating command line "link.exe @C:\Users\YangCao\AppData\Local\Temp\RSPF737.tmp"
+<h3>Output Window</h3>
+Compiling...
+CGame.cpp
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/新的样本.bsc"  ".\Debug\CGame.sbr" ".\Debug\CLog.sbr" ".\Debug\main.sbr" ".\Debug\Vertex.sbr" ".\Debug\CDrawText.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+新的样本.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

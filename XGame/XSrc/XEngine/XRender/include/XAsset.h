@@ -42,8 +42,8 @@ enum X_DECLTYPE
 	X_DECLTYPE_MATRIX4X3_VECTOR	= 52,
 	X_DECLTYPE_MATRIX3X4_VECTOR	= 53,
 	X_DECLTYPE_MATRIX4X4_VECTOR	= 54,
-
 } ;
+
 enum X_DECLUSAGE
 {
 	X_DECLUSAGE_POSITION = 0,
@@ -73,6 +73,8 @@ enum ENUM_ASSET_TYPE
 	ASSET_TEXTURE_RENDER,//Render Target
 	ASSET_TEXTURE_DEPTH,//Depth Stencil
 	ASSET_MTRL,//材质
+	ASSET_VERTEX_SHADER,//顶点着色器
+	ASSET_PIXEL_SHADER,//像素着色器
 };
 
 enum X_D3DCUBEMAP_FACES
@@ -104,12 +106,13 @@ class XAsset : public XRefObject//, public XAssetData
 public:
 	
 public:
-	XAsset(ENUM_ASSET_TYPE assetType) : m_emAssetType(assetType), uAssetDataID(0), m_bDirty(true){}
+	XAsset(ENUM_ASSET_TYPE assetType) : m_emAssetType(assetType), uAssetDataID(0), m_bDirty(true), m_bDynamic(false){}
 	virtual ~XAsset(){}
 public:
 	ENUM_ASSET_TYPE GetAssetType(){return m_emAssetType;}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor) {}//{pMonitor->UpdateAsset(this);}
 	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}//{pMonitor->ReleaseAsset(this);}
+	void Dirty(){m_bDirty = true;}
 public:
 	ENUM_ASSET_TYPE m_emAssetType;
 	xuint32 uAssetDataID;//数据的唯一ID
@@ -117,16 +120,43 @@ public:
 	xbool m_bDynamic;//是否是动态的
 };
 
+struct XVertexPoolDesc 
+{
+	xbyte* buffer;
+	xint32 count;
+};
+
 class XVertexPool : public XAsset
 {
 public:
 	XVertexPool() : XAsset(ASSET_VERTEX_POOL){}
+public:
+	const XVertexPoolDesc& GetVertexPoolDesc(){return m_VertexPoolDesc;}
+	void SetVertexPoolDesc(const XVertexPoolDesc& desc){m_VertexPoolDesc = desc;}
+protected:
+	XVertexPoolDesc m_VertexPoolDesc;
 };
 
+enum
+{
+	INDEX_16BITS,
+	INDEX_32BITS,
+};
+struct XIndexPoolDesc 
+{
+	xbyte* buffer;
+	xint32 count;
+	xint32 type;
+};
 class XIndexPool : public XAsset
 {
 public:
 	XIndexPool() : XAsset(ASSET_INDEX_POOL){}
+public:
+	const XIndexPoolDesc& GetIndexPoolDesc(){return m_IndexPoolDesc;}
+	void SetIndexPoolDesc(const XIndexPoolDesc& desc){m_IndexPoolDesc = desc;}
+protected:
+	XIndexPoolDesc m_IndexPoolDesc;
 };
 
 enum
@@ -223,9 +253,9 @@ public:
 			int offset;//数据在定点中偏移
 			int method_normalized;//...待用
 			X_DECLUSAGE usage;//用途，仅在d3d中用
-			xint32 stream;//流索引  和下面的stream_index对应
+			xint32 stream;//流索引 
 		};
-		XStl::vector<Element> vecElement;
+		std::vector<Element> vecElement;
 		xint32 stream_index;//当前流索引，用于D3D
 		xint32 asset_vertex_pool;//当前顶点池
 	};
@@ -234,10 +264,49 @@ public:
 public:
 	void AddVertexElement(const VertexElement& ve){vecVertexElement.push_back(ve);}
 protected:
-	XStl::vector<VertexElement> vecVertexElement;
+	std::vector<VertexElement> vecVertexElement;
 };
 
 typedef XVertexAttribute::VertexElement::Element Vertex_Decl_Element;
+
+struct ShaderMarco
+{
+	XStl::string name;
+	XStl::string definition;
+};
+
+struct VertexShaderDesc
+{
+	XStl::string entry;
+	std::string shader_src;
+	XStl::vector<ShaderMarco> marcos;
+};
+
+class XVertexShader : public XAsset
+{
+public:
+	XVertexShader() : XAsset(ASSET_VERTEX_SHADER){}
+public:
+	const VertexShaderDesc& GetVertexShaderDesc(){return m_VertexShaderDesc;}
+	void SetVertexShaderDesc(const VertexShaderDesc& desc){m_VertexShaderDesc = desc;}
+public:
+	VertexShaderDesc m_VertexShaderDesc;
+};
+
+struct PixelShaderDesc
+{
+	XStl::string entry;
+	XStl::string shader_src;
+	XStl::vector<ShaderMarco> marcos;
+};
+
+class XPixelShader : public XAsset
+{
+public:
+	XPixelShader() : XAsset(ASSET_PIXEL_SHADER){}
+public:
+	PixelShaderDesc m_VertexShaderDesc;
+};
 
 class XMtrl : public XAsset
 {
@@ -245,46 +314,6 @@ public:
 protected:
 	xint32 vertexShader;
 	xint32 pixelShader;
-};
-
-template<typename T>
-struct XBufferData
-{
-public:
-	XBufferData() : buffer(NULL), count(0){}
-	~XBufferData()
-	{
-		ASSERT(!buffer);//这里提倡程序释放
-		Release();
-	}
-public:
-	void Lock(void** data){data = &buffer;}
-	void UnLock();
-	bool Allocate(int num)
-	{
-		Release();
-		count = num;
-		buffer = new (typename T)[count];
-		if (!buffer)
-		{
-			return false;
-			Assert(0);
-		}
-
-		return true;
-	}
-	void Release()
-	{
-		if (buffer)
-		{
-			delete []buffer;
-			buffer = NULL;
-		}
-		count = 0;
-	}
-protected:
-	typename T* buffer;
-	xint32 count;
 };
 
 // template<typename V, typename I>
