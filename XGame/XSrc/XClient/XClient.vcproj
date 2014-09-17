@@ -45,7 +45,8 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="XCPch.h"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -174,12 +175,37 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\XC_Client.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XCPch.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="XCPch.cpp"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\XC_Client.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XCPch.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"

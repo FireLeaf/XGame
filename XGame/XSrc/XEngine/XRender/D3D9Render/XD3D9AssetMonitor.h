@@ -12,12 +12,15 @@
 #ifndef __COCONAT_XD3D9ASSETMONITOR_H_
 #define __COCONAT_XD3D9ASSETMONITOR_H_
 
+#include "XAssetMonitor.h"
+
 class XD3D9AssetMonitor : public XAssetMonitor
 {
 public:
-	void UpdateAsset(XAsset* pAsset);
-	bool CreateAsset(XAsset* pAsset);
-	void ReleaseAsset(XAsset* pAsset);
+	virtual void UpdateAsset(XAsset* pAsset);
+	virtual XAsset* CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic);//创建一个资源
+	virtual void ReleaseAsset(XAsset* pAsset);
+public:
 };
 
 #endif

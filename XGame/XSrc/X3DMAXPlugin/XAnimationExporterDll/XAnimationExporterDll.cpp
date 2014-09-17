@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "XAnimationExporterDll.h"
 #include "DlgAnimationExporterMain.h"
+#include "MeshExporter.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -69,6 +70,7 @@ extern "C" __declspec(dllexport) int	DoExport(const TCHAR *name,ExpInterface *ei
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 	CWnd* cWnd=AfxGetApp()->GetMainWnd();
 	DlgAnimationExporterMain daem(cWnd);
+	XMeshExporter::Get().SetExporterFilePath(name);
 	daem.DoModal();
 	return TRUE;
 }

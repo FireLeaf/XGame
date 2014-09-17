@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\XRender\include;..\XRender\D3D9Render;..\XRender\GLES2Render"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				AdditionalIncludeDirectories="..\XRender\include;..\XRender\D3D9Render;..\XRender\GLES2Render;..\..\..\XInc"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -77,6 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -161,11 +162,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\XAssetLoader.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\XAssetMonitor.h"
 				>
 			</File>
 			<File
+				RelativePath=".\include\XRenderContext.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\XRenderEntity.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\XRenderMonitor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\XRenderUtil.h"
 				>
 			</File>
 			<File
@@ -203,9 +220,41 @@
 				>
 			</File>
 			<File
+				RelativePath=".\D3D9Render\XD3D9RenderContext.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\D3D9Render\XD3D9RenderContext.h"
+				>
+			</File>
+			<File
+				RelativePath=".\D3D9Render\XD3D9RenderMonitor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\D3D9Render\XD3D9RenderUtil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\D3D9Render\XD3D9RII.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\D3D9Render\XD3D9RII.h"
 				>
 			</File>
+			<Filter
+				Name="Shader"
+				>
+				<File
+					RelativePath=".\D3D9Render\shader\mesh_ps.shader"
+					>
+				</File>
+				<File
+					RelativePath=".\D3D9Render\shader\mesh_vs.shader"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="GLES2Render"

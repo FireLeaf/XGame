@@ -10,3 +10,52 @@
 
 #include "XD3D9Header.h"
 #include "XD3D9AssetMonitor.h"
+#include "XD3D9Asset.h"
+
+#define CASE_NEW(a, b) case a:\
+					  {\
+						b* ptr = new b;\
+						if(ptr) \
+						{\
+							ptr->uAssetDataID = GetAssetDataStamp();\
+							ptr->m_bDynamic = bDynamic;\
+							m_mapAsset[ptr->uAssetDataID] = ptr;\
+						}\
+						return ptr;\
+					  }\
+					  break;
+
+void XD3D9AssetMonitor::UpdateAsset(XAsset* pAsset)
+{
+
+}
+
+XAsset* XD3D9AssetMonitor::CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic)
+{
+	switch (asset_type)
+	{
+		CASE_NEW(ASSET_VERTEX_POOL, XD3D9VertexPool)
+		CASE_NEW(ASSET_INDEX_POOL, XD3D9IndexPool)
+		CASE_NEW(ASSET_TEXTURE_2D, XD3D9Texture2D)
+		CASE_NEW(ASSET_TEXTURE_CUBE, XD3D9TextureCube)
+		CASE_NEW(ASSET_TEXTURE_RENDER, XD3DRenderTarget)
+		CASE_NEW(ASSET_VERTEX_ATTRIBUTE, XD3D9VertexAttribute)
+	}
+	return NULL;
+}
+
+void XD3D9AssetMonitor::ReleaseAsset(XAsset* pAsset)
+{
+	if (!pAsset)
+	{
+		Assert(0);
+		return;
+	}
+	int ref = pAsset->GetRef();
+	pAsset->ReleaseAsset(this);
+	MapAsset::iterator iter = m_mapAsset.find(pAsset->uAssetDataID);
+	if (1 == ref && iter != m_mapAsset.end())
+	{
+		m_mapAsset.erase(iter);
+	}
+}

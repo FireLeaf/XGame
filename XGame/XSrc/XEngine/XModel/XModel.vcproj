@@ -41,6 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\XModel\include;..\..\..\XInc;..\..\..\XInc\XExporter"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -149,12 +150,28 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\src\XAnimationModel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\XMesh.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\include\XAnimationModel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\XMesh.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"

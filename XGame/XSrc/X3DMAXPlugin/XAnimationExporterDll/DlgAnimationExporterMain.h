@@ -32,4 +32,5 @@ public:
 	CTabCtrl m_tabExporter;
 	virtual BOOL DestroyWindow();
 	afx_msg void OnMove(int x, int y);
+	afx_msg void OnBnClickedButtonExport();
 };
