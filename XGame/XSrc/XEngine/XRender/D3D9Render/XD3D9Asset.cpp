@@ -172,7 +172,100 @@ void XD3D9VertexShader::UpdateAsset(XAssetMonitor* pMonitor)
 			return;
 		}
 		
-		//D3DXCompileShader(m_VertexShaderDesc.shader_src.c_str(), m_VertexShaderDesc.shader_src.length())
+		D3DXMACRO macro[VertexShaderDesc::MAX_SHADER_MARCO] = {NULL,};
+		for (int i = 0; i < m_VertexShaderDesc.marcos.size(); i++)
+		{
+			macro[i].Name = m_VertexShaderDesc.marcos[i].name.c_str();
+			macro[i].Definition = m_VertexShaderDesc.marcos[i].definition.c_str();
+		}
+		int flag = D3DXSHADER_OPTIMIZATION_LEVEL3;
+#ifdef _DEBUG
+		flag = D3DXSHADER_DEBUG;
+#endif
+		ID3DXBuffer* pShaderBuffer = NULL;
+		ID3DXBuffer* pErrorBuffer = NULL;
+		HRESULT hr = D3DXCompileShader(m_VertexShaderDesc.shader_src.c_str(), 
+			m_VertexShaderDesc.shader_src.length(), macro, NULL, 
+			m_VertexShaderDesc.entry.c_str(), m_VertexShaderDesc.profile.c_str(), 
+			flag, &pShaderBuffer, &pErrorBuffer, &m_pD3DXConstantTable
+			);
+		
+		if (pErrorBuffer)
+		{
+			if(pShaderBuffer)
+			{
+				pShaderBuffer->Release();
+			}
+			const char* err_info = (const char*)pErrorBuffer->GetBufferPointer();
+			return;
+		}
 
+		if (FAILED(hr))
+		{
+			Assert(0);
+			return;
+		}
+
+		hr = pD3D9Device->CreateVertexShader((DWORD*)pShaderBuffer->GetBufferPointer(), &m_pD3D9VertexShader);
+		if (FAILED(hr))
+		{
+			pShaderBuffer->Release();
+			return;
+		}
+		pShaderBuffer->Release();
+	}
+}
+
+void XD3D9PixelShader::UpdateAsset(XAssetMonitor* pMonitor)
+{
+	if (!m_pD3D9PixelShader)
+	{
+		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
+		if (!pD3D9Device)
+		{
+			return;
+		}
+
+		D3DXMACRO macro[VertexShaderDesc::MAX_SHADER_MARCO] = {NULL,};
+		for (int i = 0; i < m_PixelShaderDesc.marcos.size(); i++)
+		{
+			macro[i].Name = m_PixelShaderDesc.marcos[i].name.c_str();
+			macro[i].Definition = m_PixelShaderDesc.marcos[i].definition.c_str();
+		}
+		int flag = D3DXSHADER_OPTIMIZATION_LEVEL3;
+#ifdef _DEBUG
+		flag = D3DXSHADER_DEBUG;
+#endif
+		ID3DXBuffer* pShaderBuffer = NULL;
+		ID3DXBuffer* pErrorBuffer = NULL;
+		HRESULT hr = D3DXCompileShader(m_PixelShaderDesc.shader_src.c_str(), 
+			m_PixelShaderDesc.shader_src.length(), macro, NULL, 
+			m_PixelShaderDesc.entry.c_str(), m_PixelShaderDesc.profile.c_str(), 
+			flag, &pShaderBuffer, &pErrorBuffer, &m_pD3DXConstantTable
+			);
+
+		if (pErrorBuffer)
+		{
+			if(pShaderBuffer)
+			{
+				pShaderBuffer->Release();
+			}
+			const char* err_info = (const char*)pErrorBuffer->GetBufferPointer();
+			return;
+		}
+
+		if (FAILED(hr))
+		{
+			Assert(0);
+			return;
+		}
+
+		hr = pD3D9Device->CreatePixelShader((DWORD*)pShaderBuffer->GetBufferPointer(), &m_pD3D9PixelShader);
+		if (FAILED(hr))
+		{
+			pShaderBuffer->Release();
+			return;
+		}
+		pShaderBuffer->Release();
 	}
 }

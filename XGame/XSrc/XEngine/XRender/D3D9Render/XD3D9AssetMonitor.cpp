@@ -27,7 +27,10 @@
 
 void XD3D9AssetMonitor::UpdateAsset(XAsset* pAsset)
 {
-
+	if (pAsset)
+	{
+		pAsset->UpdateAsset(this);
+	}
 }
 
 XAsset* XD3D9AssetMonitor::CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic)
@@ -40,6 +43,8 @@ XAsset* XD3D9AssetMonitor::CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic
 		CASE_NEW(ASSET_TEXTURE_CUBE, XD3D9TextureCube)
 		CASE_NEW(ASSET_TEXTURE_RENDER, XD3DRenderTarget)
 		CASE_NEW(ASSET_VERTEX_ATTRIBUTE, XD3D9VertexAttribute)
+		CASE_NEW(ASSET_VERTEX_SHADER, XD3D9VertexShader)
+		CASE_NEW(ASSET_PIXEL_SHADER, XD3D9PixelShader)
 	}
 	return NULL;
 }
