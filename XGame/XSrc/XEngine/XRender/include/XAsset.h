@@ -42,6 +42,8 @@ enum X_DECLTYPE
 	X_DECLTYPE_MATRIX4X3_VECTOR	= 52,
 	X_DECLTYPE_MATRIX3X4_VECTOR	= 53,
 	X_DECLTYPE_MATRIX4X4_VECTOR	= 54,
+	X_DECLTYPE_TEXTURE_2D		= 55,
+	X_DECLTYPE_TEXTURE_CUBE		= 56,
 } ;
 
 enum X_DECLUSAGE
@@ -277,8 +279,13 @@ struct ShaderMarco
 
 struct VertexShaderDesc
 {
+	enum
+	{
+		MAX_SHADER_MARCO = 128,
+	};
 	XStl::string entry;
 	std::string shader_src;
+	XStl::string profile;
 	XStl::vector<ShaderMarco> marcos;
 };
 
@@ -295,8 +302,13 @@ public:
 
 struct PixelShaderDesc
 {
+	enum
+	{
+		MAX_SHADER_MARCO = 128,
+	};
 	XStl::string entry;
 	XStl::string shader_src;
+	XStl::string profile;
 	XStl::vector<ShaderMarco> marcos;
 };
 
@@ -305,7 +317,10 @@ class XPixelShader : public XAsset
 public:
 	XPixelShader() : XAsset(ASSET_PIXEL_SHADER){}
 public:
-	PixelShaderDesc m_VertexShaderDesc;
+	const PixelShaderDesc& GetPixelShaderDesc(){return m_PixelShaderDesc;}
+	void SetPixelShaderDesc(const PixelShaderDesc& desc){m_PixelShaderDesc = desc;}
+public:
+	PixelShaderDesc m_PixelShaderDesc;
 };
 
 class XMtrl : public XAsset
@@ -357,7 +372,6 @@ public:
 struct ShaderParam 
 {
 	XStl::string param_name;//参数名字
-	bool in_vertex_shader;//是在顶点
 	X_DECLTYPE type;
 	struct
 	{
