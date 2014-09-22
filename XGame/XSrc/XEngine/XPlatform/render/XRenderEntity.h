@@ -8,7 +8,7 @@
 
 #ifndef __XRENDERENTITY__H
 #define __XRENDERENTITY__H
-
+#include "XRII.h"
 struct CommonVertexPos 
 {
 	float x,y,z;

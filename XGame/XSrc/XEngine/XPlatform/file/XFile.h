@@ -85,7 +85,12 @@ protected:
 	FILE* m_fp;
 };
 
-class XFileImageBase : public XFile
+class XFileMapBase : public XFile
+{
+
+};
+
+class XFileMap : public XFileMapBase
 {
 
 };

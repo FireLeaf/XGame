@@ -23,6 +23,7 @@ typedef unsigned long xulong;
 typedef unsigned char xbool;
 #include <string>
 #include <vector>
+#include <hash_map>
 #endif
 
 #endif // XWinType

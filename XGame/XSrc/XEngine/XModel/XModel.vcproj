@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\XModel\include;..\..\..\XInc;..\..\..\XInc\XExporter"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

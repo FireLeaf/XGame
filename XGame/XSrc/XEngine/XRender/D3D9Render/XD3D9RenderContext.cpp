@@ -9,7 +9,7 @@
 #include "XD3D9RenderContext.h"
 
 XD3D9RenderContext d3d9_render_context;
-x_ptr_render_context = &d3d9_render_context;
+XRenderContext* x_ptr_render_context = &d3d9_render_context;
 
 XD3D9RenderContext::XD3D9RenderContext()
 {

@@ -27,8 +27,10 @@ class XD3D9TextureCube : public XTextureCube
 {
 public:
 	XD3D9TextureCube() : XTextureCube(), m_pD3D9CubeTexture(NULL){}
+	IDirect3DCubeTexture9* GetD3D9CubeTexture(){return m_pD3D9CubeTexture;}
 public:
 	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DCubeTexture9* m_pD3D9CubeTexture;
 };
@@ -38,10 +40,15 @@ class XD3D9Texture3D : public XTexture3D
 
 };
 
-class XD3DRenderTarget : public XRenderTarget
+class XD3D9RenderTarget : public XRenderTarget
 {
 public:
+	XD3D9RenderTarget() : XRenderTarget(), m_pD3D9DepthSurface(NULL), m_pD3D9RenderTarget(NULL){}
+	IDirect3DTexture9* GetD3D9RenderTarget() {return m_pD3D9RenderTarget;}
+	IDirect3DSurface9* GetD3D9DepthSurface() {return m_pD3D9DepthSurface;}
+public:
 	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DTexture9* m_pD3D9RenderTarget;
 	IDirect3DSurface9* m_pD3D9DepthSurface;
@@ -141,8 +148,11 @@ protected:
 	IDirect3DVertexDeclaration9* m_pD3D9VertexDeclaration;
 };
 
-class XD3D9ShaderParamTable
+class XD3D9ShaderParamTable : public XShaderParamTable
 {
+public:
+	XD3D9ShaderParamTable(){m_pD3DXConstantTable = NULL;}
+	~XD3D9ShaderParamTable(){if(m_pD3DXConstantTable) m_pD3DXConstantTable->Release(); m_pD3DXConstantTable = NULL;}
 public:
 // 	void SetTexture(const char* name, XTexture* texture);
 // 	void SetBool(const char* name, xbool val);
@@ -153,35 +163,15 @@ public:
 // 	void SetIntArray(const char* name, int* vals, int count);
 // 	void SetValue(const char* name, void* val, int size);
 
-	void SetValue(const char* name, XTexture* texture)
-	{
-		const ShaderConstDesc* ptr_desc = GetConstDesc(name);
-		if (ptr_desc)
-		{
-			x_ptr_d3ddevice->SetTexture(ptr_desc->reg_index, (XD3d))
-		}
-	}
-	void SetValue(const char* name, xbool val)
-	{
-		const ShaderConstDesc* ptr_desc = GetConstDesc(name);
-		if (ptr_desc)
-		{
-			m_pD3DXConstantTable->SetBool(x_ptr_d3ddevice, ptr_desc->handle, val);
-		}
-	}
-	void SetValue(const char* name, xbool* vals, int count);
-	void SetValue(const char* name, float val);
-	void SetValue(const char* name, float* vals, int count);
-	void SetValue(const char* name, int val);
-	void SetValue(const char* name, int* vals, int count);
-	void SetValue(const char* name, void* val, int size);
+	virtual void SetValue(const char* name, XTexture* texture);
+	virtual void SetValue(const char* name, const xbool val);
+	virtual void SetValue(const char* name, const xbool* vals, const int count);
+	virtual void SetValue(const char* name, const float val);
+	virtual void SetValue(const char* name, const float* vals, const int count);
+	virtual void SetValue(const char* name, const int val);
+	virtual void SetValue(const char* name, const int* vals, const int count);
+	virtual void SetValue(const char* name, const void* val, const int size);
 public:
-	struct ShaderConstDesc
-	{ 
-		D3DXHANDLE handle;
-		int reg_index;
-		//int count;
-	};
 	void DumpConstTable()
 	{
 		D3DXCONSTANTTABLE_DESC table_desc;
@@ -193,30 +183,20 @@ public:
 			{
 				xint32 count = 1;
 				D3DXCONSTANT_DESC desc;
-				if(FAILED(m_pD3DXConstantTable->GetConstantDesc(handle, &desc, &count)))
+				if(FAILED(m_pD3DXConstantTable->GetConstantDesc(handle, &desc, (UINT*)&count)))
 				{
 					continue;
 				}
 				ShaderConstDesc scd;
-				scd.handle = handle;
+				scd.handle = (void*)handle;
 				scd.reg_index = desc.RegisterIndex;
 			}
 		}
 	}
-	const ShaderConstDesc* GetConstDesc(const char* name)
-	{
-		NameToD3DXHandleMap::iterator iter = m_mapNameToHandle.find(name);
-		if(iter != m_mapNameToHandle.end())
-		{
-			return &(iter->second);
-		}
-		return NULL;
-	}
 
-	typedef stdext::hash_map<std::string, ShaderConstDesc> NameToD3DXHandleMap;
-protected:
+	ID3DXConstantTable* GetD3D9ConstantTable(){return m_pD3DXConstantTable;}
+public:
 	ID3DXConstantTable* m_pD3DXConstantTable;
-	NameToD3DXHandleMap m_mapNameToHandle;
 	
 };
 
@@ -230,7 +210,7 @@ public:
 	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 public:
 	IDirect3DVertexShader9* m_pD3D9VertexShader;
-	ID3DXConstantTable* m_pD3DXConstantTable;
+	//ID3DXConstantTable* m_pD3DXConstantTable;
 };
 
 class XD3D9PixelShader : public XPixelShader
@@ -243,7 +223,7 @@ public:
 	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 public:
 	IDirect3DPixelShader9* m_pD3D9PixelShader;
-	ID3DXConstantTable* m_pD3DXConstantTable;
+	//ID3DXConstantTable* m_pD3DXConstantTable;
 };
 
 #endif // XD3D9Asset

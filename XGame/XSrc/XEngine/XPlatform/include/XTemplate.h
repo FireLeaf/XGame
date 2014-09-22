@@ -38,17 +38,17 @@ public:
 	XBufferData() : buffer(NULL), count(0){}
 	~XBufferData()
 	{
-		ASSERT(!buffer);//这里提倡程序释放
+		Assert(!buffer);//这里提倡程序释放
 		Release();
 	}
 public:
-	void Lock(void** data){data = &buffer;}
-	void UnLock();
+	void Lock(void** data){data = (void**)&buffer;}
+	void UnLock(){}
 	bool Allocate(int num)
 	{
 		Release();
 		count = num;
-		buffer = new (typename T)[count];
+		buffer = new T[count];
 		if (!buffer)
 		{
 			return false;

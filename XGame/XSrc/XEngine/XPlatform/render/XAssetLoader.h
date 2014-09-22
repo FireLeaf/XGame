@@ -6,14 +6,16 @@
 /*		CopyRight: yc 
 /*************************************************************************/
 
+#include "XAsset.h"
+
 class XAssetLoader
 {
 public:
-	bool LoadAsset(XAsset* pAsset);
+	static bool LoadAsset(XAsset* pAsset);
 protected:
 	//
-	bool Load2DTexture(XAsset* pAsset);
-	bool LoadCubeTexture(XAsset* pAsset);
-	bool Load3DTexture(XAsset* pAsset);
+	static bool Load2DTexture(XAsset* pAsset);
+	static bool LoadCubeTexture(XAsset* pAsset);
+	static bool Load3DTexture(XAsset* pAsset);
 	//
 };

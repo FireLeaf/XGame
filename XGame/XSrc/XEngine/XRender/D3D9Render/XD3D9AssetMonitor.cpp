@@ -25,6 +25,9 @@
 					  }\
 					  break;
 
+XD3D9AssetMonitor d3d9_asset_monitor;
+XAssetMonitor* x_ptr_asset_monitor = &d3d9_asset_monitor;
+
 void XD3D9AssetMonitor::UpdateAsset(XAsset* pAsset)
 {
 	if (pAsset)
@@ -33,7 +36,7 @@ void XD3D9AssetMonitor::UpdateAsset(XAsset* pAsset)
 	}
 }
 
-XAsset* XD3D9AssetMonitor::CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic)
+XAsset* XD3D9AssetMonitor::CreateAsset(ENUM_ASSET_TYPE asset_type, xbool bDynamic)
 {
 	switch (asset_type)
 	{
@@ -41,7 +44,7 @@ XAsset* XD3D9AssetMonitor::CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic
 		CASE_NEW(ASSET_INDEX_POOL, XD3D9IndexPool)
 		CASE_NEW(ASSET_TEXTURE_2D, XD3D9Texture2D)
 		CASE_NEW(ASSET_TEXTURE_CUBE, XD3D9TextureCube)
-		CASE_NEW(ASSET_TEXTURE_RENDER, XD3DRenderTarget)
+		CASE_NEW(ASSET_TEXTURE_RENDER, XD3D9RenderTarget)
 		CASE_NEW(ASSET_VERTEX_ATTRIBUTE, XD3D9VertexAttribute)
 		CASE_NEW(ASSET_VERTEX_SHADER, XD3D9VertexShader)
 		CASE_NEW(ASSET_PIXEL_SHADER, XD3D9PixelShader)

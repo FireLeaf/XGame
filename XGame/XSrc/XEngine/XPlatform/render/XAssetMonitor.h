@@ -17,18 +17,29 @@
 class XAssetMonitor
 {
 public:
-	typedef XStlext::hash_map<int, XAsset*> MapAsset;
+	typedef XStlext::hash_map<xint32, XAsset*> MapAsset;
+	//typedef XStl::vector<XAsset> ;
 public:
 	XAssetMonitor() : m_iCurDataStamp(0){}
 public:
 	xint32 GetAssetDataStamp(){return ++m_iCurDataStamp;}
+	XAsset* GetAsset(xint32 id)
+	{
+		MapAsset::iterator iter = m_mapAsset.find(id);
+		if (iter != m_mapAsset.end())
+		{
+			return iter->second;
+		}
+		return NULL;
+	}
 public:
 	virtual void UpdateAsset(XAsset* pAsset) = 0;
-	virtual XAsset* CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic) = 0;
+	virtual XAsset* CreateAsset(ENUM_ASSET_TYPE asset_type, xbool bDynamic) = 0;
 	virtual void ReleaseAsset(XAsset* pAsset) = 0;
 protected:
 	MapAsset m_mapAsset;
 	xint32 m_iCurDataStamp;
-};
 
+};
+extern XAssetMonitor* x_ptr_asset_monitor;
 #endif // XAssetMonitor

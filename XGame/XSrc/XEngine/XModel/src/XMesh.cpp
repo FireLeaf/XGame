@@ -8,12 +8,14 @@
 
 #include "XMesh.h"
 #include "XFile.h"
+#include "XAssetUtil.h"
 
 bool XMesh::InitMesh()
 {
-	for (int i = 0; i < )
-	{
-	}
+// 	for (int i = 0; i < )
+// 	{
+// 	}
+	return true;
 }
 
 bool XMesh::LoadMesh(const char* file_name)
@@ -28,17 +30,17 @@ bool XMesh::LoadMesh(const char* file_name)
 	X3DVector3* poses = new X3DVector3[vertex_num];
 	file.Read((void*)poses, sizeof(X3DVector3), vertex_num);
 	MeshVertexBufferPTX0N* vertex_pool = new MeshVertexBufferPTX0N;
+	geometry_data.vertex_attribute = AssetUtil::GetVertexAttribute(PTX0N_elements);
 	geometry_data.vertex_pools.push_back(vertex_pool);
 	vertex_pool->Allocate(vertex_num);
 	AnimationVertexPTXnN<1>* pVData;
-	vertex_pool->Lock(&pVData);
+	vertex_pool->Lock((void**)&pVData);
 	for (int i = 0; i < vertex_num; i++)
 	{
 		pVData[i].x = poses[i].x;
 		pVData[i].y = poses[i].y;
 		pVData[i].z = poses[i].z;
 	}
-
 	vertex_pool->UnLock();
 
 	xint32 indices_num;

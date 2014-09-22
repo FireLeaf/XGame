@@ -13,6 +13,7 @@
 
 enum X_DECLTYPE
 {
+	X_DECLTYPE_INVALID   =  -1,
 	X_DECLTYPE_FLOAT1    =  0,  // 1D float expanded to (value, 0., 0., 1.)
 	X_DECLTYPE_FLOAT2    =  1,  // 2D float expanded to (value, value, 0., 1.)
 	X_DECLTYPE_FLOAT3    =  2,  // 3D float expanded to (value, value, value, 1.)
@@ -44,10 +45,13 @@ enum X_DECLTYPE
 	X_DECLTYPE_MATRIX4X4_VECTOR	= 54,
 	X_DECLTYPE_TEXTURE_2D		= 55,
 	X_DECLTYPE_TEXTURE_CUBE		= 56,
+
+	X_DECLTYPE_MAX	= 0x8000,
 } ;
 
 enum X_DECLUSAGE
 {
+	X_DECLUSAGE_INVALID = -1,
 	X_DECLUSAGE_POSITION = 0,
 	X_DECLUSAGE_BLENDWEIGHT,   // 1
 	X_DECLUSAGE_BLENDINDICES,  // 2
@@ -62,6 +66,8 @@ enum X_DECLUSAGE
 	X_DECLUSAGE_FOG,           // 11
 	X_DECLUSAGE_DEPTH,         // 12
 	X_DECLUSAGE_SAMPLE,        // 13
+
+	X_DECLUSAGE_MAX = 0x8000,
 }; 
 
 enum ENUM_ASSET_TYPE
@@ -115,6 +121,10 @@ public:
 	virtual void UpdateAsset(XAssetMonitor* pMonitor) {}//{pMonitor->UpdateAsset(this);}
 	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}//{pMonitor->ReleaseAsset(this);}
 	void Dirty(){m_bDirty = true;}
+	xbool Dynamic(){return m_bDynamic;}
+	void SetDynamic(xbool dynamic){m_bDynamic = dynamic;}
+	xint32 GetAssetID(){return uAssetDataID;}
+	void SetAssetID(xint32 id){ uAssetDataID = id;}
 public:
 	ENUM_ASSET_TYPE m_emAssetType;
 	xuint32 uAssetDataID;//数据的唯一ID
@@ -126,6 +136,7 @@ struct XVertexPoolDesc
 {
 	xbyte* buffer;
 	xint32 count;
+	XVertexPoolDesc(){memset(this, 0, sizeof(XVertexPoolDesc));}
 };
 
 class XVertexPool : public XAsset
@@ -141,6 +152,7 @@ protected:
 
 enum
 {
+	INDEX_0BITS = 0,
 	INDEX_16BITS,
 	INDEX_32BITS,
 };
@@ -149,6 +161,7 @@ struct XIndexPoolDesc
 	xbyte* buffer;
 	xint32 count;
 	xint32 type;
+	XIndexPoolDesc(){memset(this, 0, sizeof(XIndexPoolDesc));}
 };
 class XIndexPool : public XAsset
 {
@@ -167,34 +180,36 @@ enum
 	XTEX_FORMAT_A16R16G16B16,
 };
 
+enum
+{
+	TEXTURE_LOAD_FROM_FILE,
+	TEXTURE_PEOGRAM_GENERATER,
+};
+
 struct XTexFormatDesc
 {
 	xint32 width;
 	xint32 height;
 	xint32 length;
+	xint32 from;
 	//xint32 
 	xint32 lod;
 	xint32 tex_format;
+	XTexFormatDesc(){memset(this, 0, sizeof(XTexFormatDesc));}
 };
 
 class XTexture : public XAsset
 {
 public:
-	enum
-	{
-		TEXTURE_LOAD_FROM_FILE,
-		TEXTURE_PEOGRAM_GENERATER,
-	};
 public:
 	XTexture(ENUM_ASSET_TYPE assetType) : XAsset(assetType){}
 public:
 	const XTexFormatDesc& GetFormatDesc(){return m_formatDesc;}
-	const XStl::string& GetTextureFile(){return m_textureFile;}
-	void SetTextureFile(const XStl::string& textureFile){m_textureFile = textureFile;}
+	//const XStl::string& GetTextureFile(){return m_textureFile;}
+	//void SetTextureFile(const XStl::string& textureFile){m_textureFile = textureFile;}
 	void SetTextureDesc(const XTexFormatDesc& fd){m_formatDesc = fd;}
 protected:
 	XTexFormatDesc m_formatDesc;
-	XStl::string m_textureFile;
 };
 
 #define MAX_LEVEL_TEXTURE 3
@@ -208,12 +223,18 @@ struct XTextureData
 		xbyte** ptr_pixel;
 	}level_data[MAX_LEVEL_TEXTURE];
 	int generate_level;
+	XStl::string m_textureFile;
+	XTextureData(){memset(this, 0, sizeof(XTextureData));}
 };
 
 class XTexture2D : public XTexture
 {
 public:
 	XTexture2D() : XTexture(ASSET_TEXTURE_2D){}
+public:
+	const XTextureData& GetPixelData(){return pixelData;}
+	XTextureData& GetTextureData(){return pixelData;}
+	void SetPixelData(const XTextureData& data){pixelData = data;}
 protected:
 	XTextureData pixelData;
 };
@@ -244,7 +265,10 @@ public:
 	XDepthStencil() : XTexture(ASSET_TEXTURE_DEPTH){}
 };
 
-class XVertexAttribute : public XAsset
+#define VERTEX_DECL_NEXT_STREAM() {X_DECLTYPE_MAX, 0x8000, 0x8000, X_DECLUSAGE_MAX, 0x8000}
+#define VERTEX_DECL_END() {X_DECLTYPE_INVALID, -1, -1, X_DECLUSAGE_INVALID, -1}
+
+struct XVertexAttributeDesc
 {
 public:
 	struct VertexElement 
@@ -256,20 +280,116 @@ public:
 			int method_normalized;//...待用
 			X_DECLUSAGE usage;//用途，仅在d3d中用
 			xint32 stream;//流索引 
+			xbool operator == (const Element& el) const
+			{
+				if( data_type != el.data_type ||
+					method_normalized != el.method_normalized ||
+					offset != el.offset ||
+					stream != el.offset ||
+					usage != el.usage)
+				{
+					return false;
+				}
+				return true;
+			}
+
+			xbool operator != (const Element& el) const
+			{
+				return !(*this == el);
+			}
 		};
 		std::vector<Element> vecElement;
 		xint32 stream_index;//当前流索引，用于D3D
-		xint32 asset_vertex_pool;//当前顶点池
+		//xint32 asset_vertex_pool;//当前顶点池
 	};
 public:
-	XVertexAttribute() : XAsset(ASSET_VERTEX_ATTRIBUTE){}
+	bool operator == (const XVertexAttributeDesc& va)
+	{
+		const std::vector<VertexElement>& ves = va.GetVertexElements();
+		if (vecVertexElement.size() != ves.size())
+		{
+			return false;
+		}
+
+		for (int i = 0; i < ves.size(); i++)
+		{
+			if (vecVertexElement[i].vecElement.size() != ves[i].vecElement.size())
+			{
+				return false;
+			}
+			for (int j = 0; j < vecVertexElement[i].vecElement.size(); j++)
+			{
+				const VertexElement::Element& a = vecVertexElement[i].vecElement[j];
+				const VertexElement::Element& b = ves[i].vecElement[j];
+				if (a.data_type != b.data_type ||
+					a.method_normalized != b.method_normalized ||
+					a.offset != b.offset ||
+					a.stream != b.offset ||
+					a.usage != b.usage
+					)
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 public:
 	void AddVertexElement(const VertexElement& ve){vecVertexElement.push_back(ve);}
-protected:
+		const std::vector<VertexElement>& GetVertexElements()const{return vecVertexElement;}
+public:
 	std::vector<VertexElement> vecVertexElement;
 };
 
-typedef XVertexAttribute::VertexElement::Element Vertex_Decl_Element;
+class XVertexAttribute : public XAsset
+{
+public:
+	XVertexAttribute() : XAsset(ASSET_VERTEX_ATTRIBUTE){}
+public:
+	void SetVertexAttributeDesc(const XVertexAttributeDesc& desc){m_VertexAttributeDesc = desc;}
+	const XVertexAttributeDesc& GetVertexAttributeDesc() const{return m_VertexAttributeDesc;}
+protected:
+	XVertexAttributeDesc m_VertexAttributeDesc;
+};
+
+typedef XVertexAttributeDesc::VertexElement::Element Vertex_Decl_Element;
+
+class XShaderParamTable
+{
+public:
+	struct ShaderConstDesc
+	{ 
+		void* handle;
+		int reg_index;
+		//int count;
+		ShaderConstDesc(){memset(this, 0, sizeof(ShaderConstDesc));}
+	};
+public:
+	virtual void SetValue(const char* name, XTexture* texture) = 0;
+	virtual void SetValue(const char* name, const xbool val) = 0;
+	virtual void SetValue(const char* name, const xbool* vals, const int count) = 0;
+	virtual void SetValue(const char* name, const float val) = 0;
+	virtual void SetValue(const char* name, const float* vals, const int count) = 0;
+	virtual void SetValue(const char* name, const int val) = 0;
+	virtual void SetValue(const char* name, const int* vals, const int count) = 0;
+	virtual void SetValue(const char* name, const void* val, const int size) = 0;
+public:
+	
+	virtual void DumpConstTable() = 0;
+	const ShaderConstDesc* GetConstDesc(const char* name)
+	{
+		NameToD3DXHandleMap::iterator iter = m_mapNameToHandle.find(name);
+		if(iter != m_mapNameToHandle.end())
+		{
+			return &(iter->second);
+		}
+		return NULL;
+	}
+
+	typedef stdext::hash_map<std::string, ShaderConstDesc> NameToD3DXHandleMap;
+protected:
+	NameToD3DXHandleMap m_mapNameToHandle;
+};
 
 struct ShaderMarco
 {
@@ -284,12 +404,22 @@ struct VertexShaderDesc
 		MAX_SHADER_MARCO = 128,
 	};
 	XStl::string entry;
-	std::string shader_src;
+	XStl::string shader_src;
 	XStl::string profile;
 	XStl::vector<ShaderMarco> marcos;
 };
 
-class XVertexShader : public XAsset
+class XShader
+{
+public:
+	operator XShaderParamTable*(){return m_pShaderParamTable;}
+	
+	inline XShaderParamTable* GetShaderParamTable(){return m_pShaderParamTable;}
+protected:
+	XShaderParamTable* m_pShaderParamTable;
+};
+
+class XVertexShader : public XAsset, public XShader
 {
 public:
 	XVertexShader() : XAsset(ASSET_VERTEX_SHADER){}
@@ -312,12 +442,12 @@ struct PixelShaderDesc
 	XStl::vector<ShaderMarco> marcos;
 };
 
-class XPixelShader : public XAsset
+class XPixelShader : public XAsset, public XShader
 {
 public:
 	XPixelShader() : XAsset(ASSET_PIXEL_SHADER){}
 public:
-	const PixelShaderDesc& GetPixelShaderDesc(){return m_PixelShaderDesc;}
+	const PixelShaderDesc& GetPixelShaderDesc()const{return m_PixelShaderDesc;}
 	void SetPixelShaderDesc(const PixelShaderDesc& desc){m_PixelShaderDesc = desc;}
 public:
 	PixelShaderDesc m_PixelShaderDesc;
@@ -330,12 +460,6 @@ protected:
 	xint32 vertexShader;
 	xint32 pixelShader;
 };
-
-// template<typename V, typename I>
-// void CreateGemotryDataAsset(XGeometryData<V, T>& gd)
-// {
-// 	
-// }
 
 template<typename V, typename I>
 struct XGeometryData
@@ -363,6 +487,7 @@ public:
 public:
 	XVertexAttribute* vertex_attribute;//包含顶点缓冲池数据，以及顶点属性
 	XStl::vector<typename V*> vertex_pools;//顶点数据，用于保存在本地的数据
+	XStl::vector<xint32> asset_vertex_pool;
 	xint32 asset_vertex_decl;//
 
 	typename I* indices_pool;//索引池数据
@@ -388,14 +513,46 @@ struct ShaderParam
 	}Value;
 	
 };
+//渲染的标记
+/**
+cull_mode
+alpha_test
+alpha_blend
+*/
 
-struct XConfigData//配置数据，包括渲染状态，材质，灯光，shader（以及shader中uniform的参数），
+enum X_CULLMODE 
 {
+	X_CULL_NONE                = 1,
+	X_CULL_CW                  = 2,
+	X_CULL_CCW                 = 3,
+} ;
+
+struct XRenderFlag
+{
+	X_CULLMODE cull_mode;
+	xbool enable_alpha_test;
+	xbool enable_alpha_blend;
+};
+
+struct MaterialDataDesc 
+{
+	VertexShaderDesc vertex_shader_desc;
+	PixelShaderDesc pixel_shader_desc;
+	XRenderFlag render_flag;
+};
+
+struct XMaterialData//配置数据，包括渲染状态，材质，灯光，shader（以及shader中uniform的参数），
+{
+public:
+	XRenderFlag render_flag;
+	
+	XVertexShader* vertex_shader;
+	XPixelShader* pixel_shader;
 	//shader
 	int asset_vertex_shader;
 	int asset_pixel_shader;//gles中表示fragment shader
 	int asset_bind;//gles中表示program
-	XStlext::hash_map<XStl::string, ShaderParam> map_shader_param;
+	//XStlext::hash_map<XStl::string, ShaderParam> map_shader_param;
 };
 
 //渲染上下文数据，

@@ -19,6 +19,24 @@ enum X_RENDER_FLAG
 	X_RENDER_SHADOW = 1 << 3,//需要参与阴影的
 };
 
+enum X_RENDER_ACTOR
+{
+	X_ACTOR_NORMAL = 1 << 0;
+	X_ACTOR_SHADOW_CAST = 1  << 1,
+	X_ACTOR_SHADOW_RECV = 1 << 2,
+	X_ACTOR_TRANSLUCENT = 1 << 3,
+	X_ACTOR_POST_PROGRESS = 1 << 4,
+	X_ACTOR_UI = 1 << 5,
+};
+
+class XRenderGroup
+{
+
+protected:
+	XRenderFlag render_flag;
+	XStl::vector<XRenderEntity*> render_entities;
+};
+
 class XRenderMonitor
 {
 public:

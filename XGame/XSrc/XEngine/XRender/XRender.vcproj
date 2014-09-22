@@ -157,38 +157,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\include\XAsset.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XAssetLoader.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XAssetMonitor.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XRenderContext.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XRenderEntity.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XRenderMonitor.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XRenderUtil.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XRII.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -255,10 +223,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="GLES2Render"
-			>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
