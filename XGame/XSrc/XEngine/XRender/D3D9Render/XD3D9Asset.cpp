@@ -19,12 +19,12 @@ void XD3D9Texture2D::UpdateAsset(XAssetMonitor* pMonitor)
 	{
 		m_bDirty = false;
 
-		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
-		if (!pD3D9Device)
-		{
-			Assert(0);
-			return;
-		}
+// 		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
+// 		if (!pD3D9Device)
+// 		{
+// 			Assert(0);
+// 			return;
+// 		}
 
 		bool bReCreate = false;
 
@@ -46,7 +46,7 @@ void XD3D9Texture2D::UpdateAsset(XAssetMonitor* pMonitor)
 		}
 		if (bReCreate)
 		{
-			HRESULT hr = pD3D9Device->CreateTexture(m_formatDesc.width, m_formatDesc.height, pixelData.generate_level, 0, (D3DFORMAT)RenderUtil::GetTexFormat(m_formatDesc.tex_format), (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic), &m_pD3D92DTexture, NULL);
+			HRESULT hr = x_ptr_d3ddevice->CreateTexture(m_formatDesc.width, m_formatDesc.height, pixelData.generate_level, 0, (D3DFORMAT)RenderUtil::GetTexFormat(m_formatDesc.tex_format), (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic), &m_pD3D92DTexture, NULL);
 			if (FAILED(hr))
 			{
 				Assert(0);
@@ -86,12 +86,12 @@ void XD3D9TextureCube::UpdateAsset(XAssetMonitor* pMonitor)
 	{
 		m_bDirty = false;
 
-		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
-		if (!pD3D9Device)
-		{
-			Assert(0);
-			return;
-		}
+// 		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
+// 		if (!pD3D9Device)
+// 		{
+// 			Assert(0);
+// 			return;
+// 		}
 
 		bool bReCreate = false;
 
@@ -133,13 +133,13 @@ void XD3D9VertexPool::UpdateAsset(XAssetMonitor* pMonitor)
 			m_pD3D9VertexBuffer = NULL;
 		}
 
-		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
-		if (!pD3D9Device)
-		{
-			return;
-		}
+// 		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
+// 		if (!pD3D9Device)
+// 		{
+// 			return;
+// 		}
 
-		HRESULT hr = pD3D9Device->CreateVertexBuffer(m_VertexPoolDesc.count, 0, 0, (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic), &m_pD3D9VertexBuffer, NULL);
+		HRESULT hr = x_ptr_d3ddevice->CreateVertexBuffer(m_VertexPoolDesc.count, 0, 0, (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic), &m_pD3D9VertexBuffer, NULL);
 		if (FAILED(hr))
 		{
 			Assert(0);
@@ -163,13 +163,13 @@ void XD3D9IndexPool::UpdateAsset(XAssetMonitor* pMonitor)
 			m_pD3D9IndexBuffer = NULL;
 		}
 
-		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
-		if (!pD3D9Device)
-		{
-			return;
-		}
+// 		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
+// 		if (!pD3D9Device)
+// 		{
+// 			return;
+// 		}
 
-		HRESULT hr = pD3D9Device->CreateIndexBuffer(m_IndexPoolDesc.count, 0, (D3DFORMAT)RenderUtil::GetIndexBits(m_IndexPoolDesc.type), (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic), &m_pD3D9IndexBuffer, NULL);
+		HRESULT hr = x_ptr_d3ddevice->CreateIndexBuffer(m_IndexPoolDesc.count, 0, (D3DFORMAT)RenderUtil::GetIndexBits(m_IndexPoolDesc.type), (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic), &m_pD3D9IndexBuffer, NULL);
 		if (FAILED(hr))
 		{
 			Assert(0);
@@ -186,11 +186,11 @@ void XD3D9VertexAttribute::UpdateAsset(XAssetMonitor* pMonitor)
 {
 	if ( !m_pD3D9VertexDeclaration )
 	{
-		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
-		if (!pD3D9Device)
-		{
-			return;
-		}
+// 		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
+// 		if (!pD3D9Device)
+// 		{
+// 			return;
+// 		}
 		const XVertexAttributeDesc& vad = m_VertexAttributeDesc;
 		D3DVERTEXELEMENT9 decl[MAX_FVF_DECL_SIZE] = {D3DDECL_END(),};
 		int cur_ele = 0;
@@ -218,7 +218,7 @@ void XD3D9VertexAttribute::UpdateAsset(XAssetMonitor* pMonitor)
 		D3DVERTEXELEMENT9 end = D3DDECL_END();
 		memcpy(&decl[cur_ele], &end, sizeof(D3DVERTEXELEMENT9));
 		
-		HRESULT hr = pD3D9Device->CreateVertexDeclaration(decl, &m_pD3D9VertexDeclaration);
+		HRESULT hr = x_ptr_d3ddevice->CreateVertexDeclaration(decl, &m_pD3D9VertexDeclaration);
 		if (FAILED(hr))
 		{
 			Assert(0);
@@ -337,13 +337,13 @@ void XD3D9VertexShader::UpdateAsset(XAssetMonitor* pMonitor)
 			Assert(0);
 			return;
 		}
-		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
-		if (!pD3D9Device)
-		{
-			return;
-		}
+// 		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
+// 		if (!pD3D9Device)
+// 		{
+// 			return;
+//		}
 		
-		D3DXMACRO macro[VertexShaderDesc::MAX_SHADER_MARCO] = {NULL,};
+		D3DXMACRO macro[XVertexShaderDesc::MAX_SHADER_MARCO] = {NULL,};
 		for (int i = 0; i < m_VertexShaderDesc.marcos.size(); i++)
 		{
 			macro[i].Name = m_VertexShaderDesc.marcos[i].name.c_str();
@@ -355,11 +355,23 @@ void XD3D9VertexShader::UpdateAsset(XAssetMonitor* pMonitor)
 #endif
 		ID3DXBuffer* pShaderBuffer = NULL;
 		ID3DXBuffer* pErrorBuffer = NULL;
-		HRESULT hr = D3DXCompileShader(m_VertexShaderDesc.shader_src.c_str(), 
-			m_VertexShaderDesc.shader_src.length(), macro, NULL, 
-			m_VertexShaderDesc.entry.c_str(), m_VertexShaderDesc.profile.c_str(), 
-			flag, &pShaderBuffer, &pErrorBuffer, &(((XD3D9ShaderParamTable*)m_pShaderParamTable)->m_pD3DXConstantTable)
-			);
+		HRESULT hr;
+		if(m_VertexShaderDesc.from == SHADER_FROM_BUFFER)
+		{
+			hr = D3DXCompileShader(m_VertexShaderDesc.shader_src.c_str(), 
+				m_VertexShaderDesc.shader_src.length(), macro, NULL, 
+				m_VertexShaderDesc.entry.c_str(), m_VertexShaderDesc.profile.c_str(), 
+				flag, &pShaderBuffer, &pErrorBuffer, &(((XD3D9ShaderParamTable*)m_pShaderParamTable)->m_pD3DXConstantTable)
+				);
+		}
+		else
+		{
+			hr = D3DXCompileShaderFromFile(m_VertexShaderDesc.shader_path.c_str(),
+				macro, NULL, m_VertexShaderDesc.entry.c_str(), m_VertexShaderDesc.profile.c_str(), 
+				flag, &pShaderBuffer, &pErrorBuffer, &(((XD3D9ShaderParamTable*)m_pShaderParamTable)->m_pD3DXConstantTable)
+				);
+		}
+		
 		
 		if (pErrorBuffer)
 		{
@@ -377,13 +389,15 @@ void XD3D9VertexShader::UpdateAsset(XAssetMonitor* pMonitor)
 			return;
 		}
 
-		hr = pD3D9Device->CreateVertexShader((DWORD*)pShaderBuffer->GetBufferPointer(), &m_pD3D9VertexShader);
+		hr = x_ptr_d3ddevice->CreateVertexShader((DWORD*)pShaderBuffer->GetBufferPointer(), &m_pD3D9VertexShader);
 		if (FAILED(hr))
 		{
 			pShaderBuffer->Release();
 			return;
 		}
 		pShaderBuffer->Release();
+
+		m_pShaderParamTable->DumpConstTable();
 	}
 }
 
@@ -391,13 +405,24 @@ void XD3D9PixelShader::UpdateAsset(XAssetMonitor* pMonitor)
 {
 	if (!m_pD3D9PixelShader)
 	{
-		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
-		if (!pD3D9Device)
+// 		IDirect3DDevice9* pD3D9Device = (IDirect3DDevice9*)x_ptr_render_context->GetRenderContext();
+// 		if (!pD3D9Device)
+// 		{
+// 			return;
+// 		}
+		if (m_pShaderParamTable) 
 		{
+			delete m_pShaderParamTable;
+			m_pShaderParamTable = NULL;
+		}
+		m_pShaderParamTable = new XD3D9ShaderParamTable;
+		if (!m_pShaderParamTable)
+		{
+			Assert(0);
 			return;
 		}
 
-		D3DXMACRO macro[VertexShaderDesc::MAX_SHADER_MARCO] = {NULL,};
+		D3DXMACRO macro[XVertexShaderDesc::MAX_SHADER_MARCO] = {NULL,};
 		for (int i = 0; i < m_PixelShaderDesc.marcos.size(); i++)
 		{
 			macro[i].Name = m_PixelShaderDesc.marcos[i].name.c_str();
@@ -409,11 +434,20 @@ void XD3D9PixelShader::UpdateAsset(XAssetMonitor* pMonitor)
 #endif
 		ID3DXBuffer* pShaderBuffer = NULL;
 		ID3DXBuffer* pErrorBuffer = NULL;
-		HRESULT hr = D3DXCompileShader(m_PixelShaderDesc.shader_src.c_str(), 
-			m_PixelShaderDesc.shader_src.length(), macro, NULL, 
-			m_PixelShaderDesc.entry.c_str(), m_PixelShaderDesc.profile.c_str(), 
-			flag, &pShaderBuffer, &pErrorBuffer, &(((XD3D9ShaderParamTable*)m_pShaderParamTable)->m_pD3DXConstantTable)
-			);
+		HRESULT hr;
+		if (m_PixelShaderDesc.from == SHADER_FROM_BUFFER)
+		{
+			hr = D3DXCompileShader(m_PixelShaderDesc.shader_src.c_str(), 
+				m_PixelShaderDesc.shader_src.length(), macro, NULL, 
+				m_PixelShaderDesc.entry.c_str(), m_PixelShaderDesc.profile.c_str(), 
+				flag, &pShaderBuffer, &pErrorBuffer, &(((XD3D9ShaderParamTable*)m_pShaderParamTable)->m_pD3DXConstantTable));
+		}
+		else
+		{
+			hr = D3DXCompileShaderFromFile(m_PixelShaderDesc.shader_path.c_str(), macro, NULL, 
+				m_PixelShaderDesc.entry.c_str(), m_PixelShaderDesc.profile.c_str(), 
+				flag, &pShaderBuffer, &pErrorBuffer, &(((XD3D9ShaderParamTable*)m_pShaderParamTable)->m_pD3DXConstantTable));
+		}
 
 		if (pErrorBuffer)
 		{
@@ -431,12 +465,13 @@ void XD3D9PixelShader::UpdateAsset(XAssetMonitor* pMonitor)
 			return;
 		}
 
-		hr = pD3D9Device->CreatePixelShader((DWORD*)pShaderBuffer->GetBufferPointer(), &m_pD3D9PixelShader);
+		hr = x_ptr_d3ddevice->CreatePixelShader((DWORD*)pShaderBuffer->GetBufferPointer(), &m_pD3D9PixelShader);
 		if (FAILED(hr))
 		{
 			pShaderBuffer->Release();
 			return;
 		}
 		pShaderBuffer->Release();
+		m_pShaderParamTable->DumpConstTable();
 	}
 }

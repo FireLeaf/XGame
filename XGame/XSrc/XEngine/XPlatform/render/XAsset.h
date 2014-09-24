@@ -300,6 +300,7 @@ public:
 		};
 		std::vector<Element> vecElement;
 		xint32 stream_index;//当前流索引，用于D3D
+		xint32 stride;
 		//xint32 asset_vertex_pool;//当前顶点池
 	};
 public:
@@ -395,9 +396,19 @@ struct ShaderMarco
 {
 	XStl::string name;
 	XStl::string definition;
+	bool operator == (const ShaderMarco& sm) const
+	{
+		return name == sm.name && definition == sm.definition;
+	}
 };
 
-struct VertexShaderDesc
+enum
+{
+	SHADER_FROM_FILE,
+	SHADER_FROM_BUFFER,
+};
+
+struct XVertexShaderDesc
 {
 	enum
 	{
@@ -405,12 +416,35 @@ struct VertexShaderDesc
 	};
 	XStl::string entry;
 	XStl::string shader_src;
+	XStl::string shader_path;
 	XStl::string profile;
 	XStl::vector<ShaderMarco> marcos;
+	int from;
+
+	bool operator == (const XVertexShaderDesc& vsd) const
+	{
+		if (marcos.size() != vsd.marcos.size())
+		{
+			return false;
+		}
+		for(int i = 0; i < marcos.size(); i++)
+		{
+			if (!(marcos[i] == vsd.marcos[i]))
+			{
+				return false;
+			}
+		}
+		return entry == vsd.entry &&
+			shader_path == vsd.shader_path &&
+			profile == vsd.profile &&
+			from == vsd.from;
+	}
 };
 
 class XShader
 {
+public:
+	XShader():m_pShaderParamTable(NULL){}
 public:
 	operator XShaderParamTable*(){return m_pShaderParamTable;}
 	
@@ -424,13 +458,13 @@ class XVertexShader : public XAsset, public XShader
 public:
 	XVertexShader() : XAsset(ASSET_VERTEX_SHADER){}
 public:
-	const VertexShaderDesc& GetVertexShaderDesc(){return m_VertexShaderDesc;}
-	void SetVertexShaderDesc(const VertexShaderDesc& desc){m_VertexShaderDesc = desc;}
+	const XVertexShaderDesc& GetVertexShaderDesc(){return m_VertexShaderDesc;}
+	void SetVertexShaderDesc(const XVertexShaderDesc& desc){m_VertexShaderDesc = desc;}
 public:
-	VertexShaderDesc m_VertexShaderDesc;
+	XVertexShaderDesc m_VertexShaderDesc;
 };
 
-struct PixelShaderDesc
+struct XPixelShaderDesc
 {
 	enum
 	{
@@ -438,8 +472,29 @@ struct PixelShaderDesc
 	};
 	XStl::string entry;
 	XStl::string shader_src;
+	XStl::string shader_path;
 	XStl::string profile;
 	XStl::vector<ShaderMarco> marcos;
+	int from;
+
+	bool operator == (const XPixelShaderDesc& vsd) const
+	{
+		if (marcos.size() != vsd.marcos.size())
+		{
+			return false;
+		}
+		for(int i = 0; i < marcos.size(); i++)
+		{
+			if (!(marcos[i] == vsd.marcos[i]))
+			{
+				return false;
+			}
+		}
+		return entry == vsd.entry &&
+			shader_path == vsd.shader_path &&
+			profile == vsd.profile&&
+			from == vsd.from;
+	}
 };
 
 class XPixelShader : public XAsset, public XShader
@@ -447,10 +502,10 @@ class XPixelShader : public XAsset, public XShader
 public:
 	XPixelShader() : XAsset(ASSET_PIXEL_SHADER){}
 public:
-	const PixelShaderDesc& GetPixelShaderDesc()const{return m_PixelShaderDesc;}
-	void SetPixelShaderDesc(const PixelShaderDesc& desc){m_PixelShaderDesc = desc;}
+	const XPixelShaderDesc& GetPixelShaderDesc()const{return m_PixelShaderDesc;}
+	void SetPixelShaderDesc(const XPixelShaderDesc& desc){m_PixelShaderDesc = desc;}
 public:
-	PixelShaderDesc m_PixelShaderDesc;
+	XPixelShaderDesc m_PixelShaderDesc;
 };
 
 class XMtrl : public XAsset
@@ -485,13 +540,16 @@ public:
 		vertex_pools.clear();
 	}
 public:
-	XVertexAttribute* vertex_attribute;//包含顶点缓冲池数据，以及顶点属性
-	XStl::vector<typename V*> vertex_pools;//顶点数据，用于保存在本地的数据
-	XStl::vector<xint32> asset_vertex_pool;
 	xint32 asset_vertex_decl;//
+	XVertexAttribute* vertex_attribute;//包含顶点缓冲池数据，以及顶点属性
+	
+	XStl::vector<typename V*> vertex_pools;//顶点数据，用于保存在本地的数据
+	XStl::vector<xint32> asset_vertex_ids;
+	XStl::vector<XVertexPool*> asset_vertex_pools;
 
 	typename I* indices_pool;//索引池数据
 	xint32 asset_indices_id;//索引
+	XIndexPool* asset_index_pool;
 };
 
 struct ShaderParam 
@@ -532,16 +590,30 @@ struct XRenderFlag
 	X_CULLMODE cull_mode;
 	xbool enable_alpha_test;
 	xbool enable_alpha_blend;
+
+	bool operator == (const XRenderFlag& rf) const
+	{
+		return cull_mode == rf.cull_mode && 
+			enable_alpha_test == rf.enable_alpha_test &&
+			enable_alpha_blend == rf.enable_alpha_blend;
+	}
 };
 
-struct MaterialDataDesc 
+struct MaterialEntityDesc 
 {
-	VertexShaderDesc vertex_shader_desc;
-	PixelShaderDesc pixel_shader_desc;
+	XVertexShaderDesc vertex_shader_desc;
+	XPixelShaderDesc pixel_shader_desc;
 	XRenderFlag render_flag;
+	
+	bool operator == (const MaterialEntityDesc& med) const
+	{
+		return render_flag == med.render_flag &&
+			vertex_shader_desc == med.vertex_shader_desc &&
+			pixel_shader_desc == med.pixel_shader_desc;
+	}
 };
 
-struct XMaterialData//配置数据，包括渲染状态，材质，灯光，shader（以及shader中uniform的参数），
+struct XMateriaEntity//配置数据，包括渲染状态，材质，灯光，shader（以及shader中uniform的参数），
 {
 public:
 	XRenderFlag render_flag;

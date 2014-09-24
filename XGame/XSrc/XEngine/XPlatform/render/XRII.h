@@ -11,21 +11,29 @@
 #ifndef __COCONAT_XRII_H_
 #define __COCONAT_XRII_H_
 
-class XRenderViewPort
-{
-	
-};
+#include "XAsset.h"
 
-class XRenderSetting
+enum X_PRIMITIVETYPE
 {
-	int mtrl;
-	//int 
+	X_PT_POINTLIST             = 1,
+	X_PT_LINELIST              = 2,
+	X_PT_LINESTRIP             = 3,
+	X_PT_TRIANGLELIST          = 4,
+	X_PT_TRIANGLESTRIP         = 5,
+	X_PT_TRIANGLEFAN           = 6, 
+	X_PT_INVALID,
 };
 
 class XRII
 {
 public:
-	void Render(XRenderSetting);
+	virtual void DrawIndexEntity(XVertexAttribute* attrib,
+		std::vector<XVertexPool*>& vertex_pools,
+		XIndexPool* indices, 
+		XMateriaEntity* mtrl, 
+		xint32 primitive_type, 
+		xuint32 start_index, 
+		xuint32 tri_count ) = 0;
 };
 
 #endif

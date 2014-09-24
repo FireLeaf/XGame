@@ -8,6 +8,7 @@
 
 #include "XAssetUtil.h"
 #include "XAssetMonitor.h"
+#include "XRenderUtil.h"
 
 namespace AssetUtil
 {
@@ -30,6 +31,7 @@ namespace AssetUtil
 			int iCurIndex = 0;
 			int iCurStream = 0;
 			XVertexAttributeDesc::VertexElement ve;
+			ve.stride = 0;
 			while(1)
 			{
 				if (vde[iCurIndex] == end)
@@ -39,18 +41,25 @@ namespace AssetUtil
 
 				if (vde[iCurIndex] == next)
 				{
-					ve.vecElement.clear();
 					ve.stream_index = iCurStream;
 					iCurStream++;
 					vad.AddVertexElement(ve);
+					ve.vecElement.clear();
+					ve.stride = 0;
 				}
 				else
 				{
+					ve.stride += RenderUtil::GetValueTypeSize(vde[iCurIndex].data_type);
 					ve.vecElement.push_back(vde[iCurIndex]);
 				}
 
-				iCurStream++;
+				iCurIndex++;
 			}
+			
+			//加上最后一个
+			ve.stream_index = iCurStream;
+			vad.AddVertexElement(ve);
+
 			ptr_vab->SetVertexAttributeDesc(vad);
 			ptr_vab->UpdateAsset(x_ptr_asset_monitor);
 			VDE_Asset_Pair vap;
@@ -154,5 +163,38 @@ namespace AssetUtil
 		ptr_asset->SetPixelData(data);
 		ptr_asset->UpdateAsset(x_ptr_asset_monitor);
 		return ptr_asset;
+	}
+
+	XVertexShader* GetVertexShader(const XVertexShaderDesc& desc)
+	{
+		XVertexShader* ptr_asset = (XVertexShader*)x_ptr_asset_monitor->CreateAsset(ASSET_VERTEX_SHADER, false);
+		if (!ptr_asset)
+		{
+			return ptr_asset;
+		}
+		ptr_asset->SetVertexShaderDesc(desc);
+		ptr_asset->UpdateAsset(x_ptr_asset_monitor);
+		return ptr_asset;
+	}
+
+	XPixelShader* GetPixelShader(const XPixelShaderDesc& desc)
+	{
+		XPixelShader* ptr_asset = (XPixelShader*)x_ptr_asset_monitor->CreateAsset(ASSET_PIXEL_SHADER, false);
+		if (!ptr_asset)
+		{
+			return ptr_asset;
+		}
+		ptr_asset->SetPixelShaderDesc(desc);
+		ptr_asset->UpdateAsset(x_ptr_asset_monitor);
+		return ptr_asset;
+	}
+
+	XMateriaEntity* GetMaterialEntity(const MaterialEntityDesc& desc)
+	{
+		XMateriaEntity* ptr_mtrl_entity = new XMateriaEntity;
+		memcpy(&ptr_mtrl_entity->render_flag , &desc.render_flag, sizeof(desc.render_flag));
+		ptr_mtrl_entity->vertex_shader = GetVertexShader(desc.vertex_shader_desc);
+		ptr_mtrl_entity->pixel_shader = GetPixelShader(desc.pixel_shader_desc);
+		return ptr_mtrl_entity;
 	}
 }

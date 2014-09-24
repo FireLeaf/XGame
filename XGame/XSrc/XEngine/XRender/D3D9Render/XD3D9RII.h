@@ -9,6 +9,18 @@
 #ifndef __XD3D9RII__H
 #define __XD3D9RII__H
 
+#include "XRII.h"
 
+class XD3D9RII : public XRII
+{
+public:
+	virtual void DrawIndexEntity(XVertexAttribute* attrib,
+		std::vector<XVertexPool*>& vertex_pools,
+		XIndexPool* indices, 
+		XMateriaEntity* mtrl, 
+		xint32 primitive_type, 
+		xuint32 start_index, 
+		xuint32 tri_count );
+};
 
 #endif // XD3D9RII

@@ -17,17 +17,16 @@ class XD3D9RenderContext : public XRenderContext
 public:
 	XD3D9RenderContext();
 
-	virtual bool Init(xint32 width, xint32 height, xbool windowed)
-	{
-		return true;
-	}
+	virtual bool Init(xint32 width, xint32 height, xbool windowed);
 
 	virtual void* GetRenderContext()
 	{
-		return (void*)ptr_d3d9_device;
+		//return (void*)ptr_d3d9_device;
+		return NULL;
 	}
 protected:
-	IDirect3DDevice9*	ptr_d3d9_device;
+	//IDirect3DDevice9*	ptr_d3d9_device;
+	D3DPRESENT_PARAMETERS d3dpp;
 };
-
+extern IDirect3DDevice9* x_ptr_d3ddevice;
 #endif // XD3D9RenderContext

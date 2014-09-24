@@ -159,10 +159,14 @@ struct MeshIndexBuffer16 : public XBufferData<xushort>
 class XMesh : public XRenderEntity
 {
 public:
+	virtual void Render(XRII* rii, XRenderArgs* args);
+public:
 	bool InitMesh();
 	bool LoadMesh(const char* file_name);
 protected:
 	XGeometryData<MeshVertexBufferPTX0N, MeshIndexBuffer16> geometry_data;
+	XMateriaEntity* material_entity;
+	float matWorld[16];
 };
 
 #endif // XMesh

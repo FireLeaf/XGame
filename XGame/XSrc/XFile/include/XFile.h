@@ -14,7 +14,7 @@
 class XFile
 {
 public:
-	XFile();
+	XFile(){m_fp = NULL;}
 	virtual ~XFile()
 	{
 		CloseFile();

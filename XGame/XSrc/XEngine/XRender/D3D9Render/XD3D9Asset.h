@@ -9,16 +9,14 @@
 #ifndef __XD3D9ASSET__H
 #define __XD3D9ASSET__H
 
-extern IDirect3DDevice9* x_ptr_d3ddevice;
-
 class XD3D9Texture2D : public XTexture2D
 {
 public:
 	XD3D9Texture2D() : XTexture2D(), m_pD3D92DTexture(NULL){}
 	IDirect3DTexture9* GetD3D9Texture(){return m_pD3D92DTexture;}
 public:
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor);
-	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DTexture9* m_pD3D92DTexture;
 };
@@ -29,7 +27,7 @@ public:
 	XD3D9TextureCube() : XTextureCube(), m_pD3D9CubeTexture(NULL){}
 	IDirect3DCubeTexture9* GetD3D9CubeTexture(){return m_pD3D9CubeTexture;}
 public:
-	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DCubeTexture9* m_pD3D9CubeTexture;
@@ -37,7 +35,9 @@ protected:
 
 class XD3D9Texture3D : public XTexture3D
 {
-
+public:
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
+	virtual void UpdateAsset(XAssetMonitor* pMonitor){}
 };
 
 class XD3D9RenderTarget : public XRenderTarget
@@ -47,8 +47,8 @@ public:
 	IDirect3DTexture9* GetD3D9RenderTarget() {return m_pD3D9RenderTarget;}
 	IDirect3DSurface9* GetD3D9DepthSurface() {return m_pD3D9DepthSurface;}
 public:
-	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
-	virtual void UpdateAsset(XAssetMonitor* pMonitor);
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
+	virtual void UpdateAsset(XAssetMonitor* pMonitor){}
 protected:
 	IDirect3DTexture9* m_pD3D9RenderTarget;
 	IDirect3DSurface9* m_pD3D9DepthSurface;
@@ -60,7 +60,7 @@ public:
 	XD3D9VertexPool() : XVertexPool(), m_pD3D9VertexBuffer(NULL) {}
 	IDirect3DVertexBuffer9* GetD3D9VertexBuffer(){return m_pD3D9VertexBuffer;}
 public:
-	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DVertexBuffer9* m_pD3D9VertexBuffer;
@@ -72,7 +72,7 @@ public:
 	XD3D9IndexPool() : XIndexPool(), m_pD3D9IndexBuffer(NULL){}
 	IDirect3DIndexBuffer9* GetD3D9IndexBuffer(){return m_pD3D9IndexBuffer;}
 public:
-	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DIndexBuffer9* m_pD3D9IndexBuffer;
@@ -142,7 +142,7 @@ public:
 	XD3D9VertexAttribute() : XVertexAttribute(), m_pD3D9VertexDeclaration(NULL){}
 	IDirect3DVertexDeclaration9* GetD3D9VertexDecl(){return m_pD3D9VertexDeclaration;}
 public:
-	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 protected:
 	IDirect3DVertexDeclaration9* m_pD3D9VertexDeclaration;
@@ -154,15 +154,6 @@ public:
 	XD3D9ShaderParamTable(){m_pD3DXConstantTable = NULL;}
 	~XD3D9ShaderParamTable(){if(m_pD3DXConstantTable) m_pD3DXConstantTable->Release(); m_pD3DXConstantTable = NULL;}
 public:
-// 	void SetTexture(const char* name, XTexture* texture);
-// 	void SetBool(const char* name, xbool val);
-// 	void SetBoolArray(const char* name, xbool* vals, int count);
-// 	void SetFloat(const char* name, float val);
-// 	void SetFloatArray(const char* name, float* vals, int count);
-// 	void SetInt(const char* name, int val);
-// 	void SetIntArray(const char* name, int* vals, int count);
-// 	void SetValue(const char* name, void* val, int size);
-
 	virtual void SetValue(const char* name, XTexture* texture);
 	virtual void SetValue(const char* name, const xbool val);
 	virtual void SetValue(const char* name, const xbool* vals, const int count);
@@ -190,6 +181,8 @@ public:
 				ShaderConstDesc scd;
 				scd.handle = (void*)handle;
 				scd.reg_index = desc.RegisterIndex;
+				XStl::string name = desc.Name;
+				m_mapNameToHandle[name] = scd;
 			}
 		}
 	}
@@ -206,7 +199,7 @@ public:
 	XD3D9VertexShader() : XVertexShader(), m_pD3D9VertexShader(NULL){}
 	IDirect3DVertexShader9* GetD3D9VertexShader(){return m_pD3D9VertexShader;}
 public:
-	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 public:
 	IDirect3DVertexShader9* m_pD3D9VertexShader;
@@ -219,7 +212,7 @@ public:
 	XD3D9PixelShader() : XPixelShader(), m_pD3D9PixelShader(NULL){}
 	IDirect3DPixelShader9* GetD3D9PixelShader(){return m_pD3D9PixelShader;}
 public:
-	virtual void ReleaseAsset(XAssetMonitor* pMonitor);
+	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor);
 public:
 	IDirect3DPixelShader9* m_pD3D9PixelShader;

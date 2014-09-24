@@ -21,7 +21,7 @@ enum X_RENDER_FLAG
 
 enum X_RENDER_ACTOR
 {
-	X_ACTOR_NORMAL = 1 << 0;
+	X_ACTOR_NORMAL = 1 << 0,
 	X_ACTOR_SHADOW_CAST = 1  << 1,
 	X_ACTOR_SHADOW_RECV = 1 << 2,
 	X_ACTOR_TRANSLUCENT = 1 << 3,
@@ -40,19 +40,11 @@ protected:
 class XRenderMonitor
 {
 public:
-	void AddToRenderList(XRenderEntity* pRenderEntity);
-	void MonitorRender();
-public:
-	//隔离层
-	XStl::vector<XRenderEntity*> all_entities;//所有的渲染体
-	XStl::vector<XRenderEntity*> shadow_cast_entities;//阴影投射者
-	XStl::vector<XRenderEntity*> shadow_recv_entities;//阴影接受者
-	XStl::vector<XRenderEntity*> opaque_entities;//不透明渲染体
-	XStl::vector<XRenderEntity*> translucent_entities;//半透明
-	XStl::vector<XRenderEntity*> post_progress_entities;//post progress
-
-	//辅助层
-	XStl::vector<XRenderEntity*> ui_entities;//UI层
+	virtual void BeginRender() = 0;
+	virtual void EndRender() = 0;
+	virtual void MonitorRender() = 0;
 };
+
+extern XRenderMonitor* x_ptr_render_monitor;
 
 #endif // XRenderMonitor 

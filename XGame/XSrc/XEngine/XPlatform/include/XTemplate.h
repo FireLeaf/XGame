@@ -12,6 +12,7 @@
 template<typename T>
 class Singleton
 {
+public:
 	static T& GetInstance()
 	{
 		static T t;
@@ -42,12 +43,12 @@ public:
 		Release();
 	}
 public:
-	void Lock(void** data){data = (void**)&buffer;}
+	void Lock(void** data){*data = (void*)buffer;}
 	void UnLock(){}
-	bool Allocate(int num)
+	bool Allocate(xuint32 num)
 	{
 		Release();
-		count = num;
+		count = num * sizeof(T);
 		buffer = new T[count];
 		if (!buffer)
 		{
@@ -66,9 +67,10 @@ public:
 		}
 		count = 0;
 	}
+	xuint32 Count(){return count;}
 protected:
 	typename T* buffer;
-	xint32 count;
+	xuint32 count;
 };
 
 #endif // XTemplate

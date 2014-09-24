@@ -7,3 +7,14 @@
 **************************************************************************/
 
 #include "XFile.h"
+bool XFile::OpenFile(const xchar* szFileName, const xchar* szOpenMode)
+{
+	CloseFile();
+	m_fp = fopen(szFileName, szOpenMode);
+	if (!m_fp)
+	{
+		return false;
+	}
+
+	return true;
+}

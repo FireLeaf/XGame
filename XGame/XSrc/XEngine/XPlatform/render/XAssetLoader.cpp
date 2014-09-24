@@ -62,3 +62,8 @@ bool XAssetLoader::Load2DTexture(XAsset* pAsset)
 
 	return true;
 }
+
+bool XAssetLoader::LoadCubeTexture(XAsset* pAsset)
+{
+	return true;
+}
