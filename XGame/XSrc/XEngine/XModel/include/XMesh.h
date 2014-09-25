@@ -10,6 +10,9 @@
 #define __XMESH__H
 
 #include "XType.h"
+#include "XAsset.h"
+#include "XRenderEntity.h"
+#include "XTemplate.h"
 //#include ""
 /*
 P 顶点 position vec3
@@ -22,6 +25,16 @@ T 切线 float3
 W 权重 weights float4 
 I 索引 int4
 */
+
+struct X3DVector2 
+{
+	float x,y;
+};
+
+struct X3DVector3
+{
+	float x,y,z;
+};
 
 //带有顶点，UV，法线
 template<int N>
@@ -37,6 +50,7 @@ const static Vertex_Decl_Element PTX0N_elements[] =
 	{X_DECLTYPE_FLOAT3, 0, 0, X_DECLUSAGE_POSITION, 0},
 	{X_DECLTYPE_FLOAT2, 12, 0, X_DECLUSAGE_TEXCOORD, 0},
 	{X_DECLTYPE_FLOAT3, 20, 0, X_DECLUSAGE_NORMAL, 0},
+	VERTEX_DECL_END()
 };
 
 template<int N>
@@ -57,6 +71,7 @@ const static Vertex_Decl_Element PTX0BT_elements[] =
 	{X_DECLTYPE_FLOAT3, 20, 0, X_DECLUSAGE_NORMAL, 0},
 	{X_DECLTYPE_FLOAT3, 32, 0, X_DECLUSAGE_BINORMAL, 0},
 	{X_DECLTYPE_FLOAT3, 44, 0, X_DECLUSAGE_TANGENT, 0},
+	VERTEX_DECL_END(),
 };
 
 template<int N>
@@ -74,6 +89,7 @@ const static Vertex_Decl_Element PTX0WI_elements[] =
 	{X_DECLTYPE_FLOAT2, 12, 0, X_DECLUSAGE_TEXCOORD, 0},
 	{X_DECLTYPE_FLOAT4, 20, 0, X_DECLUSAGE_BLENDWEIGHT, 0},
 	{X_DECLTYPE_UBYTE4, 36, 0, X_DECLUSAGE_BLENDINDICES, 0},
+	VERTEX_DECL_END(),
 };
 
 template<int N>
@@ -98,6 +114,7 @@ const static Vertex_Decl_Element PTX0NBTWI_elements[] =
 	{X_DECLTYPE_FLOAT3, 52, 0, X_DECLUSAGE_TANGENT, 0},
 	{X_DECLTYPE_FLOAT4, 64, 0, X_DECLUSAGE_BLENDWEIGHT, 0},
 	{X_DECLTYPE_UBYTE4, 80, 0, X_DECLUSAGE_BLENDINDICES, 0},
+	VERTEX_DECL_END(),
 };
 
 template<int N>
@@ -124,10 +141,13 @@ const static Vertex_Decl_Element PTX0NBTWIP_elements[] =
 	{X_DECLTYPE_FLOAT3, 52, 0, X_DECLUSAGE_TANGENT, 0},
 	{X_DECLTYPE_FLOAT4, 64, 0, X_DECLUSAGE_BLENDWEIGHT, 0},
 	{X_DECLTYPE_UBYTE4, 80, 0, X_DECLUSAGE_BLENDINDICES, 0},
+	VERTEX_DECL_NEXT_STREAM(),
+	{X_DECLTYPE_FLOAT3, 0, 0, X_DECLUSAGE_POSITION, 0},
+	VERTEX_DECL_END(),
 };
 
 
-struct MeshVertexBufferPTX0N : public XBufferData<AnimationVertexPTXnN<1> > 
+struct MeshVertexBufferPTX0N : public XBufferData<typename AnimationVertexPTXnN<1> > 
 {
 };
 
@@ -139,10 +159,14 @@ struct MeshIndexBuffer16 : public XBufferData<xushort>
 class XMesh : public XRenderEntity
 {
 public:
+	virtual void Render(XRII* rii, XRenderArgs* args);
+public:
 	bool InitMesh();
 	bool LoadMesh(const char* file_name);
 protected:
 	XGeometryData<MeshVertexBufferPTX0N, MeshIndexBuffer16> geometry_data;
+	XMateriaEntity* material_entity;
+	float matWorld[16];
 };
 
 #endif // XMesh

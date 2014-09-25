@@ -9,6 +9,9 @@
 #ifdef _WIN_PLATFORM
 #include "XRenderUtil.h"
 #include "XAsset.h"
+#include "XRII.h"
+
+#define CASE_RETURN(a, b) case a: return b;break;
 
 namespace RenderUtil
 {
@@ -139,6 +142,20 @@ namespace RenderUtil
 		}
 
 		return -1;
+	}
+
+	int GetPrimitiveType(int primtiveType)
+	{
+		switch(primtiveType)
+		{
+			CASE_RETURN(X_PT_POINTLIST, D3DPT_POINTLIST)
+			CASE_RETURN(X_PT_LINELIST, D3DPT_LINELIST)
+			CASE_RETURN(X_PT_LINESTRIP, D3DPT_LINESTRIP)
+			CASE_RETURN(X_PT_TRIANGLELIST, D3DPT_TRIANGLELIST)
+			CASE_RETURN(X_PT_TRIANGLESTRIP, D3DPT_TRIANGLESTRIP)
+			CASE_RETURN(X_PT_TRIANGLEFAN, D3DPT_TRIANGLEFAN)
+		}
+		return X_PT_INVALID;
 	}
 }
 

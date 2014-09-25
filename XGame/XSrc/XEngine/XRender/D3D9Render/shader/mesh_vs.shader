@@ -1,4 +1,5 @@
 
+matrix world;
 matrix view_proj_matrix;
 
 struct VS_INPUT
@@ -16,6 +17,7 @@ struct VS_OUTPUT
 VS_OUTPUT VS_Main(VS_INPUT ip)
 {
 	VS_OUTPUT op;
-	op.pos = mul(ip.pos, view_proj_matrix);
+	matrix wvp = world * view_proj_matrix;
+	op.pos = mul(ip.pos, wvp);
 	return op;
 }

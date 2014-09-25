@@ -8,7 +8,7 @@
 
 #ifndef __XRENDERENTITY__H
 #define __XRENDERENTITY__H
-
+#include "XRII.h"
 struct CommonVertexPos 
 {
 	float x,y,z;
@@ -26,10 +26,20 @@ struct CommonVertexPosTex
 	float u, v;
 };
 
+class XRenderViewPort
+{
+
+};
+
+struct XRenderArgs
+{
+	float mat_view_proj[16];
+};
+
 class XRenderEntity
 {
 public:
-	virtual void Render(XRenderSetting* pSetting);
+	virtual void Render(XRII* rii, XRenderArgs* args) = 0;
 };
 
 #endif // XRenderEntity

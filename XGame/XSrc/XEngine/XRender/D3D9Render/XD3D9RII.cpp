@@ -6,9 +6,32 @@
 /*		CopyRight: yc 
 /*************************************************************************/
 
-#ifndef __XD3D9RII__H
-#define __XD3D9RII__H
+#include "XD3D9RII.h"
+#include "XRenderUtil.h"
+#include "XD3D9RenderContext.h"
+#include "XD3D9Asset.h"
 
-
-
-#endif // XD3D9RII
+void XD3D9RII::DrawIndexEntity(XVertexAttribute* attrib,
+							   XStl::vector<XVertexPool*>& vertex_pools,
+							   XIndexPool* indices, 
+							   XMateriaEntity* mtrl, 
+							   xint32 primitive_type, 
+							   xuint32 start_index, 
+							   xuint32 tri_count )
+{
+	x_ptr_d3ddevice->SetIndices(((XD3D9IndexPool*)indices)->GetD3D9IndexBuffer());
+	for (int i = 0; i < vertex_pools.size(); i++)
+	{
+		if(vertex_pools[i])
+			x_ptr_d3ddevice->SetStreamSource(i, ((XD3D9VertexPool*)(vertex_pools[i]))->GetD3D9VertexBuffer(), 0, attrib->GetVertexAttributeDesc().vecVertexElement[i].stride);
+	}
+	x_ptr_d3ddevice->SetVertexDeclaration(((XD3D9VertexAttribute*)attrib)->GetD3D9VertexDecl());
+	if(mtrl->vertex_shader)
+		x_ptr_d3ddevice->SetVertexShader(((XD3D9VertexShader*)mtrl->vertex_shader)->GetD3D9VertexShader());
+	if(mtrl->pixel_shader)
+		x_ptr_d3ddevice->SetPixelShader(((XD3D9PixelShader*)mtrl->pixel_shader)->GetD3D9PixelShader());
+	x_ptr_d3ddevice->DrawIndexedPrimitive(
+		(D3DPRIMITIVETYPE)RenderUtil::GetPrimitiveType(primitive_type),
+		0, 0, vertex_pools[0]->GetVertexPoolDesc().count / attrib->GetVertexAttributeDesc().vecVertexElement[0].stride, start_index, tri_count
+		);
+}

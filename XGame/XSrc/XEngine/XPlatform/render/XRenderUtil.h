@@ -15,5 +15,5 @@ namespace RenderUtil
 	int GetValueTypeSize(int declType);
 	int GetDeclType(int declType);
 	int GetDeclUsage(int declUsage);
-
+	int GetPrimitiveType(int primtiveType);
 }

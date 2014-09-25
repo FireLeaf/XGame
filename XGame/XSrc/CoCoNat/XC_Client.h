@@ -6,9 +6,8 @@
 /*		CopyRight: yc 
 /*************************************************************************/
 
-#ifndef __XC_CLIENT__H
-#define __XC_CLIENT__H
 #include "XClient.h"
+
 class CXCClient : public XClient
 {
 public:
@@ -17,7 +16,7 @@ public:
 public:
 	virtual xbool Init();
 	virtual void Tick();
-	virtual void Render();
+	virtual void Render(XRenderMonitor* ptr_render_monitor);
+protected:
+	XMesh* pMesh;
 };
-#endif // XC_Client
-

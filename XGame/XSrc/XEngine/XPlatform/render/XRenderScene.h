@@ -1,29 +1,18 @@
 /**************************************************************************
-/*		FileName: XRenderMonitor.h
-/*		FileDesc: 场景渲染器
+/*		FileName: XRenderScene.h
+/*		FileDesc: 场景管理
 /*		FileAuthor: YangCao
-/*		CreateTime: 2014/09/02 20/57/09
+/*		CreateTime: 2014/09/24 22:00:14
 /*		CopyRight: yc 
 /*************************************************************************/
 
-#ifndef __XRENDERMONITOR__H
-#define __XRENDERMONITOR__H
+#ifndef __XRENDERSCENE__H
+#define __XRENDERSCENE__H
 
-#include "XRenderEntity.h"
-
-enum X_RENDER_FLAG
-{
-	X_RENDER_OPAQUE = 1 << 0,//不透明的
-	X_RENDER_TRANSPARENCY = 1 << 1,//透明的，需要blend的
-	X_RENDER_POST_PROCESS = 1 << 2,//需要参与post process的
-	X_RENDER_SHADOW = 1 << 3,//需要参与阴影的
-};
-
-class XRenderMonitor
+class XRenderScene
 {
 public:
-	void AddToRenderList(XRenderEntity* pRenderEntity);
-	void MonitorRender();
+		virtual void AddToRenderList(XRenderEntity* pRenderEntity) = 0;
 public:
 	//隔离层
 	XStl::vector<XRenderEntity*> all_entities;//所有的渲染体
@@ -37,4 +26,4 @@ public:
 	XStl::vector<XRenderEntity*> ui_entities;//UI层
 };
 
-#endif // XRenderMonitor 
+#endif // XRenderScene

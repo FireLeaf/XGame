@@ -62,9 +62,20 @@ public:
 		return ftell(m_fp);
 	}
 
-	xint32 Seek( xlong offset, xint32 origin )
+	xint32 Seek( xulong offset, xint32 origin )
 	{
 		return fseek(m_fp, offset, origin);
+	}
+
+	xulong Length()
+	{
+		xulong cur = Tell();
+		Seek(0, SEEK_SET);
+		xulong start = Tell();
+		Seek(0, SEEK_END);
+		xulong end = Tell();
+		Seek(cur, SEEK_SET);
+		return end - start;
 	}
 
 	void Rewind()
@@ -85,7 +96,12 @@ protected:
 	FILE* m_fp;
 };
 
-class XFileImageBase : public XFile
+class XFileMapBase : public XFile
+{
+
+};
+
+class XFileMap : public XFileMapBase
 {
 
 };

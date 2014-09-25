@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="XRender"
-	ProjectGUID="{C5A85B0B-046E-4D4C-8567-E0E7513239B1}"
-	RootNamespace="XRender"
+	Name="CoCoNat"
+	ProjectGUID="{18694411-AE42-47DD-9D18-2EB30B6198D7}"
+	RootNamespace="CoCoNat"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -20,8 +20,8 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="2"
+			ConfigurationType="1"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -41,12 +41,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\XRender\include;..\XRender\D3D9Render;..\XRender\GLES2Render;..\..\..\XInc"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM"
+				AdditionalIncludeDirectories="..\..\XInc;..\..\XInc\Win"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WIN_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="NatPch.h"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -60,12 +61,19 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
-				AdditionalDependencies="d3d9.lib d3dx9.lib"
-				OutputFile="$(OutDir)\$(ProjectName)_d.lib"
+				Name="VCLinkerTool"
+				AdditionalDependencies="XPlatform_d.lib XRender_d.lib XEngine_d.lib XModel_d.lib"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="..\..\XLib"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -77,15 +85,17 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\d3d9render\*.h&quot; &quot;..\..\..\XInc\D3D9Render\&quot;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -108,10 +118,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -125,10 +135,19 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkIncremental="1"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -138,6 +157,9 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -152,82 +174,82 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\CoCoNat.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NatPch.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\CoCoNat.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NatPch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\targetver.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\CoCoNat.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\CoCoNat.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\small.ico"
+				>
+			</File>
 		</Filter>
 		<Filter
-			Name="D3D9Render"
+			Name="frame"
 			>
 			<File
-				RelativePath=".\D3D9Render\XD3D9Asset.cpp"
+				RelativePath=".\XC_Client.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\D3D9Render\XD3D9Asset.h"
+				RelativePath=".\XC_Client.h"
 				>
 			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9AssetMonitor.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9AssetMonitor.h"
-				>
-			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9Header.h"
-				>
-			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9RenderContext.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9RenderContext.h"
-				>
-			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9RenderMonitor.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9RenderMonitor.h"
-				>
-			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9RenderUtil.h"
-				>
-			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9RII.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\D3D9Render\XD3D9RII.h"
-				>
-			</File>
-			<Filter
-				Name="Shader"
-				>
-				<File
-					RelativePath=".\D3D9Render\shader\mesh_ps.shader"
-					>
-				</File>
-				<File
-					RelativePath=".\D3D9Render\shader\mesh_vs.shader"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

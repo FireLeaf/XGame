@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\XModel\include;..\..\..\XInc;..\..\..\XInc\XExporter"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -77,6 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*.h&quot; &quot;..\..\..\XInc&quot;"
 			/>
 		</Configuration>
 		<Configuration

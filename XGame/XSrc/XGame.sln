@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XDemo", "XDemo", "{8B3CAC40
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "新的样本", "XDemo\Demo_TestTexture\新的样本.vcproj", "{73CD931C-2A95-446A-9D46-FD9976E4E066}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoCoNat", "CoCoNat\CoCoNat.vcproj", "{18694411-AE42-47DD-9D18-2EB30B6198D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -168,6 +170,18 @@ Global
 		{73CD931C-2A95-446A-9D46-FD9976E4E066}.Release|Win32.Build.0 = Release|Win32
 		{73CD931C-2A95-446A-9D46-FD9976E4E066}.ReleaseUnicode|Win32.ActiveCfg = Release|Win32
 		{73CD931C-2A95-446A-9D46-FD9976E4E066}.ReleaseUnicode|Win32.Build.0 = Release|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.Debug|Win32.Build.0 = Debug|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.DebugUnicode|Win32.ActiveCfg = Debug|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.DebugUnicode|Win32.Build.0 = Debug|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.Hybrid|Win32.ActiveCfg = Release|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.Hybrid|Win32.Build.0 = Release|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.HybridUnicode|Win32.ActiveCfg = Release|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.HybridUnicode|Win32.Build.0 = Release|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.Release|Win32.ActiveCfg = Release|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.Release|Win32.Build.0 = Release|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.ReleaseUnicode|Win32.ActiveCfg = Release|Win32
+		{18694411-AE42-47DD-9D18-2EB30B6198D7}.ReleaseUnicode|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
