@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\XPlatform\include;..\XPlatform\include\Win;..\XPlatform\render;..\XPlatform\manager;..\XPlatform\file"
+				AdditionalIncludeDirectories="..\XPlatform\include;..\XPlatform\include\Win;..\XPlatform\render;..\XPlatform\manager;..\XPlatform\file;..\XPlatform\math"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -77,7 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\render\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\win\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\file\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\manager\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\render\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\win\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\file\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\manager\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\math\*.h&quot; &quot;..\..\..\XInc&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -275,6 +275,34 @@
 			</File>
 			<File
 				RelativePath=".\file\XFile.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="math"
+			>
+			<File
+				RelativePath=".\math\XMath.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\math\XMath.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\XMatrix.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\math\XMatrix.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\XVector.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\math\XVector.h"
 				>
 			</File>
 		</Filter>
