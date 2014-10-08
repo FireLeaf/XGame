@@ -125,3 +125,5 @@
 /XGame/XInc/Win/*.h
 /XGame/XInc/*.h
 /XGame/XLib/*.lib
+/XGame/XSrc/XEngine/XTerrain/*.txt
+/XGame/XSrc/XEngine/XTerrain/*.user
