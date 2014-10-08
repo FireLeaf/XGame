@@ -30,6 +30,7 @@ class XShell : public Singleton<XShell>
 public:
 	bool Init(const XInitContext* ptr_ini_context);
 	void Frame();
+protected:
 };
 
 

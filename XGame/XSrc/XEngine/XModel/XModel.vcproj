@@ -77,7 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*.h&quot; &quot;..\..\..\XInc&quot;"
+				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -166,11 +166,31 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\include\XAnimationKey.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\XAnimationMesh.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\XAnimationModel.h"
 				>
 			</File>
 			<File
+				RelativePath=".\include\XExporterMaterial.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\XMesh.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\XSkeltonFrame.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\XSkinMesh.h"
 				>
 			</File>
 		</Filter>

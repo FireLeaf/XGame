@@ -33,6 +33,7 @@ public:
 	XVector3& operator += (const XVector3& v);
 	XVector3& operator -= (const XVector3& v);
 	XVector3& operator /= (const float v);
+	float operator * (const XVector3 v) const;
 	friend XVector3 operator + (const XVector3& l, const XVector3& r);
 	friend XVector3 operator - (const XVector3& l, const XVector3& r);
 	friend XVector3 operator / (const XVector3& l, const float r);

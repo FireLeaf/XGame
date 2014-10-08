@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="XEngine"
-	ProjectGUID="{799FB8AA-DB31-4314-9665-58C47F149D84}"
-	RootNamespace="XEngine"
+	Name="XTerrain"
+	ProjectGUID="{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}"
+	RootNamespace="XTerrain"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -41,8 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\XEngine\include;..\..\..\XInc"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -61,8 +60,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\$(ProjectName)_d.lib"
-				AdditionalLibraryDirectories="..\..\..\XLib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -78,7 +75,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -153,15 +149,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\XClient.cpp"
+				RelativePath=".\src\XDotaTerrain.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\XShell.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\XWorld.cpp"
+				RelativePath=".\src\XTerrain.cpp"
 				>
 			</File>
 		</Filter>
@@ -171,15 +163,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\include\XClient.h"
+				RelativePath=".\include\XDotaTerrain.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\XShell.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XWorld.h"
+				RelativePath=".\include\XTerrain.h"
 				>
 			</File>
 		</Filter>

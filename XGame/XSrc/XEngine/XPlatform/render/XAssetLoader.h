@@ -11,6 +11,12 @@
 class XAssetLoader
 {
 public:
+	enum DATATYPE
+	{
+		RGBDATA		= 3,
+		RGBADATA	= 4,
+	};
+public:
 	static bool LoadAsset(XAsset* pAsset);
 protected:
 	//

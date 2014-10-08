@@ -10,5 +10,5 @@
 #define __XTYPE_H_
 #include "XMacro.h"
 #include "XWinType.h"
-
+#include <assert.h>
 #endif
