@@ -7,6 +7,7 @@
 /*************************************************************************/
 
 #include <math.h>
+#include <float.h>
 #include <assert.h>
 #include "XVector.h"
 #include "XType.h"
@@ -64,6 +65,11 @@ XVector3& XVector3::operator /= (const float v)
 	y /= v;
 	z /= v;
 	return *this;
+}
+
+float XVector3::operator *(const XVector3 v) const
+{
+	return x * v.x + y * v.y + z * v.z;
 }
 
 XVector3 operator + (const XVector3& l, const XVector3& r)

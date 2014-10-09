@@ -157,6 +157,17 @@ namespace RenderUtil
 		}
 		return X_PT_INVALID;
 	}
+
+	xulong GetClearBufferFlag(xulong flag)
+	{
+		xulong ret = 0;
+		if (flag & X_CLEAR_TARGET)
+			ret |= D3DCLEAR_TARGET;
+		if (flag & X_CLEAR_STENCIL)
+			ret |= D3DCLEAR_STENCIL;
+		if (flag & X_CLEAR_ZBUFFER)
+			ret |= D3DCLEAR_ZBUFFER;
+	}
 }
 
 #endif

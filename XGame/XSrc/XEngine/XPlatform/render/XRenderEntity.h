@@ -31,15 +31,39 @@ class XRenderViewPort
 
 };
 
-struct XRenderArgs
+struct XAABB
 {
-	float mat_view_proj[16];
+	XVector3 left_up;
+	XVector3 right_down;
 };
 
-class XRenderEntity
+struct XRenderArgs
+{
+	//float mat_view_proj[16];
+	XMatrix mat_view;
+	XMatrix mat_proj;
+	XMatrix mat_view_proj;
+	xint32 cur_render_flag;
+};
+
+class XAbstract
+{
+public:
+	void GetAABB(){return aabb;}
+protected:
+	XAABB aabb;
+	XVector3 abs_pos;//绝对位置
+	XVector3 loc_pos;//相对位置
+};
+
+class XRenderEntity : public XAbstract
 {
 public:
 	virtual void Render(XRII* rii, XRenderArgs* args) = 0;
+	xint32 GetRenderFlag();
+protected:
+	xint32 render_flag;
+	
 };
 
 #endif // XRenderEntity

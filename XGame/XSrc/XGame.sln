@@ -19,16 +19,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XAnimationExporter", "X3DMA
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XAnimationExporterDll", "X3DMAXPlugin\XAnimationExporterDll\XAnimationExporterDll.vcproj", "{24241A53-84A7-44E5-B75C-720C838D75EA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XFile", "XFile\XFile.vcproj", "{93DCB957-88A5-409D-867C-03DD5585A571}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XInc", "XInc", "{1EC94008-7A7E-40C8-828F-A4D81F0293ED}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XExporter", "XExporter", "{3FC806FA-808B-41FF-B2F3-D8D0D9CA0B48}"
-	ProjectSection(SolutionItems) = preProject
-		..\XInc\XExporter\XAnimationKey.h = ..\XInc\XExporter\XAnimationKey.h
-		..\XInc\XExporter\XAnimationMesh.h = ..\XInc\XExporter\XAnimationMesh.h
-		..\XInc\XExporter\XExporterMaterial.h = ..\XInc\XExporter\XExporterMaterial.h
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XFile____", "XFile\XFile.vcproj", "{93DCB957-88A5-409D-867C-03DD5585A571}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XAsset", "XEngine\XResource\XResource.vcproj", "{8162A861-E503-4D92-99F0-0898C405574D}"
 EndProject
@@ -39,6 +30,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "新的样本", "XDemo\Demo_TestTexture\新的样本.vcproj", "{73CD931C-2A95-446A-9D46-FD9976E4E066}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoCoNat", "CoCoNat\CoCoNat.vcproj", "{18694411-AE42-47DD-9D18-2EB30B6198D7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XTerrain", "XEngine\XTerrain\XTerrain.vcproj", "{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -182,6 +175,18 @@ Global
 		{18694411-AE42-47DD-9D18-2EB30B6198D7}.Release|Win32.Build.0 = Release|Win32
 		{18694411-AE42-47DD-9D18-2EB30B6198D7}.ReleaseUnicode|Win32.ActiveCfg = Release|Win32
 		{18694411-AE42-47DD-9D18-2EB30B6198D7}.ReleaseUnicode|Win32.Build.0 = Release|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.Debug|Win32.Build.0 = Debug|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.DebugUnicode|Win32.ActiveCfg = Debug|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.DebugUnicode|Win32.Build.0 = Debug|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.Hybrid|Win32.ActiveCfg = Release|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.Hybrid|Win32.Build.0 = Release|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.HybridUnicode|Win32.ActiveCfg = Release|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.HybridUnicode|Win32.Build.0 = Release|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.Release|Win32.ActiveCfg = Release|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.Release|Win32.Build.0 = Release|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.ReleaseUnicode|Win32.ActiveCfg = Release|Win32
+		{257BE6E3-7BFB-4E23-8A7A-0AD95A3876D1}.ReleaseUnicode|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -195,7 +200,6 @@ Global
 		{799FB8AA-DB31-4314-9665-58C47F149D84} = {8197A826-DF71-47F2-B2C5-D0838F6E2ECD}
 		{E7CB76AA-6113-46BA-8EBC-8AE1D2B81210} = {2317CD66-2EE9-4990-BA73-7F7A043B8D22}
 		{24241A53-84A7-44E5-B75C-720C838D75EA} = {2317CD66-2EE9-4990-BA73-7F7A043B8D22}
-		{3FC806FA-808B-41FF-B2F3-D8D0D9CA0B48} = {1EC94008-7A7E-40C8-828F-A4D81F0293ED}
 		{73CD931C-2A95-446A-9D46-FD9976E4E066} = {8B3CAC40-0235-400E-81AF-3B374FF6D562}
 	EndGlobalSection
 EndGlobal

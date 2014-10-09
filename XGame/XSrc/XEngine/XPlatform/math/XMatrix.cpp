@@ -6,7 +6,10 @@
 /*		CopyRight: yc 
 /*************************************************************************/
 
+#include "XType.h"
 #include "XMatrix.h"
+#include <stdlib.h>
+#include <math.h>
 
 #define IS_FLOAT_ZERO(a) (fabsf(a) < FLT_EPSILON)
 
@@ -88,36 +91,38 @@ XMatrix& XMatrix::operator -= (const XMatrix& m)
 	return *this;
 }
 
-XMatrix& XMatrix::operator * (float v)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			f[i][j] *= v;
-		}
-	}
-
-	return *this;
-}
-
-XMatrix& XMatrix::operator / (float v)
-{
-	if (IS_FLOAT_ZERO(v))
-	{
-		Assert(0);
-		return *this;
-	}
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			f[i][j] /= v;
-		}
-	}
-
-	return *this;
-}
+// XMatrix XMatrix::operator * (float v) const
+// {
+// 	XMatrix m = *this;
+// 	for (int i = 0; i < 4; i++)
+// 	{
+// 		for (int j = 0; j < 4; j++)
+// 		{
+// 			m.f[i][j] *= v;
+// 		}
+// 	}
+// 
+// 	return m;
+// }
+// 
+// XMatrix XMatrix::operator / (float v) const
+// {
+// 	if (IS_FLOAT_ZERO(v))
+// 	{
+// 		Assert(0);
+// 		return *this;
+// 	}
+// 	XMatrix m = *this;
+// 	for (int i = 0; i < 4; i++)
+// 	{
+// 		for (int j = 0; j < 4; j++)
+// 		{
+// 			m.f[i][j] /= v;
+// 		}
+// 	}
+// 
+// 	return m;
+// }
 
 // unary operators
 XMatrix XMatrix::operator + () const
@@ -127,14 +132,15 @@ XMatrix XMatrix::operator + () const
 
 XMatrix XMatrix::operator - () const
 {
+	XMatrix m = *this;
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			f[i][j] = -f[i][j];
+			m.f[i][j] = -m.f[i][j];
 		}
 	}
-	return *this;
+	return m;
 }
 
 XMatrix XMatrix::operator * ( const XMatrix& m) const
@@ -172,13 +178,6 @@ XMatrix XMatrix::operator / ( float v) const
 	return ret;
 }
 
-XMatrix operator * ( float v, const XMatrix& m)
-{
-	XMatrix ret(m);
-	m *= v;
-	return ret;
-}
-
 bool  XMatrix::operator == ( const XMatrix& m) const
 {
 	for (int i = 0; i < 4; i++)
@@ -191,6 +190,8 @@ bool  XMatrix::operator == ( const XMatrix& m) const
 			}
 		}
 	}
+
+	return true;
 }
 
 bool  XMatrix::operator != ( const XMatrix& m) const
@@ -198,7 +199,7 @@ bool  XMatrix::operator != ( const XMatrix& m) const
 	return !(*this == m);
 }
 
-float  XMatrix::operator () (int index)
+float  XMatrix::operator () (int index) const
 {
 	if (index > 15)
 	{
@@ -209,13 +210,23 @@ float  XMatrix::operator () (int index)
 	return f[a][b];
 }
 
-float&  XMatrix::operator () (int index)
+// float&  XMatrix::operator () (int index)
+// {
+// 	if (index > 15)
+// 	{
+// 		Assert(0);
+// 		return 0.0f;
+// 	}
+// 	int a = index / 4, b = index % 4;
+// 	return f[a][b];
+// }
+
+float XMatrix::operator ()(int x, int y) const
 {
-	if (index > 15)
-	{
-		Assert(0);
-		return 0.0f;
-	}
-	int a = index / 4, b = index % 4;
-	return f[a][b];
+	return f[x][y];
+}
+
+float& XMatrix::operator () (int x, int y)
+{
+	return f[x][y];
 }

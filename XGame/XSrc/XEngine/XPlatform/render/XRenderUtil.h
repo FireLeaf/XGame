@@ -16,4 +16,5 @@ namespace RenderUtil
 	int GetDeclType(int declType);
 	int GetDeclUsage(int declUsage);
 	int GetPrimitiveType(int primtiveType);
+	xulong GetClearBufferFlag(xulong flag);
 }

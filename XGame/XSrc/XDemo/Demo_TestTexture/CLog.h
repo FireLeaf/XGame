@@ -4,7 +4,8 @@
 #include <windows.h>
 #define LOGFILENAME "www.gamerefer.com.log"
 
-class CLog{
+class CLog
+{
 private:
 //	char szFileName[512];
 	FILE *fp;

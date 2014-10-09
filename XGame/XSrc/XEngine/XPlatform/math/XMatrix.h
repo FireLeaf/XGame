@@ -9,6 +9,12 @@
 #ifndef __XMATRIX__H
 #define __XMATRIX__H
 
+#include <stdlib.h>
+#include <string.h>
+#include <float.h>
+
+#define X_PI 3.14159f
+
 class XMatrix
 {
 public:
@@ -36,14 +42,19 @@ public:
 	XMatrix operator * ( float ) const;
 	XMatrix operator / ( float ) const;
 
-	friend XMatrix operator * ( float, const XMatrix& );
-
 	bool operator == ( const XMatrix& ) const;
 	bool operator != ( const XMatrix& ) const;
-	float operator () (int index);
+	float operator () (int index) const;
 	float& operator () (int index);
+	float operator() (int x, int y) const;
+	float& operator()(int x, int y);
 public:
 	float f[4][4];
+};
+
+class XQuaternion
+{
+
 };
 
 #endif // XMatrix
