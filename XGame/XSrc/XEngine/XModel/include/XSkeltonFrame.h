@@ -9,7 +9,7 @@
 #ifndef __XSKELTONFRAME__H
 #define __XSKELTONFRAME__H
 
-struct XSkelton
+struct XBone
 {
 	std::string name;
 	std::string parent_name;
@@ -22,7 +22,7 @@ struct XSkelton
 	XMatrix init_matrix;
 	XMatrix inv_matrix;
 	XMatrix abs_matrix;
-	XSkelton():parent_index(-1), first_child_index(-1), next_sbling(-1), cur_index(-1){}
+	XBone():parent_index(-1), first_child_index(-1), next_sbling(-1), cur_index(-1){}
 };
 
 class XSkeltonFrame
@@ -33,7 +33,7 @@ public:
 		
 	}
 
-	void UpdateSkelton(XSkelton* ptr_skelton, XSkelton* ptr_parent_skelton)
+	void UpdateSkelton(XBone* ptr_skelton, XBone* ptr_parent_skelton)
 	{
 		if (!ptr_skelton)
 		{
@@ -51,13 +51,17 @@ public:
 
 		//更新兄弟
 		if(-1 != ptr_skelton->next_sbling)
-			UpdateSkelton(skeltons[ptr_skelton->next_sbling], ptr_parent_skelton);
+			UpdateSkelton(bone_ptr_array[ptr_skelton->next_sbling], ptr_parent_skelton);
 		//更新孩子
 		if(-1 != ptr_skelton->first_child_index)
-			UpdateSkelton(skeltons[ptr_skelton->first_child_index], ptr_skelton);
+			UpdateSkelton(bone_ptr_array[ptr_skelton->first_child_index], ptr_skelton);
 	}
+
+public:
+	int GetBoneCount(){return (int)(bone_ptr_array.size());}
+	XBone* GetBone(int index){if(index < 0 || index >= bone_ptr_array.size()) return NULL; return bone_ptr_array[index];}
 protected:
-	std::vector<XSkelton*> skeltons;
+	std::vector<XBone*> bone_ptr_array;
 };
 
 #endif // XSkeltonFrame
