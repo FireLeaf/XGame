@@ -9,6 +9,13 @@
 #include "XClient.h"
 #include "XShell.h"
 #include "XRenderContext.h"
+#include "XRenderMonitor.h"
+#include "XRenderScene.h"
+
+XShell::XShell()
+{
+	ptr_render_scene = NULL;
+}
 
 bool XShell::Init(const XInitContext* ptr_ini_context)
 {
@@ -18,18 +25,25 @@ bool XShell::Init(const XInitContext* ptr_ini_context)
 	{
 		return false;
 	}
+	ptr_render_scene = new XRenderScene;
+	ptr_render_scene->SetSceneDesc(*(x_ptr_render_monitor->GetDefaultSceneDesc()));
+	return (bool)x_ptr_client->Init();
+}
 
-	return x_ptr_client->Init();
+void XShell::Reset(const XInitContext* ptr_rest_context)
+{
+	x_ptr_render_context->Resize(ptr_rest_context->width, ptr_rest_context->height, ptr_rest_context->windowed);
+	ptr_render_scene->SetSceneDesc(*(x_ptr_render_monitor->GetDefaultSceneDesc()));
 }
 
 void XShell::Frame()
 {
 	if (x_ptr_client)
 	{
-		x_ptr_render_monitor->BeginRender();
+		
+		ptr_render_scene->BeginScene();
 		x_ptr_client->Tick();
-		x_ptr_client->Render(x_ptr_render_monitor);
-		x_ptr_render_monitor->MonitorRender();
-		x_ptr_render_monitor->EndRender();
+		x_ptr_client->Render(ptr_render_scene);
+		x_ptr_render_monitor->MonitorRender(ptr_render_scene);
 	}
 }

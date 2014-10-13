@@ -294,6 +294,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\math\XMathUtil.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\math\XMathUtil.h"
+				>
+			</File>
+			<File
 				RelativePath=".\math\XMatrix.cpp"
 				>
 			</File>

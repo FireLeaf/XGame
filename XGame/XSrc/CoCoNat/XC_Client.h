@@ -16,7 +16,7 @@ public:
 public:
 	virtual xbool Init();
 	virtual void Tick();
-	virtual void Render(XRenderMonitor* ptr_render_monitor);
+	virtual void Render(XRenderScene* ptr_render_scene);
 protected:
 	XMesh* pMesh;
 };

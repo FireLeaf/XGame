@@ -10,6 +10,7 @@
 #define __XRENDERMONITOR__H
 
 #include "XRenderEntity.h"
+#include "XRenderScene.h"
 
 class XRenderScene;
 
@@ -23,11 +24,15 @@ protected:
 class XRenderMonitor
 {
 public:
-	virtual void BeginRender(const XSceneDesc&);
-	virtual void EndRender(const XSceneDesc&);
+	XRenderMonitor() : ptr_default_desc(NULL){}
 	virtual void MonitorRender(XRenderScene* scene) = 0;
+	XSceneDesc** GetDefaultSceneDesc(){return &ptr_default_desc;}
+protected:
+	virtual void BeginRender(const XSceneDesc*) = 0;
+	virtual void EndRender(const XSceneDesc*) = 0;
 public:
 //	virtual void AddToRenderList(XRenderEntity* pRenderEntity) = 0;
+	XSceneDesc* ptr_default_desc;
 };
 
 extern XRenderMonitor* x_ptr_render_monitor;

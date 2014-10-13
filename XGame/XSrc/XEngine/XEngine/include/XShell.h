@@ -28,9 +28,12 @@ class XShell;
 class XShell : public Singleton<XShell>
 {
 public:
+	XShell();
 	bool Init(const XInitContext* ptr_ini_context);
+	void Reset(const XInitContext* ptr_rest_context);
 	void Frame();
 protected:
+	XRenderScene* ptr_render_scene;
 };
 
 

@@ -91,38 +91,36 @@ XMatrix& XMatrix::operator -= (const XMatrix& m)
 	return *this;
 }
 
-// XMatrix XMatrix::operator * (float v) const
-// {
-// 	XMatrix m = *this;
-// 	for (int i = 0; i < 4; i++)
-// 	{
-// 		for (int j = 0; j < 4; j++)
-// 		{
-// 			m.f[i][j] *= v;
-// 		}
-// 	}
-// 
-// 	return m;
-// }
-// 
-// XMatrix XMatrix::operator / (float v) const
-// {
-// 	if (IS_FLOAT_ZERO(v))
-// 	{
-// 		Assert(0);
-// 		return *this;
-// 	}
-// 	XMatrix m = *this;
-// 	for (int i = 0; i < 4; i++)
-// 	{
-// 		for (int j = 0; j < 4; j++)
-// 		{
-// 			m.f[i][j] /= v;
-// 		}
-// 	}
-// 
-// 	return m;
-// }
+XMatrix& XMatrix::operator *= (float v)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			f[i][j] *= v;
+		}
+	}
+
+	return *this;
+}
+
+XMatrix& XMatrix::operator /= (float v)
+{
+	if (IS_FLOAT_ZERO(v))
+	{
+		Assert(0);
+		return *this;
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			f[i][j] /= v;
+		}
+	}
+
+	return *this;
+}
 
 // unary operators
 XMatrix XMatrix::operator + () const

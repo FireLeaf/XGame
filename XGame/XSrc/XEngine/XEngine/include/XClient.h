@@ -10,14 +10,14 @@
 #define __XCLIENT__H
 
 #include "XType.h"
-#include "XRenderMonitor.h"
+#include "XRenderScene.h"
 
 class XClient
 {
 public:
 	virtual xbool Init() = 0;
 	virtual void Tick() = 0;
-	virtual void Render(XRenderMonitor* ptr_render_monitor) = 0;
+	virtual void Render(XRenderScene* ptr_render_scene) = 0;
 };
 
 extern XClient* x_ptr_client;

@@ -15,8 +15,8 @@ class XD3D9RenderMonitor : public XRenderMonitor
 {
 public:
 	virtual void MonitorRender(XRenderScene* scene);
-	virtual void BeginRender(const XSceneDesc&);
-	virtual void EndRender(const XSceneDesc&);
+	virtual void BeginRender(const XSceneDesc*);
+	virtual void EndRender(const XSceneDesc*);
 };
 
 #endif // XD3D9RenderMonitor

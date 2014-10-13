@@ -30,7 +30,7 @@ public:
 				value += path[i];
 			}
 			value += dynamic;
-			return value;
+			return (size_t)value;
 		}
 		bool operator < (const TexKey& tk) const
 		{

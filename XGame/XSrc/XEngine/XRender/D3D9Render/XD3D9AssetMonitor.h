@@ -20,6 +20,7 @@ public:
 	virtual void UpdateAsset(XAsset* pAsset);
 	virtual XAsset* CreateAsset(ENUM_ASSET_TYPE asset_type, xbool bDynamic);//创建一个资源
 	virtual void ReleaseAsset(XAsset* pAsset);
+	virtual void ResetAsset(){}
 public:
 };
 

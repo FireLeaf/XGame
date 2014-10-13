@@ -12,6 +12,7 @@
 #include "XD3D9RenderContext.h"
 #include "XD3D9RenderUtil.h"
 #include "XTemplate.h"
+#include <d3d9.h>
 
 void XD3D9Texture2D::UpdateAsset(XAssetMonitor* pMonitor)
 {
@@ -246,7 +247,11 @@ void XD3D9ShaderParamTable::SetValue(const char* name, XTexture* texture)
 				x_ptr_d3ddevice->SetTexture(ptr_desc->reg_index, ((XD3D9TextureCube*)texture)->GetD3D9CubeTexture());
 				break;
 			case  ASSET_TEXTURE_RENDER:
-				x_ptr_d3ddevice->SetTexture(ptr_desc->reg_index, ((XD3D9RenderTarget*)texture)->GetD3D9RenderTarget());
+				{
+					IDirect3DTexture9 *pTexture = NULL;
+				//	HRESULT hr = ((XD3D9RenderTarget*)texture)->GetD3D9RenderTarget()->GetContainer(IID_IDirect3DTexture9, (void**)&pTexture);
+				//	x_ptr_d3ddevice->SetTexture(ptr_desc->reg_index, pTexture);
+				}
 				break;
 			default:
 				x_ptr_d3ddevice->SetTexture(ptr_desc->reg_index, NULL);

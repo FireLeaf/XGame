@@ -11,35 +11,18 @@
 
 #include "XType.h"
 #include "XMath.h"
+#include "XMatrix.h"
+#include "XVector.h"
+#include "XMathUtil.h"
+#include "XAsset.h"
 
 class XRenderEntity;
 
-enum X_CLEAR_BUFFFER
+enum X_CLEAR_FLAG
 {
 	X_CLEAR_TARGET = 0x00000001l,  /* Clear target surface */
 	X_CLEAR_ZBUFFER = 0x00000002l,  /* Clear target z buffer */
 	X_CLEAR_STENCIL = 0x00000004l,  /* Clear stencil planes */
-};
-
-enum X_RENDER_FLAG
-{
-	X_RENDER_OPAQUE = 1 << 0,//不透明的
-	X_RENDER_TRANSPARENCY = 1 << 1,//透明的，需要blend的
-	X_RENDER_POST_PROCESS = 1 << 2,//需要参与post process的
-	X_RENDER_SHADOW = 1 << 3,//需要参与阴影的
-};
-
-enum X_RENDER_ACTOR
-{
-	X_ACTOR_NORMAL = 1 << 16,
-	X_ACTOR_SHADOW_CAST = 1  << 17,
-	X_ACTOR_SHADOW_RECV = 1 << 18,
-	X_ACTOR_TRANSLUCENT = 1 << 19,
-	X_ACTOR_ALPHATEST = 1 << 20,
-	X_ACTOR_POST_PROGRESS = 1 << 21,
-	X_ACTOR_FOREGROUND = 1 << 22,
-	X_ACTOR_BACKGROUND = 1 << 23,
-	X_ACTOR_OCCLUSION = 1 << 24,
 };
 
 class XCamera
@@ -103,8 +86,8 @@ public:
 	bool DetectCuboid(const XVector3 &center,float width,float length,float height);
 	bool DetectCube(const XVector3 &center,float size);
 	bool DetectRectangle(const XVector3 &center,float width,float length);
-	bool DetectSquare(const D3DXVECTOR3 &center,float size);
-	bool DetectAABB(const XAABB &aabb);
+	bool DetectSquare(const XVector3 &center,float size);
+	bool DetectAABB(const XAABB& aabb){return true;}
 };
 
 struct XSceneDesc
@@ -126,12 +109,16 @@ struct XSceneDesc
 	XViewPort view_port;
 	int render_target_count;
 	XAsset* ptr_asset_render_target[MAX_RENDER_TARGET];
-	XAsset* ptr_asset_depth_stencil;
+	XAsset* ptr_asset_depth_stencil;//这里直接用的render_target保存的
 	xint32 clear_color;
 	xulong clear_buffer_flag;
-	bool is_device_target;
-	XLight light[MAX_LIGHT_COUNT];
+//	bool is_device_target;
+	XLight* light[MAX_LIGHT_COUNT];
 	bool build_shadow[MAX_LIGHT_COUNT];
+
+	XSceneDesc();
+	~XSceneDesc();
+	void ResetDesc();
 };
 
 class XRenderScene
@@ -139,9 +126,13 @@ class XRenderScene
 public:
 	void AddToRenderList(XRenderEntity* pRenderEntity);
 	void ClassifyRenderList();
-	void SetViewPort(const XViewPort& vp){secne_desc.view_port = vp;/*secne_desc.SetViewPort(vp);*/}
-	void SetCamera()(const XCamera& cam){secne_desc.camera = cam;/*secne_desc.SetCamera(cam);*/}
-	XSceneDesc& GetSceneDesc(){return secne_desc;}
+	//void SetViewPort(const XViewPort& vp){ptr_secne_desc->view_port = vp;/*secne_desc.SetViewPort(vp);*/}
+	//void SetCamera(const XCamera& cam){ptr_secne_desc->camera = cam;/*secne_desc.SetCamera(cam);*/}
+	void SetSceneDesc(XSceneDesc* desc){ptr_secne_desc = desc;}
+	XSceneDesc* GetSceneDesc(){return ptr_secne_desc;}
+	void Clear();
+	void BeginScene();
+	void EndScene();
 public:
 	//隔离层
 	XStl::vector<XRenderEntity*> all_entities;//所有的渲染体
@@ -159,7 +150,7 @@ public:
 	XStl::vector<XRenderEntity*> normal_entities;//普通层
 	XStl::vector<XRenderEntity*> background_entities;//背景层，包括远景，天空盒之类
 protected:
-	XSceneDesc secne_desc;
+	XSceneDesc* ptr_secne_desc;
 };
 
 #endif // XRenderScene

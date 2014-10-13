@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="d3d9.lib d3dx9.lib"
+				AdditionalDependencies="d3dx9.lib d3d9.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.lib"
 			/>
 			<Tool
@@ -78,7 +78,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\d3d9render\*.h&quot; &quot;..\..\..\XInc\D3D9Render\&quot;"
+				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\d3d9render\*.h&quot; &quot;..\..\..\XInc\D3D9Render\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration

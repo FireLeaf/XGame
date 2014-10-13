@@ -9,7 +9,11 @@
 #ifdef _WIN_PLATFORM
 #include "XRenderUtil.h"
 #include "XAsset.h"
+#include "XRenderScene.h"
 #include "XRII.h"
+
+#ifndef __XD3D9RENDERUTIL__H
+#define __XD3D9RENDERUTIL__H
 
 #define CASE_RETURN(a, b) case a: return b;break;
 
@@ -102,11 +106,11 @@ namespace RenderUtil
 		case X_DECLTYPE_FLOAT3: return D3DDECLTYPE_FLOAT3;break;
 		case X_DECLTYPE_FLOAT4: return D3DDECLTYPE_FLOAT4;break;
 		case X_DECLTYPE_COLOR: return D3DDECLTYPE_D3DCOLOR;break;
-				// Input is in X_COLOR format (ARGB) expanded to (R, G, B, A)
+			// Input is in X_COLOR format (ARGB) expanded to (R, G, B, A)
 		case X_DECLTYPE_UBYTE4: return D3DDECLTYPE_UBYTE4;break;
 		case X_DECLTYPE_SHORT2: return D3DDECLTYPE_SHORT2;break;
 		case X_DECLTYPE_SHORT4: return D3DDECLTYPE_SHORT4;break;
-				// The following types are valid only with vertex shaders >= 2.0
+			// The following types are valid only with vertex shaders >= 2.0
 		case X_DECLTYPE_UBYTE4N: return D3DDECLTYPE_UBYTE4N;break;
 		case X_DECLTYPE_SHORT2N: return D3DDECLTYPE_SHORT2N;break;
 		case X_DECLTYPE_SHORT4N: return D3DDECLTYPE_SHORT4N;break;
@@ -149,11 +153,11 @@ namespace RenderUtil
 		switch(primtiveType)
 		{
 			CASE_RETURN(X_PT_POINTLIST, D3DPT_POINTLIST)
-			CASE_RETURN(X_PT_LINELIST, D3DPT_LINELIST)
-			CASE_RETURN(X_PT_LINESTRIP, D3DPT_LINESTRIP)
-			CASE_RETURN(X_PT_TRIANGLELIST, D3DPT_TRIANGLELIST)
-			CASE_RETURN(X_PT_TRIANGLESTRIP, D3DPT_TRIANGLESTRIP)
-			CASE_RETURN(X_PT_TRIANGLEFAN, D3DPT_TRIANGLEFAN)
+				CASE_RETURN(X_PT_LINELIST, D3DPT_LINELIST)
+				CASE_RETURN(X_PT_LINESTRIP, D3DPT_LINESTRIP)
+				CASE_RETURN(X_PT_TRIANGLELIST, D3DPT_TRIANGLELIST)
+				CASE_RETURN(X_PT_TRIANGLESTRIP, D3DPT_TRIANGLESTRIP)
+				CASE_RETURN(X_PT_TRIANGLEFAN, D3DPT_TRIANGLEFAN)
 		}
 		return X_PT_INVALID;
 	}
@@ -167,7 +171,10 @@ namespace RenderUtil
 			ret |= D3DCLEAR_STENCIL;
 		if (flag & X_CLEAR_ZBUFFER)
 			ret |= D3DCLEAR_ZBUFFER;
+		return ret;
 	}
 }
+
+#endif // XD3D9RenderUtil
 
 #endif
