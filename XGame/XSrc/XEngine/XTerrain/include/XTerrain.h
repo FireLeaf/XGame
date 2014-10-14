@@ -68,8 +68,8 @@ class XTerrain : public XRenderEntity
 public:
 	typedef stdext::hash_map<XAnchorPos, XArea*> PosToAreaMap;
 public:
-	virtual void Render(XRII* rii, XRenderArgs* args) = 0;
-	void Tick(xuint32 time_delta);
+	virtual void Render(XRII* rii, XRenderArgs* args);
+	void Tick(const XVector3& pos, xuint32 time_delta);
 protected:
 	float chunk_side;//一个chunk的边长
 	int chunk_area_edges;//一个chunk_area边含有的chunk数
