@@ -156,6 +156,10 @@
 				RelativePath=".\src\XTerrain.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\src\XTerrainLoader.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -168,6 +172,10 @@
 			</File>
 			<File
 				RelativePath=".\include\XTerrain.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\XTerrainLoader.h"
 				>
 			</File>
 		</Filter>

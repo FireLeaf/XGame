@@ -61,6 +61,7 @@ public:
 protected:
 	XAnchorPos pos;
 	PosToChunkAreaMap map_pos_chunkarea;
+	XAABB aabb;
 };
 
 class XTerrain : public XRenderEntity
@@ -68,6 +69,7 @@ class XTerrain : public XRenderEntity
 public:
 	typedef stdext::hash_map<XAnchorPos, XArea*> PosToAreaMap;
 public:
+	XTerrain();
 	virtual void Render(XRII* rii, XRenderArgs* args);
 	void Tick(const XVector3& pos, xuint32 time_delta);
 protected:
@@ -81,6 +83,9 @@ protected:
 //lod factor
 	float factor_lod1;
 	float factor_lod2;
+//可视设置
+	int visable_length;//可视长度
+	int unload_length;//卸载距离
 };
 
 #endif // XTerrain

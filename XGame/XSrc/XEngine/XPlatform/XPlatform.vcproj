@@ -157,6 +157,10 @@
 				RelativePath=".\src\XType.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\src\Win\XWinSys.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -169,6 +173,10 @@
 			</File>
 			<File
 				RelativePath=".\include\XRefObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\XSys.h"
 				>
 			</File>
 			<File

@@ -14,8 +14,11 @@
 class XTerrainLoader
 {
 public:
-	void LoadTerrain();
-	void LoadArea();
+	XTerrainLoader(XTerrain* pTerrain);
+	void InitTerrain();
+	void LoadChunkArea(const XAnchorPos& pos);
+protected:
+	
 };
 
 #endif
