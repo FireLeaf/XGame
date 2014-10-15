@@ -550,6 +550,7 @@ public:
 	typename I* indices_pool;//索引池数据
 	xint32 asset_indices_id;//索引
 	XIndexPool* asset_index_pool;
+	xint32 tri_count;
 };
 
 struct ShaderParam 

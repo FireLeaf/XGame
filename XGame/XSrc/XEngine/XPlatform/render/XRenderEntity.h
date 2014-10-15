@@ -41,6 +41,8 @@ struct XRenderArgs
 	XMatrix mat_view;
 	XMatrix mat_proj;
 	XMatrix mat_view_proj;
+	XCamera* ptr_camera;
+	XFrustum* ptr_frustum;
 	xint32 cur_render_flag;
 };
 

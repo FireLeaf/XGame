@@ -39,6 +39,11 @@ struct TerrainIndexBuffer16 : public XBufferData<xushort>
 struct XAnchorPos 
 {
 	int x,y,z;
+
+	bool operator < (const XAnchorPos& pos) const 
+	{
+		//return x
+	}
 };
 
 struct XChunk//一个小区块
@@ -52,12 +57,16 @@ struct XChunkArea//共享一个顶点数据块
 	XGeometryData<TerrainVertexBufferPTX0N, TerrainIndexBuffer16> geometry_data;
 	XMateriaEntity* material_entity;
 	XAABB aabb;
+public:
+	void Render(XRII* rii, XRenderArgs* args);
 };
 
 struct XArea//
 {
 public:
 	typedef stdext::hash_map<XAnchorPos, XChunkArea> PosToChunkAreaMap;
+public:
+	void Render(XRII* rii, XRenderArgs* args);
 protected:
 	XAnchorPos pos;
 	PosToChunkAreaMap map_pos_chunkarea;
@@ -72,6 +81,11 @@ public:
 	XTerrain();
 	virtual void Render(XRII* rii, XRenderArgs* args);
 	void Tick(const XVector3& pos, xuint32 time_delta);
+
+	void ThreadLoadChunkArea(XChunkArea*);
+protected:
+	void ClearLod();
+	int GetLod();
 protected:
 	float chunk_side;//一个chunk的边长
 	int chunk_area_edges;//一个chunk_area边含有的chunk数
@@ -80,12 +94,16 @@ protected:
 	float area_side;// = chunk_area_side * area_edges
 //area
 	PosToAreaMap map_pos_area;
+	//std::vector<>
 //lod factor
 	float factor_lod1;
 	float factor_lod2;
 //可视设置
-	int visable_length;//可视长度
+	int visable_chunks;//可视长度
 	int unload_length;//卸载距离
+//
+	int* lod;//(2 * visable_chunks + 1) * (2 * visable_chunks + 1)
+	XAnchorPos anchor_pos;//当前点
 };
 
 #endif // XTerrain

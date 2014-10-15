@@ -127,3 +127,5 @@
 /XGame/XLib/*.lib
 /XGame/XSrc/XEngine/XTerrain/*.txt
 /XGame/XSrc/XEngine/XTerrain/*.user
+/XGame/XSrc/XEngine/XAudio/XAudio/*.txt
+/XGame/XSrc/XEngine/XAudio/XAudio/*.user

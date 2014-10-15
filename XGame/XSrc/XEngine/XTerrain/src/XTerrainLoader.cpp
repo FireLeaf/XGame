@@ -9,3 +9,9 @@
 *******************************************************************************/
 
 #include "XTerrainLoader.h"
+
+XTerrainLoader::XTerrainLoader()
+{
+	ptr_terrain = NULL;
+}
+

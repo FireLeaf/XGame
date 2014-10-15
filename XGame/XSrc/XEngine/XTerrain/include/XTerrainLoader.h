@@ -18,7 +18,7 @@ public:
 	void InitTerrain();
 	void LoadChunkArea(const XAnchorPos& pos);
 protected:
-	
+	XTerrain* ptr_terrain;
 };
 
 #endif
