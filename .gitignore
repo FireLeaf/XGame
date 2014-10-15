@@ -129,3 +129,4 @@
 /XGame/XSrc/XEngine/XTerrain/*.user
 /XGame/XSrc/XEngine/XAudio/XAudio/*.txt
 /XGame/XSrc/XEngine/XAudio/XAudio/*.user
+/XGame/XInc/Win/*.cpp
