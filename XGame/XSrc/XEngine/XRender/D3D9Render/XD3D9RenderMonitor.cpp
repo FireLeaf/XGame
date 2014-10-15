@@ -44,7 +44,7 @@ void XD3D9RenderMonitor::MonitorRender(XRenderScene* scene)
 // 	}
 
 	//back_ground
-	for (int i = 0; i < scene->background_entities.size(); i++)
+	for (int i = 0; i < (int)scene->background_entities.size(); i++)
 	{
 		ra.cur_render_flag = X_ACTOR_BACKGROUND;
 		scene->background_entities[i]->Render(&d3d9rii, &ra);
@@ -53,7 +53,7 @@ void XD3D9RenderMonitor::MonitorRender(XRenderScene* scene)
 	//shadow
 
 	//oqupae
-	for (int i = 0; i < scene->opaque_entities.size(); i++)
+	for (int i = 0; i < (int)scene->opaque_entities.size(); i++)
 	{
 		ra.cur_render_flag = X_RENDER_OPAQUE;
 		scene->opaque_entities[i]->Render(&d3d9rii, &ra);

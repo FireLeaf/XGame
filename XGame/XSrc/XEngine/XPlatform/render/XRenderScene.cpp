@@ -79,7 +79,7 @@ void XRenderScene::ClassifyRenderList()
 	XFrustum frustum;
 	Clear();
 
-	for (int i = 0; i < all_entities.size(); i++)
+	for (int i = 0; i < (int)all_entities.size(); i++)
 	{
 		XRenderEntity* entity = all_entities[i];
 		if (!frustum.DetectAABB(entity->GetAABB()))

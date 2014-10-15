@@ -77,7 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /y /s /r /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\render\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\win\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\file\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\manager\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\math\*.h&quot; &quot;..\..\..\XInc&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /y /s /r /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\render\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\win\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\file\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\manager\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\math\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -154,11 +154,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\XType.cpp"
+				RelativePath=".\src\XSys.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Win\XWinSys.cpp"
+				RelativePath=".\src\XType.cpp"
 				>
 			</File>
 		</Filter>
@@ -197,6 +197,14 @@
 		<Filter
 			Name="Win"
 			>
+			<File
+				RelativePath=".\include\Win\XWinSys.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\Win\XWinSysThread.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\include\Win\XWinType.h"
 				>

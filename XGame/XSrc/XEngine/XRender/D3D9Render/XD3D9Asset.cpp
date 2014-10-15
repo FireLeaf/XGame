@@ -35,7 +35,7 @@ void XD3D9Texture2D::UpdateAsset(XAssetMonitor* pMonitor)
 			m_pD3D92DTexture->GetLevelDesc(0, &desc);
 			if (desc.Width != m_formatDesc.width
 				|| desc.Height != m_formatDesc.height
-				|| desc.Pool != (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic)
+				|| desc.Pool != (D3DPOOL)RenderUtil::GetAssetManageType((bool)m_bDynamic)
 				|| desc.Format != (D3DFORMAT)RenderUtil::GetTexFormat(m_formatDesc.tex_format)
 				)
 			{
@@ -47,7 +47,7 @@ void XD3D9Texture2D::UpdateAsset(XAssetMonitor* pMonitor)
 		}
 		if (bReCreate)
 		{
-			HRESULT hr = x_ptr_d3ddevice->CreateTexture(m_formatDesc.width, m_formatDesc.height, pixelData.generate_level, 0, (D3DFORMAT)RenderUtil::GetTexFormat(m_formatDesc.tex_format), (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic), &m_pD3D92DTexture, NULL);
+			HRESULT hr = x_ptr_d3ddevice->CreateTexture(m_formatDesc.width, m_formatDesc.height, pixelData.generate_level, 0, (D3DFORMAT)RenderUtil::GetTexFormat(m_formatDesc.tex_format), (D3DPOOL)RenderUtil::GetAssetManageType((bool)m_bDynamic), &m_pD3D92DTexture, NULL);
 			if (FAILED(hr))
 			{
 				Assert(0);
@@ -71,7 +71,7 @@ void XD3D9Texture2D::UpdateAsset(XAssetMonitor* pMonitor)
 			xbyte* pix_buffer = (xbyte*)lockRc.pBits;
 			xint32 lock_max_pix = lockRc.Pitch / iPixelStride;
 			xint32 pix_pitch = pixelData.level_data[i].width * iPixelStride;
-			for (int j = 0; j < dc.Height && j < pixelData.level_data[i].height; j++)
+			for (int j = 0; j < (int)dc.Height && j < pixelData.level_data[i].height; j++)
 			{
 				memcpy(pix_buffer + j * lockRc.Pitch, pixelData.level_data[i].ptr_pixel + j * pix_pitch, xMin(lock_max_pix * iPixelStride, pix_pitch));
 			}
@@ -105,7 +105,7 @@ void XD3D9TextureCube::UpdateAsset(XAssetMonitor* pMonitor)
 			{
 				if (desc[i].Width != m_formatDesc.width
 				|| desc[i].Height != m_formatDesc.height
-				|| desc[i].Pool != (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic)
+				|| desc[i].Pool != (D3DPOOL)RenderUtil::GetAssetManageType((bool)m_bDynamic)
 				|| desc[i].Format != (D3DFORMAT)RenderUtil::GetTexFormat(m_formatDesc.tex_format)
 				)
 				{
@@ -140,7 +140,7 @@ void XD3D9VertexPool::UpdateAsset(XAssetMonitor* pMonitor)
 // 			return;
 // 		}
 
-		HRESULT hr = x_ptr_d3ddevice->CreateVertexBuffer(m_VertexPoolDesc.count, 0, 0, (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic), &m_pD3D9VertexBuffer, NULL);
+		HRESULT hr = x_ptr_d3ddevice->CreateVertexBuffer(m_VertexPoolDesc.count, 0, 0, (D3DPOOL)RenderUtil::GetAssetManageType((bool)m_bDynamic), &m_pD3D9VertexBuffer, NULL);
 		if (FAILED(hr))
 		{
 			Assert(0);
@@ -170,7 +170,7 @@ void XD3D9IndexPool::UpdateAsset(XAssetMonitor* pMonitor)
 // 			return;
 // 		}
 
-		HRESULT hr = x_ptr_d3ddevice->CreateIndexBuffer(m_IndexPoolDesc.count, 0, (D3DFORMAT)RenderUtil::GetIndexBits(m_IndexPoolDesc.type), (D3DPOOL)RenderUtil::GetAssetManageType(m_bDynamic), &m_pD3D9IndexBuffer, NULL);
+		HRESULT hr = x_ptr_d3ddevice->CreateIndexBuffer(m_IndexPoolDesc.count, 0, (D3DFORMAT)RenderUtil::GetIndexBits(m_IndexPoolDesc.type), (D3DPOOL)RenderUtil::GetAssetManageType((bool)m_bDynamic), &m_pD3D9IndexBuffer, NULL);
 		if (FAILED(hr))
 		{
 			Assert(0);
@@ -195,9 +195,9 @@ void XD3D9VertexAttribute::UpdateAsset(XAssetMonitor* pMonitor)
 		const XVertexAttributeDesc& vad = m_VertexAttributeDesc;
 		D3DVERTEXELEMENT9 decl[MAX_FVF_DECL_SIZE] = {D3DDECL_END(),};
 		int cur_ele = 0;
-		for (int i = 0; i < vad.vecVertexElement.size(); i++)
+		for (int i = 0; i < (int)vad.vecVertexElement.size(); i++)
 		{
-			for (int j = 0; j < vad.vecVertexElement[i].vecElement.size(); j++)
+			for (int j = 0; j < (int)vad.vecVertexElement[i].vecElement.size(); j++)
 			{
 				const Vertex_Decl_Element& ele = vad.vecVertexElement[i].vecElement[j];
 				D3DVERTEXELEMENT9 elem = 
@@ -349,7 +349,7 @@ void XD3D9VertexShader::UpdateAsset(XAssetMonitor* pMonitor)
 //		}
 		
 		D3DXMACRO macro[XVertexShaderDesc::MAX_SHADER_MARCO] = {NULL,};
-		for (int i = 0; i < m_VertexShaderDesc.marcos.size(); i++)
+		for (int i = 0; i < (int)m_VertexShaderDesc.marcos.size(); i++)
 		{
 			macro[i].Name = m_VertexShaderDesc.marcos[i].name.c_str();
 			macro[i].Definition = m_VertexShaderDesc.marcos[i].definition.c_str();
@@ -428,7 +428,7 @@ void XD3D9PixelShader::UpdateAsset(XAssetMonitor* pMonitor)
 		}
 
 		D3DXMACRO macro[XVertexShaderDesc::MAX_SHADER_MARCO] = {NULL,};
-		for (int i = 0; i < m_PixelShaderDesc.marcos.size(); i++)
+		for (int i = 0; i < (int)m_PixelShaderDesc.marcos.size(); i++)
 		{
 			macro[i].Name = m_PixelShaderDesc.marcos[i].name.c_str();
 			macro[i].Definition = m_PixelShaderDesc.marcos[i].definition.c_str();

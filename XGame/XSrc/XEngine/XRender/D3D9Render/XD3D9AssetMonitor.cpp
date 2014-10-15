@@ -36,7 +36,7 @@ void XD3D9AssetMonitor::UpdateAsset(XAsset* pAsset)
 	}
 }
 
-XAsset* XD3D9AssetMonitor::CreateAsset(ENUM_ASSET_TYPE asset_type, xbool bDynamic)
+XAsset* XD3D9AssetMonitor::CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic)
 {
 	switch (asset_type)
 	{

@@ -14,9 +14,9 @@
 namespace AssetUtil
 {
 	XVertexAttribute* GetVertexAttribute(const Vertex_Decl_Element* vde);
-	XVertexPool* GetVertexPool(const XVertexPoolDesc& desc, xbool dynamic);
-	XIndexPool* GetIndexPool(const XIndexPoolDesc& desc, xbool dynamic);
-	XTexture2D* GetTexture2D(const XTexFormatDesc& desc, const XTextureData& data, xbool dynamic);
+	XVertexPool* GetVertexPool(const XVertexPoolDesc& desc, bool dynamic);
+	XIndexPool* GetIndexPool(const XIndexPoolDesc& desc, bool dynamic);
+	XTexture2D* GetTexture2D(const XTexFormatDesc& desc, const XTextureData& data, bool dynamic);
 	XVertexShader* GetVertexShader(const XVertexShaderDesc& desc);
 	XPixelShader* GetPixelShader(const XPixelShaderDesc& desc);
 	XMateriaEntity* GetMaterialEntity(const MaterialEntityDesc& desc);

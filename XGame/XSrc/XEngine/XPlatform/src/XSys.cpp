@@ -1,12 +1,9 @@
 /**************************************************************************
-/*		FileName: XWinSys.cpp
+/*		FileName: XSys.cpp
 /*		FileDesc: 
 /*		FileAuthor: YangCao
-/*		CreateTime: 2014/10/14 20:30:22
+/*		CreateTime: 2014/10/15 22:12:46
 /*		CopyRight: yc 
 /*************************************************************************/
 
-namespace XSys
-{
-	class 
-}
+#include "XSys.h"

@@ -121,15 +121,15 @@ public:
 	virtual void UpdateAsset(XAssetMonitor* pMonitor) {}//{pMonitor->UpdateAsset(this);}
 	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}//{pMonitor->ReleaseAsset(this);}
 	void Dirty(){m_bDirty = true;}
-	xbool Dynamic(){return m_bDynamic;}
-	void SetDynamic(xbool dynamic){m_bDynamic = dynamic;}
+	bool Dynamic(){return m_bDynamic;}
+	void SetDynamic(bool dynamic){m_bDynamic = dynamic;}
 	xint32 GetAssetID(){return uAssetDataID;}
 	void SetAssetID(xint32 id){ uAssetDataID = id;}
 public:
 	ENUM_ASSET_TYPE m_emAssetType;
 	xuint32 uAssetDataID;//数据的唯一ID
-	xbool m_bDirty;//数据污染
-	xbool m_bDynamic;//是否是动态的
+	bool m_bDirty;//数据污染
+	bool m_bDynamic;//是否是动态的
 };
 
 struct XVertexPoolDesc 
@@ -312,13 +312,13 @@ public:
 			return false;
 		}
 
-		for (int i = 0; i < ves.size(); i++)
+		for (int i = 0; i < (int)ves.size(); i++)
 		{
 			if (vecVertexElement[i].vecElement.size() != ves[i].vecElement.size())
 			{
 				return false;
 			}
-			for (int j = 0; j < vecVertexElement[i].vecElement.size(); j++)
+			for (int j = 0; j < (int)vecVertexElement[i].vecElement.size(); j++)
 			{
 				const VertexElement::Element& a = vecVertexElement[i].vecElement[j];
 				const VertexElement::Element& b = ves[i].vecElement[j];
@@ -427,7 +427,7 @@ struct XVertexShaderDesc
 		{
 			return false;
 		}
-		for(int i = 0; i < marcos.size(); i++)
+		for(int i = 0; i < (int)marcos.size(); i++)
 		{
 			if (!(marcos[i] == vsd.marcos[i]))
 			{
@@ -483,7 +483,7 @@ struct XPixelShaderDesc
 		{
 			return false;
 		}
-		for(int i = 0; i < marcos.size(); i++)
+		for(int i = 0; i < (int)marcos.size(); i++)
 		{
 			if (!(marcos[i] == vsd.marcos[i]))
 			{
@@ -529,7 +529,7 @@ public:
 			indices_pool = NULL;
 		}
 
-		for (int i = 0; i < vertex_pools.size(); i++)
+		for (int i = 0; i < (int)vertex_pools.size(); i++)
 		{
 			if (vertex_pools[i])
 			{

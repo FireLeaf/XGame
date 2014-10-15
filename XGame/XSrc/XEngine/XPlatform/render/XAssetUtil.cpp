@@ -99,14 +99,14 @@ namespace AssetUtil
 			iCurIndex++;
 		}
 		int i = 0;
-		for (; i < cache.cacheDeclElements.size(); i++)
+		for (; i < (int)cache.cacheDeclElements.size(); i++)
 		{
 			if (cache.cacheDeclElements[i].first.size() != vecVDE.size())
 			{
 				continue;
 			}
 			int j = 0;
-			for ( ; j < vecVDE.size(); j++)
+			for ( ; j < (int)vecVDE.size(); j++)
 			{
 				if (cache.cacheDeclElements[i].first[i] != vecVDE[i])
 				{
@@ -114,13 +114,13 @@ namespace AssetUtil
 				}
 			}
 
-			if (j >= vecVDE.size())
+			if (j >= (int)vecVDE.size())
 			{
 				break;
 			}
 		}
 
-		if (i < cache.cacheDeclElements.size())
+		if (i < (int)cache.cacheDeclElements.size())
 		{
 			return cache.cacheDeclElements[i].second;
 		}
@@ -128,7 +128,7 @@ namespace AssetUtil
 		return cache.CreateVertexAttribute(vde, vecVDE);
 	}
 
-	XVertexPool* GetVertexPool(const XVertexPoolDesc& desc, xbool dynamic)
+	XVertexPool* GetVertexPool(const XVertexPoolDesc& desc, bool dynamic)
 	{
 		XVertexPool* ptr_asset = (XVertexPool*)x_ptr_asset_monitor->CreateAsset(ASSET_VERTEX_POOL, dynamic);
 		if (!ptr_asset)
@@ -140,7 +140,7 @@ namespace AssetUtil
 		return ptr_asset;
 	}
 
-	XIndexPool* GetIndexPool(const XIndexPoolDesc& desc, xbool dynamic)
+	XIndexPool* GetIndexPool(const XIndexPoolDesc& desc, bool dynamic)
 	{
 		XIndexPool* ptr_asset = (XIndexPool*)x_ptr_asset_monitor->CreateAsset(ASSET_INDEX_POOL, dynamic);
 		if (!ptr_asset)
@@ -152,7 +152,7 @@ namespace AssetUtil
 		return ptr_asset;
 	}
 
-	XTexture2D* GetTexture2D(const XTexFormatDesc& desc, const XTextureData& data, xbool dynamic)
+	XTexture2D* GetTexture2D(const XTexFormatDesc& desc, const XTextureData& data, bool dynamic)
 	{
 		XTexture2D* ptr_asset = (XTexture2D*)x_ptr_asset_monitor->CreateAsset(ASSET_TEXTURE_2D, dynamic);
 		if (!ptr_asset)

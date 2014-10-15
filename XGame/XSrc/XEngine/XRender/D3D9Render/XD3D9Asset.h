@@ -168,7 +168,7 @@ public:
 	{
 		D3DXCONSTANTTABLE_DESC table_desc;
 		m_pD3DXConstantTable->GetDesc(&table_desc);
-		for (int i = 0; i < table_desc.Constants; i++)
+		for (int i = 0; i < (int)table_desc.Constants; i++)
 		{
 			D3DXHANDLE handle = m_pD3DXConstantTable->GetConstant(NULL, i);
 			if (handle)

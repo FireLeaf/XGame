@@ -20,7 +20,7 @@ void XD3D9RII::DrawIndexEntity(XVertexAttribute* attrib,
 							   xuint32 tri_count )
 {
 	x_ptr_d3ddevice->SetIndices(((XD3D9IndexPool*)indices)->GetD3D9IndexBuffer());
-	for (int i = 0; i < vertex_pools.size(); i++)
+	for (int i = 0; i < (int)vertex_pools.size(); i++)
 	{
 		if(vertex_pools[i])
 			x_ptr_d3ddevice->SetStreamSource(i, ((XD3D9VertexPool*)(vertex_pools[i]))->GetD3D9VertexBuffer(), 0, attrib->GetVertexAttributeDesc().vecVertexElement[i].stride);

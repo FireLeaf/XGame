@@ -11,7 +11,7 @@
 #include "XAssetUtil.h"
 #include "XAssetLoader.h"
 
-XTexture2D* XTextureManager::LoadTexture2D(const XTexFormatDesc& desc, const XTextureData& data, xbool dynamic)
+XTexture2D* XTextureManager::LoadTexture2D(const XTexFormatDesc& desc, const XTextureData& data, bool dynamic)
 {
 	if (TEXTURE_LOAD_FROM_FILE != desc.from)
 	{

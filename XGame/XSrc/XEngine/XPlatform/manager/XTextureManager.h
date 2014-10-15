@@ -25,7 +25,7 @@ public:
 		operator size_t () const
 		{
 			xint64 value = 0;
-			for (int i = 0; i < path.length(); i++)
+			for (int i = 0; i < (int)path.length(); i++)
 			{
 				value += path[i];
 			}
@@ -39,7 +39,7 @@ public:
 	};
 	typedef XStlext::hash_map<TexKey, xint32> PathToAssetIDMap;
 public:
-	XTexture2D* LoadTexture2D(const XTexFormatDesc& desc, const XTextureData& data, xbool dynamic);
+	XTexture2D* LoadTexture2D(const XTexFormatDesc& desc, const XTextureData& data, bool dynamic);
 protected:
 	PathToAssetIDMap map_path_to_assetid;
 	xint32 default_asset_id;//Ä¬ÈÏµÄÆåÅÌ¸ñ

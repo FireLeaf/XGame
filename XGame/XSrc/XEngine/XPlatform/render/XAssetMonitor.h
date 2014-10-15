@@ -34,7 +34,7 @@ public:
 	}
 public:
 	virtual void UpdateAsset(XAsset* pAsset) = 0;
-	virtual XAsset* CreateAsset(ENUM_ASSET_TYPE asset_type, xbool bDynamic) = 0;
+	virtual XAsset* CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic) = 0;
 	virtual void ReleaseAsset(XAsset* pAsset) = 0;
 	virtual void ResetAsset() = 0;
 protected:

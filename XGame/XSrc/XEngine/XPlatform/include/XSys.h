@@ -9,15 +9,91 @@
 #ifndef __XSYS__H
 #define __XSYS__H
 
+#include "XType.h"
+
+class XMutex
+{
+public:
+	virtual void Lock() = 0;
+	virtual void Unlock() = 0;
+};
+
+class XEvent
+{
+
+};
+
+struct XJobDesc 
+{
+
+};
+
+typedef xint32 (*pfnJobProc)(XJobDesc* parm);
+
+class XThread;
+
+struct XJob
+{
+	XJobDesc* desc;
+	pfnJobProc job_proc;
+//	XThread* thread;
+	XJob():desc(NULL), job_proc(NULL)/*, thread(NULL)*/{}
+};
+
+class XThread
+{
+public:
+	enum
+	{
+		LOWER_PRIORITY,
+		NORMAL_PRIORITY,
+		HIGH_PRIORITY,
+		PRIORITY_NUM,
+	};
+public:
+	XThread():job(), job_mutex(NULL){}
+	virtual ~XThread();
+public:
+	virtual void Suppend() = 0;
+	virtual void Stop() = 0;
+	virtual void Resume() = 0;
+	virtual void Run() = 0;
+protected:
+	//std::vector<XJob> jobs[PRIORITY_NUM];
+	XJob job;
+	XMutex* job_mutex;//
+};
+
+class XThreadPool
+{
+public:
+	enum
+	{
+		RUN_EVENT,
+		PAUSE_EVENT,
+		EXIT_EVENT,
+		EVENT_NUM,
+	};
+public:
+	XThreadPool();
+	virtual ~XThreadPool();
+
+	virtual bool CreateThreadPool(int thread_count) = 0;//
+	virtual void ReleaseThreadPool() = 0;
+	virtual void PauseThreadPool() = 0;
+	virtual void ResumeThreadPool() = 0;
+
+	virtual void DoJob(const XJob& job) = 0;
+protected:
+};
+	
 namespace XSys
 {
-	class XMutex
-	{
-	public:
-		virtual void Lock() = 0;
-		virtual void Unlock() = 0;
-	};
-	class XLock;
-}
+	XMutex* XCreateMutex();
+	void XDeleteMutex(XMutex*);
+	XThread* XCreateThread(pfnJobProc func, XJobDesc* desc);
+	bool XReleaseThread(XThread*);
+	XThreadPool* XCreateThreadPool(int thread_count);
+};
 
 #endif // XSys
