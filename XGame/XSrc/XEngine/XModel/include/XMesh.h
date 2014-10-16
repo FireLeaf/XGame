@@ -87,6 +87,7 @@ struct MeshIndexBuffer16 : public XBufferData<xushort>
 class XMesh : public XRenderEntity
 {
 public:
+	XMesh() : material_entity(NULL){}
 	virtual void Render(XRII* rii, XRenderArgs* args);
 public:
 	bool InitMesh();

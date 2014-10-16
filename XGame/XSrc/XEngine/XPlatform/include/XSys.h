@@ -14,6 +14,8 @@
 class XMutex
 {
 public:
+	virtual ~XMutex(){}
+public:
 	virtual void Lock() = 0;
 	virtual void Unlock() = 0;
 };
@@ -52,7 +54,7 @@ public:
 	};
 public:
 	XThread():job(), job_mutex(NULL){}
-	virtual ~XThread();
+	virtual ~XThread(){}
 public:
 	virtual void Suppend() = 0;
 	virtual void Stop() = 0;
@@ -75,8 +77,7 @@ public:
 		EVENT_NUM,
 	};
 public:
-	XThreadPool();
-	virtual ~XThreadPool();
+	virtual ~XThreadPool(){}
 
 	virtual bool CreateThreadPool(int thread_count) = 0;//
 	virtual void ReleaseThreadPool() = 0;

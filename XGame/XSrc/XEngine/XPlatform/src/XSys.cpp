@@ -7,3 +7,14 @@
 /*************************************************************************/
 
 #include "XSys.h"
+
+namespace XSys
+{
+	void XDeleteMutex(XMutex* mutex)
+	{
+		if (mutex)
+		{
+			delete mutex;
+		}
+	}
+}

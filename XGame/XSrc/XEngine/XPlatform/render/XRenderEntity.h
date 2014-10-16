@@ -12,6 +12,7 @@
 #include "XMath.h"
 #include "XVector.h"
 #include "XMatrix.h"
+#include "XCamera.h"
 
 struct CommonVertexPos 
 {

@@ -47,7 +47,7 @@ public:
 	{
 		if (m_hThread)
 		{
-			
+			WaitForSingleObject(m_hThread, INFINITE);
 		}
 		return true;
 	}
@@ -62,8 +62,10 @@ public:
 		{
 			job.job_proc(job.desc);
 		}
-		ReleaseThread();
+		//ReleaseThread();
 	}
+
+	HANDLE GetHandle(){return m_hThread;}
 protected:
 	HANDLE m_hThread;
 };
@@ -97,11 +99,11 @@ class XWinThreadPool : public XThreadPool
 {
 public:
 	XWinThreadPool();
-
+	virtual ~XWinThreadPool(){}
 	virtual bool CreateThreadPool(int thread_count);//
 	virtual void ReleaseThreadPool();
-	virtual void PauseThreadPool();
-	virtual void ResumeThreadPool();
+	virtual void PauseThreadPool(){}
+	virtual void ResumeThreadPool(){}
 
 	HANDLE* GetWaitEvents(){return sync_events;}
 	
@@ -112,6 +114,7 @@ public:
 		ptr_job->job_proc = job.job_proc;
 		ptr_job->desc = job.desc;
 		job_queue.push_back(ptr_job);
+		SetEvent(sync_events[RUN_EVENT]);
 		job_mutex->Unlock();
 	}
 
@@ -122,10 +125,21 @@ public:
 		{
 			XJob* ret = (XJob*)(*(job_queue.begin()));
 			job_queue.pop_front();
+			
+			if (job_queue.size())
+			{
+				SetEvent(sync_events[RUN_EVENT]);
+			}
+			else
+			{
+				ResetEvent(sync_events[RUN_EVENT]);
+			}
 			job_mutex->Unlock();
 			return ret;
 		}
+		ResetEvent(sync_events[RUN_EVENT]);
 		job_mutex->Unlock();
+	
 		return NULL;
 	}
 protected:
@@ -152,6 +166,7 @@ xint32 TPJobProc(XJobDesc* parm)
 		return -1;
 	}
 	while(1)
+
 	{
 		int ret = WaitForMultipleObjects(XThreadPool::EVENT_NUM, (const HANDLE*)pool->GetWaitEvents(), FALSE, INFINITE);
 		switch (ret - WAIT_OBJECT_0)
@@ -183,8 +198,9 @@ XWinThreadPool::XWinThreadPool()
 {
 	for (int i = 0; i < EVENT_NUM; i++)
 	{
-		sync_events[i] = NULL;
+		sync_events[i] = CreateEvent(NULL, i == RUN_EVENT, FALSE, NULL)/*XSys::*/;
 	}
+	job_mutex = XSys::XCreateMutex();
 }
 
 
@@ -214,6 +230,21 @@ void XWinThreadPool::ReleaseThreadPool()
 	SetEvent(sync_events[EXIT_EVENT]);
 	for (int i = 0; i < (int)thread_pool.size(); i++)
 	{
-		
+		HANDLE hThread = ((XWinThread*)thread_pool[i])->GetHandle();
+		WaitForSingleObject(hThread, INFINITE);
 	}
+}
+
+XThreadPool* XSys::XCreateThreadPool(int thread_count)
+{
+	XWinThreadPool* thread = new XWinThreadPool();
+	if (thread)
+	{
+		if (thread->CreateThreadPool(thread_count))
+		{
+			return thread;
+		}
+		delete thread;
+	}
+	return NULL;
 }

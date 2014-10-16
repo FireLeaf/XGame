@@ -11,10 +11,42 @@
 
 CXCClient client;
 XClient* x_ptr_client = &client;
+XThreadPool* load_pool = NULL;
+XThread* load_thread = NULL;
+
+xint32 Test_Proc(XJobDesc* desc)
+{
+	int a = 0;
+	while (a < 3)
+	{
+		a++;
+		int b = a + 2 * a;
+	}
+	char buf[64] = "\0";
+	sprintf(buf, "%d: job complete!\n", (int)(desc));
+	OutputDebugStringA(buf);
+	return a;
+}
+
+xint32 Test_Proc2(XJobDesc* desc)
+{
+	while (1)
+	{
+		int a = 0;
+		a++;
+		int b = a + 2 * a;
+		break;
+	}
+	char buf[64] = "\0";
+	sprintf(buf, "%d: job complete!\n", (int)(desc));
+	OutputDebugStringA(buf);
+	return 0;
+}
 
 CXCClient::CXCClient()
 {
 	pMesh = NULL;
+	//load_pool = XSys::XCreateThreadPool(2);
 }
 
 CXCClient::~CXCClient()
@@ -24,21 +56,45 @@ CXCClient::~CXCClient()
 		delete pMesh;
 		pMesh = NULL;
 	}
+	if (load_pool)
+	{
+		load_pool->ReleaseThreadPool();
+	}
 }
 
 xbool CXCClient::Init()
 {
-	pMesh = new XMesh;
-	if(!pMesh->LoadMesh("AssetBundle\\model\\test2.AX"))
-	{
-		return false;
-	}
+//	pMesh = new XMesh;
+// 	if(!pMesh->LoadMesh("AssetBundle\\model\\test2.AX"))
+// 	{
+// 		return false;
+// 	}
+
+	load_pool = XSys::XCreateThreadPool(2);
+	XJob job;
+	job.job_proc = Test_Proc;
+	job.desc = (XJobDesc*)(1234567);
+	load_pool->DoJob(job);
+
+	job.job_proc = Test_Proc2;
+	job.desc = (XJobDesc*)(2345678);
+	load_pool->DoJob(job);
+
+//	load_thread = XSys::XCreateThread(Test_Proc, (XJobDesc*)(98765));
 	return true;
 }
 
 void CXCClient::Tick()
 {
-	
+	static int time_acc = 0;
+	time_acc++;
+	if (time_acc % 300)
+	{
+		XJob job;
+		job.job_proc = Test_Proc;
+		job.desc = (XJobDesc*)(1234567 + rand() % 1024);
+		load_pool->DoJob(job);
+	}
 }
 
 void CXCClient::Render(XRenderScene* ptr_render_scene)

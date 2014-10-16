@@ -7,11 +7,23 @@
 /*************************************************************************/
 
 #include "XSys.h"
+#include <windows.h>
+
+class XWinMutex : public XMutex
+{
+public:
+	XWinMutex(){InitializeCriticalSection(&cs);}
+	virtual ~XWinMutex(){DeleteCriticalSection(&cs);}
+	virtual void Lock(){EnterCriticalSection(&cs);}
+	virtual void Unlock(){LeaveCriticalSection(&cs);}
+protected:
+	CRITICAL_SECTION cs;
+};
 
 namespace XSys
 {
-	XMutex* CreateMutex()
+	XMutex* XCreateMutex()
 	{
-		return NULL;
+		return (new XWinMutex());
 	}
 }

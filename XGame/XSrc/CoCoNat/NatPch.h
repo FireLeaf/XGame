@@ -32,3 +32,5 @@
 #include "XRenderUtil.h"
 #include "XMesh.h"
 #include "XFile.h"
+#include "XSys.h"
+#include "XCamera.h"
