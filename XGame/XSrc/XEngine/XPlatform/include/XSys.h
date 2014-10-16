@@ -95,6 +95,7 @@ namespace XSys
 	XThread* XCreateThread(pfnJobProc func, XJobDesc* desc);
 	bool XReleaseThread(XThread*);
 	XThreadPool* XCreateThreadPool(int thread_count);
+	void XReleaseThreadPool(XThreadPool*);
 };
 
 #endif // XSys

@@ -17,4 +17,13 @@ namespace XSys
 			delete mutex;
 		}
 	}
+
+	void XReleaseThreadPool(XThreadPool* pool)
+	{
+		if (pool)
+		{
+			pool->ReleaseThreadPool();
+			delete pool;
+		}
+	}
 }

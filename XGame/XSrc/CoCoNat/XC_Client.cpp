@@ -88,13 +88,6 @@ void CXCClient::Tick()
 {
 	static int time_acc = 0;
 	time_acc++;
-	if (time_acc % 300)
-	{
-		XJob job;
-		job.job_proc = Test_Proc;
-		job.desc = (XJobDesc*)(1234567 + rand() % 1024);
-		load_pool->DoJob(job);
-	}
 }
 
 void CXCClient::Render(XRenderScene* ptr_render_scene)

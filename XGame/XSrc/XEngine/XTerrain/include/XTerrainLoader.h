@@ -11,6 +11,27 @@
 #ifndef __COCONAT_XTERRAINLOADER_H_
 #define __COCONAT_XTERRAINLOADER_H_
 
+struct TerrainHeader 
+{
+	int magic;
+	int version;
+	char map_name[32];
+	float chunk_side;//
+	int chunk_area_edges;
+	float chunk_area_side;
+	int area_edges;
+	float area_side;
+	int area_count;//区域数量
+	int mtrl_count;//用到的材质数量
+
+};
+
+struct AreaInfo 
+{
+	XAnchorPos pos;
+	int* mtrl;
+};
+
 class XTerrainLoader
 {
 public:

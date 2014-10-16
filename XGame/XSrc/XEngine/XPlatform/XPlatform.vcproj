@@ -77,7 +77,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /y /s /r /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\render\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\win\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\file\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\manager\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\math\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\3d\*.h&quot; &quot;..\..\..\XInc\&quot;"
+				CommandLine="xcopy /y /s /r /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\render\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\win\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\file\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\manager\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\math\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\3d\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -283,6 +283,14 @@
 			</File>
 			<File
 				RelativePath=".\manager\XTextureManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\manager\XThreadLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\manager\XThreadLoader.h"
 				>
 			</File>
 		</Filter>

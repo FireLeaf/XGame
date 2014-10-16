@@ -11,6 +11,7 @@
 #include "XRenderContext.h"
 #include "XRenderMonitor.h"
 #include "XRenderScene.h"
+#include "XThreadLoader.h"
 
 XShell::XShell()
 {
@@ -20,6 +21,10 @@ XShell::XShell()
 bool XShell::Init(const XInitContext* ptr_ini_context)
 {
 	x_ptr_render_context->Init(ptr_ini_context->width, ptr_ini_context->height, ptr_ini_context->windowed);
+	if(!XThreadLoader::GetInstance().Init())
+	{
+		return false;
+	}
 
 	if (!x_ptr_client)
 	{

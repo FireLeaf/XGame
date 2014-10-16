@@ -47,7 +47,8 @@ public:
 	{
 		if (m_hThread)
 		{
-			WaitForSingleObject(m_hThread, INFINITE);
+			//WaitForSingleObject(m_hThread, INFINITE);
+			TerminateThread(m_hThread, 0);
 		}
 		return true;
 	}
@@ -198,7 +199,7 @@ XWinThreadPool::XWinThreadPool()
 {
 	for (int i = 0; i < EVENT_NUM; i++)
 	{
-		sync_events[i] = CreateEvent(NULL, i == RUN_EVENT, FALSE, NULL)/*XSys::*/;
+		sync_events[i] = CreateEvent(NULL, i != RUN_EVENT, FALSE, NULL)/*XSys::*/;
 	}
 	job_mutex = XSys::XCreateMutex();
 }
