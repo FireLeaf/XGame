@@ -287,3 +287,33 @@ void XMathVector3TransformCoord(const XMatrix& m, const XVector3& v, XVector3& o
 	o.y = v.x * m(0, 1) + v.y * m(1, 1) + v.z * m(2, 1);
 	o.z = v.x * m(0, 0) + v.y * m(1, 2) + v.z * m(2, 2);
 }
+
+int XRandomInt()
+{
+	return rand();
+}
+
+int XRandomInt(int aMin, int bMax)
+{
+	if (aMin >= bMax)
+	{
+		return aMin;
+	}
+
+	return ((rand() % (bMax - aMin)) + aMin);
+}
+
+int XRandomFloat()
+{
+	return (float)XRandomInt() / (float)RAND_MAX;
+}
+
+int XRandomFloat(float aMin, float bMax)
+{
+	if (aMin>= bMax)
+	{
+		return aMin;
+	}
+
+	return (aMin + (bMax - aMin) * XRandomFloat());
+}

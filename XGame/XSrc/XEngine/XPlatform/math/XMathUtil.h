@@ -39,6 +39,13 @@ void XMathMatrixPerspectiveFovRH(XMatrix& m, float fovy,float Aspect,float zn, f
 //vector-matrix
 void XMathVector3Transform(const XMatrix& m, const XVector3& v, XVector3& o);
 void XMathVector3TransformCoord(const XMatrix& m, const XVector3& v, XVector3& o);
+
+int XRandomInt();
+int XRandomInt(int aMin, int bMax);
+int XRandomFloat();
+int XRandomFloat(float aMin, float bMax);
+void XRandomVector3();
+
 #endif // XMathUtil
 
 

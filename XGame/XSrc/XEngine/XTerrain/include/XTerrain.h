@@ -9,6 +9,8 @@
 #ifndef __XTERRAIN__H
 #define __XTERRAIN__H
 
+#include "XRenderEntity.h"
+
 //带有顶点，UV，法线
 template<int N>
 struct TerrainVertexPTXnN
@@ -16,14 +18,6 @@ struct TerrainVertexPTXnN
 	float x,y,z;
 	X3DVector2 uv[N];
 	float nx, ny, nz;
-};
-
-const static Vertex_Decl_Element PTX0N_elements[] = 
-{
-	{X_DECLTYPE_FLOAT3, 0, 0, X_DECLUSAGE_POSITION, 0},
-	{X_DECLTYPE_FLOAT2, 12, 0, X_DECLUSAGE_TEXCOORD, 0},
-	{X_DECLTYPE_FLOAT3, 20, 0, X_DECLUSAGE_NORMAL, 0},
-	VERTEX_DECL_END()
 };
 
 struct TerrainVertexBufferPTX0N : public XBufferData<typename TerrainVertexPTXnN<0> >
@@ -56,6 +50,7 @@ struct XChunkArea//共享一个顶点数据块
 	XAnchorPos pos;
 	XGeometryData<TerrainVertexBufferPTX0N, TerrainIndexBuffer16> geometry_data;
 	XMateriaEntity* material_entity;
+	//XVertexAttribute* vertex_attrib;
 	XAABB aabb;
 public:
 	void Render(XRII* rii, XRenderArgs* args);
@@ -67,7 +62,7 @@ public:
 	typedef stdext::hash_map<XAnchorPos, XChunkArea> PosToChunkAreaMap;
 public:
 	void Render(XRII* rii, XRenderArgs* args);
-protected:
+public:
 	XAnchorPos pos;
 	PosToChunkAreaMap map_pos_chunkarea;
 	XAABB aabb;
@@ -77,16 +72,21 @@ class XTerrain : public XRenderEntity
 {
 public:
 	typedef stdext::hash_map<XAnchorPos, XArea*> PosToAreaMap;
+	friend class XTerrainLoader;
 public:
 	XTerrain();
-	virtual void Render(XRII* rii, XRenderArgs* args);
-	void Tick(const XVector3& pos, xuint32 time_delta);
+	bool Init(const char* terrain_file);
 
+	virtual void Render(XRII* rii, XRenderArgs* args);
+
+	void Tick(const XVector3& pos, xuint32 time_delta);
+	void TickIndex(const XVector3& pos);
 	void ThreadLoadChunkArea(XChunkArea*);
 protected:
 	void ClearLod();
 	int GetLod();
 protected:
+	int chunk_edges;//一个chunk 一条边含有的边数
 	float chunk_side;//一个chunk的边长
 	int chunk_area_edges;//一个chunk_area边含有的chunk数
 	float chunk_area_side;//= chunk_side * chunk_area_edges
@@ -104,6 +104,8 @@ protected:
 //
 	int* lod;//(2 * visable_chunks + 1) * (2 * visable_chunks + 1)
 	XAnchorPos anchor_pos;//当前点
+
+	XMateriaEntity* material_entity;
 };
 
 #endif // XTerrain
