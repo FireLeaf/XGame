@@ -12,6 +12,7 @@
 
 XTerrain::XTerrain()
 {
+	edges_side = 0.0f;
 	chunk_side = 0.0f;
 	chunk_area_edges = 0;
 	chunk_area_side = 0.0f;
@@ -42,6 +43,15 @@ bool XTerrain::Init(const char* terrain_file)
 	{
 		return false;
 	}
+	edges_side = 1.0f;
+	chunk_edges = 4;
+	chunk_side = edges_side * chunk_edges;
+	chunk_area_edges = 4;
+	chunk_area_side = chunk_side * chunk_area_edges;
+	area_edges = 36;
+	area_side = chunk_area_side * chunk_area_side;
+
+	ptr_terrain_loader = new XTerrainLoader(this);
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -111,6 +121,8 @@ void XTerrain::ThreadLoadChunkArea(XChunkArea* chunk_area)
 	if (iter == map_pos_area.end())
 	{
 		ptr_area = new XArea;
+		ptr_area->pos = area_pos;
+		map_pos_area[area_pos] = ptr_area;
 	}
 	else
 	{

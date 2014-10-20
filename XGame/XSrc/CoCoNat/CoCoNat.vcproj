@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="XPlatform_d.lib XRender_d.lib XEngine_d.lib XModel_d.lib"
+				AdditionalDependencies="XPlatform_d.lib XRender_d.lib XEngine_d.lib XModel_d.lib XTerrain_d.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\XLib"
 				GenerateDebugInformation="true"
@@ -248,6 +248,14 @@
 			</File>
 			<File
 				RelativePath=".\XC_Client.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XC_World.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XC_World.h"
 				>
 			</File>
 		</Filter>

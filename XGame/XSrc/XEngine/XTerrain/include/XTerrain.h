@@ -96,6 +96,7 @@ protected:
 	void ClearLod();
 	int GetLod();
 protected:
+	float edges_side;//一个最小单位的边长
 	int chunk_edges;//一个chunk 一条边含有的边数
 	float chunk_side;//一个chunk的边长
 	int chunk_area_edges;//一个chunk_area边含有的chunk数

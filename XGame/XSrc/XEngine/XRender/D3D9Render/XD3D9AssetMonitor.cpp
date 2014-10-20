@@ -12,7 +12,7 @@
 #include "XD3D9AssetMonitor.h"
 #include "XD3D9Asset.h"
 
-#define CASE_NEW(a, b) case a:\
+#define ASSET_CASE_NEW(a, b) case a:\
 					  {\
 						b* ptr = new b;\
 						if(ptr) \
@@ -40,14 +40,14 @@ XAsset* XD3D9AssetMonitor::CreateAsset(ENUM_ASSET_TYPE asset_type, bool bDynamic
 {
 	switch (asset_type)
 	{
-		CASE_NEW(ASSET_VERTEX_POOL, XD3D9VertexPool)
-		CASE_NEW(ASSET_INDEX_POOL, XD3D9IndexPool)
-		CASE_NEW(ASSET_TEXTURE_2D, XD3D9Texture2D)
-		CASE_NEW(ASSET_TEXTURE_CUBE, XD3D9TextureCube)
-		CASE_NEW(ASSET_TEXTURE_RENDER, XD3D9RenderTarget)
-		CASE_NEW(ASSET_VERTEX_ATTRIBUTE, XD3D9VertexAttribute)
-		CASE_NEW(ASSET_VERTEX_SHADER, XD3D9VertexShader)
-		CASE_NEW(ASSET_PIXEL_SHADER, XD3D9PixelShader)
+		ASSET_CASE_NEW(ASSET_VERTEX_POOL, XD3D9VertexPool)
+		ASSET_CASE_NEW(ASSET_INDEX_POOL, XD3D9IndexPool)
+		ASSET_CASE_NEW(ASSET_TEXTURE_2D, XD3D9Texture2D)
+		ASSET_CASE_NEW(ASSET_TEXTURE_CUBE, XD3D9TextureCube)
+		ASSET_CASE_NEW(ASSET_TEXTURE_RENDER, XD3D9RenderTarget)
+		ASSET_CASE_NEW(ASSET_VERTEX_ATTRIBUTE, XD3D9VertexAttribute)
+		ASSET_CASE_NEW(ASSET_VERTEX_SHADER, XD3D9VertexShader)
+		ASSET_CASE_NEW(ASSET_PIXEL_SHADER, XD3D9PixelShader)
 	}
 	return NULL;
 }

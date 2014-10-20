@@ -34,3 +34,7 @@
 #include "XFile.h"
 #include "XSys.h"
 #include "XCamera.h"
+#include "XWorld.h"
+
+
+#include "XC_World.h"

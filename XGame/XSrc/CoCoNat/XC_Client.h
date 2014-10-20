@@ -19,4 +19,5 @@ public:
 	virtual void Render(XRenderScene* ptr_render_scene);
 protected:
 	XMesh* pMesh;
+	CXCWorld* ptr_world;
 };

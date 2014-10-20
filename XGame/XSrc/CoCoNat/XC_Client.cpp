@@ -47,6 +47,7 @@ CXCClient::CXCClient()
 {
 	pMesh = NULL;
 	//load_pool = XSys::XCreateThreadPool(2);
+	ptr_world = NULL;
 }
 
 CXCClient::~CXCClient()
@@ -60,15 +61,22 @@ CXCClient::~CXCClient()
 	{
 		load_pool->ReleaseThreadPool();
 	}
+
+	if (ptr_world)
+	{
+		ptr_world->Release();
+		delete ptr_world;
+		ptr_world = NULL;
+	}
 }
 
 xbool CXCClient::Init()
 {
-//	pMesh = new XMesh;
-// 	if(!pMesh->LoadMesh("AssetBundle\\model\\test2.AX"))
-// 	{
-// 		return false;
-// 	}
+	pMesh = new XMesh;
+	if(!pMesh->LoadMesh("AssetBundle\\model\\test2.AX"))
+	{
+		return false;
+	}
 
 	load_pool = XSys::XCreateThreadPool(2);
 	XJob job;
@@ -81,18 +89,26 @@ xbool CXCClient::Init()
 	load_pool->DoJob(job);
 
 //	load_thread = XSys::XCreateThread(Test_Proc, (XJobDesc*)(98765));
+	
+	ptr_world = new CXCWorld;
+	if(!ptr_world || !ptr_world->Init(NULL, XVector3(0.0f, 0.0f, 0.0f)))
+	{
+		return false;
+	}
 	return true;
 }
 
 void CXCClient::Tick()
 {
-	static int time_acc = 0;
-	time_acc++;
+	if (ptr_world)
+	{
+		ptr_world->Tick(50);
+	}
 }
 
 void CXCClient::Render(XRenderScene* ptr_render_scene)
 {
-	XVector3 eye(5.0f, 5.0f, -20.0f), up(0.0f, 1.0f, 0.0f), at(0.0f, 0.0f, 0.0f);
+	XVector3 eye(5.0f, 150.0f, -20.0f), up(0.0f, 1.0f, 0.0f), at(0.0f, 0.0f, 0.0f);
 	XCamera& camera = ptr_render_scene->GetSceneDesc()->camera;
 	XViewPort& viwport = ptr_render_scene->GetSceneDesc()->view_port;
 
@@ -108,5 +124,10 @@ void CXCClient::Render(XRenderScene* ptr_render_scene)
 	if (pMesh)
 	{
 		ptr_render_scene->AddToRenderList(pMesh);
+	}
+
+	if (ptr_world)
+	{
+		ptr_world->Render(ptr_render_scene);
 	}
 }

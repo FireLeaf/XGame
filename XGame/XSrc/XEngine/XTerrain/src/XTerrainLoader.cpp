@@ -11,6 +11,7 @@
 #include "XTerrainLoader.h"
 #include "XAsset.h"
 #include "XAssetUtil.h"
+#include "XMath.h"
 
 const static Vertex_Decl_Element T_PTX0N_elements[] = 
 {
@@ -34,15 +35,20 @@ void XTerrainLoader::LoadChunkArea(const XAnchorPos& pos)
 	chunk_area->geometry_data.vertex_pools.push_back(vertex_pool);
 
 	int vertex_num = (ptr_terrain->chunk_edges * ptr_terrain->chunk_area_edges) + 1;
+	int row_col_num = vertex_num;
 	vertex_num *= vertex_num;
 	vertex_pool->Allocate(vertex_num); 
 	TerrainVertexPTXnN<1>* pVData = NULL;
 	vertex_pool->Lock((void**)&pVData);
-	for (int i = 0; i < vertex_num; i++)
+	for (int i = 0; i < row_col_num; i++)
 	{
-		pVData[i].x = pos.x * ptr_terrain->chunk_area_side + i * ptr_terrain->chunk_side;
-		pVData[i].y = XRandomFloat(0.0f, 256.0f);
-		pVData[i].z = pos.z * ptr_terrain->chunk_area_side + i * ptr_terrain->chunk_side;
+		for (int j = 0; j < row_col_num; j++)
+		{
+			TerrainVertexPTXnN<1>& v = pVData[i * row_col_num + j];
+			v.x = pos.x * ptr_terrain->chunk_area_side + i * ptr_terrain->edges_side;
+			v.y = XRandomFloat(0.0f, 256.0f);
+			v.z = pos.z * ptr_terrain->chunk_area_side + j * ptr_terrain->edges_side;
+		}
 	}
 	XVertexPoolDesc vertex_pool_desc;
 	vertex_pool_desc.buffer = (xbyte*)pVData;
@@ -54,7 +60,7 @@ void XTerrainLoader::LoadChunkArea(const XAnchorPos& pos)
 	vertex_pool->UnLock();
 
 	int index_num = ptr_terrain->chunk_edges * ptr_terrain->chunk_area_edges;
-	int row_col_num = index_num;
+	row_col_num = index_num;
 	index_num = index_num * index_num * 2 * 3;
 	chunk_area->geometry_data.indices_pool = new TerrainIndexBuffer16;
 	chunk_area->geometry_data.indices_pool->Allocate(index_num);
@@ -79,6 +85,8 @@ void XTerrainLoader::LoadChunkArea(const XAnchorPos& pos)
 	index_pool_desc.type = INDEX_16BITS;
 	chunk_area->geometry_data.asset_index_pool = AssetUtil::GetIndexPool(index_pool_desc, true);
 	chunk_area->geometry_data.indices_pool->UnLock();
+	
+	chunk_area->geometry_data.tri_count = row_col_num * row_col_num * 2;
 
 	ptr_terrain->ThreadLoadChunkArea(chunk_area);
 }
