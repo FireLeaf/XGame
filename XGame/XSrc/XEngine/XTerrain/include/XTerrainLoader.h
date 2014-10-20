@@ -11,6 +11,8 @@
 #ifndef __COCONAT_XTERRAINLOADER_H_
 #define __COCONAT_XTERRAINLOADER_H_
 
+#include "XTerrain.h"
+
 struct TerrainHeader 
 {
 	int magic;

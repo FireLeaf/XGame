@@ -130,3 +130,7 @@
 /XGame/XSrc/XEngine/XAudio/XAudio/*.txt
 /XGame/XSrc/XEngine/XAudio/XAudio/*.user
 /XGame/XInc/Win/*.cpp
+/XGame/XSrc/XEngine/XTerrain/Debug/*.htm
+/XGame/XSrc/XEngine/XTerrain/Debug/*.obj
+/XGame/XSrc/XEngine/XTerrain/Debug/*.idb
+/XGame/XSrc/XEngine/XTerrain/Debug/*.pdb

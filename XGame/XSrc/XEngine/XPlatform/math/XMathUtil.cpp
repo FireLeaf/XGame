@@ -303,12 +303,12 @@ int XRandomInt(int aMin, int bMax)
 	return ((rand() % (bMax - aMin)) + aMin);
 }
 
-int XRandomFloat()
+float XRandomFloat()
 {
 	return (float)XRandomInt() / (float)RAND_MAX;
 }
 
-int XRandomFloat(float aMin, float bMax)
+float XRandomFloat(float aMin, float bMax)
 {
 	if (aMin>= bMax)
 	{

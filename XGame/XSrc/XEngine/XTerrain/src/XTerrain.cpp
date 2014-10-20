@@ -7,6 +7,8 @@
 /*************************************************************************/
 
 #include "XTerrain.h"
+#include "XAssetUtil.h"
+#include "XTerrainLoader.h"
 
 XTerrain::XTerrain()
 {
@@ -18,6 +20,8 @@ XTerrain::XTerrain()
 
 	factor_lod1 = 0.0f;
 	factor_lod2 = 0.0f;
+
+	ptr_terrain_loader = NULL;
 }
 
 bool XTerrain::Init(const char* terrain_file)
@@ -38,6 +42,20 @@ bool XTerrain::Init(const char* terrain_file)
 	{
 		return false;
 	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			XAnchorPos pos;
+			pos.x = i;
+			pos.y = 0;
+			pos.z = j;
+			ptr_terrain_loader->LoadChunkArea(pos);
+		}
+	}
+
+	return true;
 }
 
 void XTerrain::Tick(const XVector3& pos, xuint32 time_delta)
@@ -69,8 +87,7 @@ void XTerrain::Render(XRII* rii, XRenderArgs* args)
 					}
 					rii->DrawIndexEntity(chunk_area->geometry_data.vertex_attribute,
 						chunk_area->geometry_data.asset_vertex_pools,
-						chunk_area->geometry_data.
-						asset_index_pool,
+						chunk_area->geometry_data.asset_index_pool,
 						chunk_area->material_entity,
 						X_PT_TRIANGLELIST,
 						0,
@@ -85,4 +102,27 @@ void XTerrain::Render(XRII* rii, XRenderArgs* args)
 void XTerrain::ThreadLoadChunkArea(XChunkArea* chunk_area)
 {
 	chunk_area->material_entity = material_entity;
+	XAnchorPos area_pos;
+	area_pos.x = chunk_area->pos.x / area_edges;
+	area_pos.y = 0;
+	area_pos.z = chunk_area->pos.z / area_edges;
+	PosToAreaMap::iterator iter = map_pos_area.find(area_pos);
+	XArea* ptr_area = NULL;
+	if (iter == map_pos_area.end())
+	{
+		ptr_area = new XArea;
+	}
+	else
+	{
+		ptr_area = iter->second;
+	}
+
+	if (ptr_area)
+	{
+		ptr_area->map_pos_chunkarea[chunk_area->pos] = chunk_area;
+	}
+	else
+	{
+		delete chunk_area;
+	}
 }

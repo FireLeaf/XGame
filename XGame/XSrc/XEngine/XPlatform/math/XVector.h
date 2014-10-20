@@ -11,7 +11,7 @@
 
 class XVector2
 {
-protected:
+public:
 	union
 	{
 		float x,y;

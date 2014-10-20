@@ -9,7 +9,7 @@
 #ifndef __XDOTATERRAIN__H
 #define __XDOTATERRAIN__H
 
-class XDotaTerrain : public 
+class XDotaTerrain 
 {
 
 };

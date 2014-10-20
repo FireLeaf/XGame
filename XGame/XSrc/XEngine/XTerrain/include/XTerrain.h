@@ -10,17 +10,22 @@
 #define __XTERRAIN__H
 
 #include "XRenderEntity.h"
+#include "XMath.h"
+#include "XVector.h"
+#include "XType.h"
+#include "XTemplate.h"
+#include "XAsset.h"
 
 //带有顶点，UV，法线
 template<int N>
 struct TerrainVertexPTXnN
 {
 	float x,y,z;
-	X3DVector2 uv[N];
+	XVector2 uv[N];
 	float nx, ny, nz;
 };
 
-struct TerrainVertexBufferPTX0N : public XBufferData<typename TerrainVertexPTXnN<0> >
+struct TerrainVertexBufferPTX0N : public XBufferData<typename TerrainVertexPTXnN<1> >
 {
 
 };
@@ -34,9 +39,14 @@ struct XAnchorPos
 {
 	int x,y,z;
 
+	operator size_t () const
+	{
+		return x + y + z;
+	}
+
 	bool operator < (const XAnchorPos& pos) const 
 	{
-		//return x
+		return x < pos.x && y < pos.y && z < pos.z;
 	}
 };
 
@@ -59,7 +69,7 @@ public:
 struct XArea//
 {
 public:
-	typedef stdext::hash_map<XAnchorPos, XChunkArea> PosToChunkAreaMap;
+	typedef stdext::hash_map<XAnchorPos, XChunkArea*> PosToChunkAreaMap;
 public:
 	void Render(XRII* rii, XRenderArgs* args);
 public:
@@ -104,6 +114,7 @@ protected:
 //
 	int* lod;//(2 * visable_chunks + 1) * (2 * visable_chunks + 1)
 	XAnchorPos anchor_pos;//当前点
+	XTerrainLoader* ptr_terrain_loader;
 
 	XMateriaEntity* material_entity;
 };

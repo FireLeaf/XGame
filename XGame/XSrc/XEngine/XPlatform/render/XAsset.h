@@ -10,6 +10,7 @@
 
 #include "XType.h"
 #include "XRefObject.h"
+#include <hash_map>
 
 enum X_DECLTYPE
 {

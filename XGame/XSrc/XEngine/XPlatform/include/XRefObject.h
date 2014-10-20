@@ -11,6 +11,7 @@
 #ifndef __COCONAT_XREFOBJECT_H_
 #define __COCONAT_XREFOBJECT_H_
 #include <assert.h>
+#include "XType.h"
 class XRefObject
 {
 public:
