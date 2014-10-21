@@ -58,9 +58,9 @@ bool XTerrain::Init(const char* terrain_file)
 		for (int j = 0; j < 5; j++)
 		{
 			XAnchorPos pos;
-			pos.x = i;
+			pos.x = 0;
 			pos.y = 0;
-			pos.z = j;
+			pos.z = 0;
 			ptr_terrain_loader->LoadChunkArea(pos);
 		}
 	}

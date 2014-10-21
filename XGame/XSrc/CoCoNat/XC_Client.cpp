@@ -72,11 +72,11 @@ CXCClient::~CXCClient()
 
 xbool CXCClient::Init()
 {
-	pMesh = new XMesh;
-	if(!pMesh->LoadMesh("AssetBundle\\model\\test2.AX"))
-	{
-		return false;
-	}
+// 	pMesh = new XMesh;
+// 	if(!pMesh->LoadMesh("AssetBundle\\model\\test2.AX"))
+// 	{
+// 		return false;
+// 	}
 
 	load_pool = XSys::XCreateThreadPool(2);
 	XJob job;
@@ -108,7 +108,7 @@ void CXCClient::Tick()
 
 void CXCClient::Render(XRenderScene* ptr_render_scene)
 {
-	XVector3 eye(5.0f, 150.0f, -20.0f), up(0.0f, 1.0f, 0.0f), at(0.0f, 0.0f, 0.0f);
+	XVector3 eye(5.0f, 100.0f, -20.0f), up(0.0f, 1.0f, 0.0f), at(0.0f, 0.0f, 0.0f);
 	XCamera& camera = ptr_render_scene->GetSceneDesc()->camera;
 	XViewPort& viwport = ptr_render_scene->GetSceneDesc()->view_port;
 
