@@ -8,6 +8,7 @@
 
 #include "NatPch.h"
 #include "XC_Client.h"
+#include<math.h>
 
 CXCClient client;
 XClient* x_ptr_client = &client;
@@ -105,10 +106,49 @@ void CXCClient::Tick()
 		ptr_world->Tick(50);
 	}
 }
-
+#define KEY_DOWN(a) (::GetAsyncKeyState(a) & 0x8000)
 void CXCClient::Render(XRenderScene* ptr_render_scene)
 {
-	XVector3 eye(5.0f, 150.0f, -20.0f), up(0.0f, 1.0f, 0.0f), at(0.0f, 0.0f, 0.0f);
+	static xuint32 old_time = GetTickCount();
+	static xuint32 cur_time = 0;
+	cur_time = GetTickCount();
+	xuint32 time_delta = cur_time - old_time;
+	old_time = cur_time;
+	static float angle = 0.0f;
+	static float rad = 10.0f;
+	static float h = 5.0f;
+	static XVector3 eye, up(0.0f, 1.0f, 0.0f), at(0.0f, 0.0f, 0.0f);
+	eye = XVector3(cosf(angle) * rad, h, sinf(angle) * rad);
+	if (KEY_DOWN(VK_LEFT))
+	{
+		angle += time_delta / 1000.0f;
+	}
+
+	if (KEY_DOWN(VK_RIGHT))
+	{
+		angle -= time_delta / 1000.0f;
+	}
+
+	if (KEY_DOWN('W'))
+	{
+		rad += time_delta / 1000.0f;
+	}
+
+	if (KEY_DOWN('S'))
+	{
+		rad -= time_delta / 1000.0f;
+	}
+
+	if (KEY_DOWN(VK_UP))
+	{
+		h += time_delta / 1000.0f;
+	}
+
+	if (KEY_DOWN(VK_DOWN))
+	{
+		h -= time_delta / 1000.0f;
+	}
+
 	XCamera& camera = ptr_render_scene->GetSceneDesc()->camera;
 	XViewPort& viwport = ptr_render_scene->GetSceneDesc()->view_port;
 

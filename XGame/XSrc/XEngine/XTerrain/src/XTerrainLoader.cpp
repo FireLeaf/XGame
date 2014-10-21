@@ -46,7 +46,7 @@ void XTerrainLoader::LoadChunkArea(const XAnchorPos& pos)
 		{
 			TerrainVertexPTXnN<1>& v = pVData[i * row_col_num + j];
 			v.x = pos.x * ptr_terrain->chunk_area_side + i * ptr_terrain->edges_side;
-			v.y = XRandomFloat(0.0f, 256.0f);
+			v.y = XRandomFloat(0.0f, 5.0f);
 			v.z = pos.z * ptr_terrain->chunk_area_side + j * ptr_terrain->edges_side;
 		}
 	}
@@ -60,23 +60,23 @@ void XTerrainLoader::LoadChunkArea(const XAnchorPos& pos)
 	vertex_pool->UnLock();
 
 	int index_num = ptr_terrain->chunk_edges * ptr_terrain->chunk_area_edges;
-	row_col_num = index_num;
+	row_col_num = index_num + 1;
 	index_num = index_num * index_num * 2 * 3;
 	chunk_area->geometry_data.indices_pool = new TerrainIndexBuffer16;
 	chunk_area->geometry_data.indices_pool->Allocate(index_num);
 	xushort* indices = NULL;
 	chunk_area->geometry_data.indices_pool->Lock((void**)&indices);
-	for (int i = 0; i < row_col_num; i++)
+	for (int i = 0; i < row_col_num - 1; i++)
 	{
-		for (int j = 0; j < row_col_num; j++)
+		for (int j = 0; j < row_col_num - 1; j++)
 		{
-			indices[ (i* row_col_num + j) * 3 + 0] = i * row_col_num + j;
-			indices[ (i* row_col_num + j) * 3 + 1] = i * row_col_num + j + 1;
-			indices[ (i* row_col_num + j) * 3 + 2] = (i + 1) * row_col_num + j + 1;
+			indices[ (i* row_col_num + j) * 6 + 0] = i * row_col_num + j;
+			indices[ (i* row_col_num + j) * 6 + 1] = i * row_col_num + j + 1;
+			indices[ (i* row_col_num + j) * 6 + 2] = (i + 1) * row_col_num + j + 1;
 
-			indices[ (i* row_col_num + j) * 3 + 3] = i * row_col_num + j;
-			indices[ (i* row_col_num + j) * 3 + 4] = (i + 1) * row_col_num + j;
-			indices[ (i* row_col_num + j) * 3 + 5] = (i + 1) * row_col_num + j + 1;
+			indices[ (i* row_col_num + j) * 6 + 3] = i * row_col_num + j;
+			indices[ (i* row_col_num + j) * 6 + 4] = (i + 1) * row_col_num + j + 1;
+			indices[ (i* row_col_num + j) * 6 + 5] = (i + 1) * row_col_num + j;
 		}
 	}
 	XIndexPoolDesc index_pool_desc;
@@ -86,7 +86,7 @@ void XTerrainLoader::LoadChunkArea(const XAnchorPos& pos)
 	chunk_area->geometry_data.asset_index_pool = AssetUtil::GetIndexPool(index_pool_desc, true);
 	chunk_area->geometry_data.indices_pool->UnLock();
 	
-	chunk_area->geometry_data.tri_count = row_col_num * row_col_num * 2;
+	chunk_area->geometry_data.tri_count = index_num / 3;
 
 	ptr_terrain->ThreadLoadChunkArea(chunk_area);
 }

@@ -46,24 +46,24 @@ bool XTerrain::Init(const char* terrain_file)
 	edges_side = 1.0f;
 	chunk_edges = 4;
 	chunk_side = edges_side * chunk_edges;
-	chunk_area_edges = 4;
+	chunk_area_edges = 8;
 	chunk_area_side = chunk_side * chunk_area_edges;
 	area_edges = 36;
 	area_side = chunk_area_side * chunk_area_side;
 
 	ptr_terrain_loader = new XTerrainLoader(this);
 
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 5; j++)
-		{
+// 	for (int i = 0; i < 5; i++)
+// 	{
+// 		for (int j = 0; j < 5; j++)
+// 		{
 			XAnchorPos pos;
-			pos.x = i;
+			pos.x = 0;
 			pos.y = 0;
-			pos.z = j;
+			pos.z = 0;
 			ptr_terrain_loader->LoadChunkArea(pos);
-		}
-	}
+// 		}
+// 	}
 
 	return true;
 }
