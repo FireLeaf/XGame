@@ -248,9 +248,8 @@ void XD3D9ShaderParamTable::SetValue(const char* name, XTexture* texture)
 				break;
 			case  ASSET_TEXTURE_RENDER:
 				{
-					IDirect3DTexture9 *pTexture = NULL;
-				//	HRESULT hr = ((XD3D9RenderTarget*)texture)->GetD3D9RenderTarget()->GetContainer(IID_IDirect3DTexture9, (void**)&pTexture);
-				//	x_ptr_d3ddevice->SetTexture(ptr_desc->reg_index, pTexture);
+					IDirect3DTexture9 *pTexture = ((XD3D9RenderTarget*)texture)->GetD3D9RenderTexture();
+					x_ptr_d3ddevice->SetTexture(ptr_desc->reg_index, pTexture);
 				}
 				break;
 			default:
@@ -385,6 +384,7 @@ void XD3D9VertexShader::UpdateAsset(XAssetMonitor* pMonitor)
 				pShaderBuffer->Release();
 			}
 			const char* err_info = (const char*)pErrorBuffer->GetBufferPointer();
+			Assert(0);
 			return;
 		}
 
@@ -461,6 +461,7 @@ void XD3D9PixelShader::UpdateAsset(XAssetMonitor* pMonitor)
 				pShaderBuffer->Release();
 			}
 			const char* err_info = (const char*)pErrorBuffer->GetBufferPointer();
+			Assert(0);
 			return;
 		}
 

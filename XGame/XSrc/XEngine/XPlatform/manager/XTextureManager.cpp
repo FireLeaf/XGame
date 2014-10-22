@@ -11,6 +11,12 @@
 #include "XAssetUtil.h"
 #include "XAssetLoader.h"
 
+XTextureManager& XTextureManager::GetInstance()
+{
+	static XTextureManager inst;
+	return inst;
+}
+
 XTexture2D* XTextureManager::LoadTexture2D(const XTexFormatDesc& desc, const XTextureData& data, bool dynamic)
 {
 	if (TEXTURE_LOAD_FROM_FILE != desc.from)
@@ -44,6 +50,6 @@ XTexture2D* XTextureManager::LoadTexture2D(const XTexFormatDesc& desc, const XTe
 		return NULL;
 	}
 	ptr_asset->UpdateAsset(x_ptr_asset_monitor);
-
+	map_path_to_assetid.insert(std::make_pair<TexKey, xint32>(key, ptr_asset->GetAssetID()));
 	return ptr_texture_2d;
 }

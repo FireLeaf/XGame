@@ -109,11 +109,21 @@ void CXCClient::Tick()
 #define KEY_DOWN(a) (::GetAsyncKeyState(a) & 0x8000)
 void CXCClient::Render(XRenderScene* ptr_render_scene)
 {
+	Sleep(20);
 	static xuint32 old_time = GetTickCount();
 	static xuint32 cur_time = 0;
+	static xuint32 acc_time = 0;
+	static xuint32 frame = 0;
 	cur_time = GetTickCount();
 	xuint32 time_delta = cur_time - old_time;
 	old_time = cur_time;
+	acc_time += time_delta;
+	if (acc_time > 1000)
+	{
+		acc_time = 0;
+		frame = 0;
+	}
+	frame++;
 	static float angle = 0.0f;
 	static float rad = 10.0f;
 	static float h = 5.0f;

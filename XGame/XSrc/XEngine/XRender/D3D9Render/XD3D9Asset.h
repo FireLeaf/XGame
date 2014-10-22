@@ -43,14 +43,16 @@ public:
 class XD3D9RenderTarget : public XRenderTarget
 {
 public:
-	XD3D9RenderTarget() : XRenderTarget(), m_pD3D9DepthSurface(NULL), m_pD3D9RenderTarget(NULL){}
-	XD3D9RenderTarget(IDirect3DSurface9* render_target, IDirect3DSurface9* depth_stencil) : m_pD3D9RenderTarget(render_target), m_pD3D9DepthSurface(depth_stencil){}
+	XD3D9RenderTarget() : XRenderTarget(),m_pD3D9RenderTexture(NULL), m_pD3D9DepthSurface(NULL), m_pD3D9RenderTarget(NULL){}
+	XD3D9RenderTarget(IDirect3DSurface9* render_target, IDirect3DSurface9* depth_stencil) : m_pD3D9RenderTexture(NULL), m_pD3D9RenderTarget(render_target), m_pD3D9DepthSurface(depth_stencil){}
+	IDirect3DTexture9* GetD3D9RenderTexture() {return m_pD3D9RenderTexture;}
 	IDirect3DSurface9* GetD3D9RenderTarget() {return m_pD3D9RenderTarget;}
 	IDirect3DSurface9* GetD3D9DepthSurface() {return m_pD3D9DepthSurface;}
 public:
 	virtual void ReleaseAsset(XAssetMonitor* pMonitor){}
 	virtual void UpdateAsset(XAssetMonitor* pMonitor){}
 protected:
+	IDirect3DTexture9* m_pD3D9RenderTexture;
 	IDirect3DSurface9* m_pD3D9RenderTarget;
 	IDirect3DSurface9* m_pD3D9DepthSurface;
 };

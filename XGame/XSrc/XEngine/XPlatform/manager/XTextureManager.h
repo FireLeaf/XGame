@@ -39,6 +39,8 @@ public:
 	};
 	typedef XStlext::hash_map<TexKey, xint32> PathToAssetIDMap;
 public:
+	static XTextureManager& GetInstance();
+
 	XTexture2D* LoadTexture2D(const XTexFormatDesc& desc, const XTextureData& data, bool dynamic);
 protected:
 	PathToAssetIDMap map_path_to_assetid;

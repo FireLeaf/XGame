@@ -9,6 +9,7 @@
 #include "XTerrain.h"
 #include "XAssetUtil.h"
 #include "XTerrainLoader.h"
+#include "XTextureManager.h"
 
 XTerrain::XTerrain()
 {
@@ -43,6 +44,13 @@ bool XTerrain::Init(const char* terrain_file)
 	{
 		return false;
 	}
+	
+	XTexFormatDesc tfd;
+	XTextureData td;
+	tfd.from = TEXTURE_LOAD_FROM_FILE;
+	td.m_textureFile = "AssetBundle\\texture\\cha.tga";
+	terrain_texture = XTextureManager::GetInstance().LoadTexture2D(tfd, td, false);
+
 	edges_side = 1.0f;
 	chunk_edges = 4;
 	chunk_side = edges_side * chunk_edges;

@@ -118,6 +118,7 @@ protected:
 	XTerrainLoader* ptr_terrain_loader;
 
 	XMateriaEntity* material_entity;
+	XTexture2D* terrain_texture;
 };
 
 #endif // XTerrain
