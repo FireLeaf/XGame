@@ -41,12 +41,12 @@ void XTerrainLoader::LoadChunkArea(const XAnchorPos& pos)
 	TerrainVertexPTXnN<1>* pVData = NULL;
 	vertex_pool->Lock((void**)&pVData);
 	for (int i = 0; i < row_col_num; i++)
-	{ 
+	{
 		for (int j = 0; j < row_col_num; j++)
 		{
 			TerrainVertexPTXnN<1>& v = pVData[i * row_col_num + j];
 			v.x = pos.x * ptr_terrain->chunk_area_side + i * ptr_terrain->edges_side;
-			v.y = XRandomFloat(0.0f, 50.0f);
+			v.y = XRandomFloat(0.0f, 5.0f);
 			v.z = pos.z * ptr_terrain->chunk_area_side + j * ptr_terrain->edges_side;
 		}
 	}
@@ -66,8 +66,7 @@ void XTerrainLoader::LoadChunkArea(const XAnchorPos& pos)
 	chunk_area->geometry_data.indices_pool->Allocate(index_num);
 	xushort* indices = NULL;
 	chunk_area->geometry_data.indices_pool->Lock((void**)&indices);
-
-	for (int i = 0; i < row_col_num - 1; i++) 
+	for (int i = 0; i < row_col_num - 1; i++)
 	{
 		for (int j = 0; j < row_col_num - 1; j++)
 		{

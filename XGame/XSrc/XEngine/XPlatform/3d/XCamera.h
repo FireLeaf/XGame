@@ -25,7 +25,7 @@ public:
 
 	void CalcViewMatrix(){XMathMatrixLookAtLH(mat_view, eye, up, at);dirty = false;}
 	XMatrix GetViewMatrix(){if(dirty){CalcViewMatrix();} return mat_view;}
-protected:
+public:
 	XMatrix mat_view;
 	XVector3 eye;
 	XVector3 up;

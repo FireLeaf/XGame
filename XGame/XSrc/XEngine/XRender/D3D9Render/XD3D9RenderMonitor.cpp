@@ -36,7 +36,17 @@ void XD3D9RenderMonitor::MonitorRender(XRenderScene* scene)
 	
 	ra.mat_view = scene_desc->camera.GetViewMatrix();
 	ra.mat_proj = scene_desc->view_port.GetProjMatrix();
+
 	ra.mat_view_proj = ra.mat_view * ra.mat_proj;
+	D3DXMATRIX matView;
+	D3DXVECTOR3 eye(scene_desc->camera.eye.x, scene_desc->camera.eye.y, scene_desc->camera.eye.z);
+	D3DXVECTOR3 up(scene_desc->camera.up.x, scene_desc->camera.up.y, scene_desc->camera.up.z);
+	D3DXVECTOR3 at(scene_desc->camera.at.x, scene_desc->camera.at.y, scene_desc->camera.at.z);
+	D3DXMatrixLookAtLH(&matView, &eye, &at, &up);
+	D3DXMATRIX matProj;
+	D3DXMatrixPerspectiveFovLH(&matProj, scene_desc->view_port.fov, scene_desc->view_port.width / (float)scene_desc->view_port.height, scene_desc->view_port.z_near, scene_desc->view_port.z_far);
+	D3DXMATRIX matViewProj;
+	D3DXMatrixMultiply(&matViewProj, &matView, &matProj);
 	
 // 	for (int i = 0; i < scene->all_entities.size(); i++)
 // 	{
