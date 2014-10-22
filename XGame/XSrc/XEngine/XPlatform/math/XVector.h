@@ -12,11 +12,11 @@
 class XVector2
 {
 public:
-	union
-	{
+// 	union
+// 	{
 		float x,y;
-		float v[2];
-	};
+// 		float v[2];
+// 	};
 };
 
 class XVector3

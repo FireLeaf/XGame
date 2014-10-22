@@ -171,9 +171,9 @@ bool LoadTGA(XFileMap& fm, XTextureData& data)
 				pByteBuffer++;
 				for(xuint32 i=0;i<uiCount;i+=(uiBpp/8))
 				{
-					pByteData[uiDataPos]=pByteBuffer[2];
+					pByteData[uiDataPos]=pByteBuffer[0];
 					pByteData[uiDataPos+1]=pByteBuffer[1];
-					pByteData[uiDataPos+2]=pByteBuffer[0];
+					pByteData[uiDataPos+2]=pByteBuffer[2];
 
 					pByteBuffer+=3;
 					uiDataPos+=3;
@@ -215,8 +215,9 @@ bool LoadTGA(XFileMap& fm, XTextureData& data)
 		} while (uiDataPos<uiImageSize);
 	}
 	
-	VFlip(pByteData, imHeight, imWidth, uiBpp/8);
-
+	//VFlip(pByteData, imHeight, imWidth, uiBpp/8);
+	
+	int cur_point = 0;
 	for (int i = 0; i < data.generate_level; i++)
 	{
 		data.level_data[i].width = xMax(imWidth / (i + 1), 1);
@@ -231,7 +232,16 @@ bool LoadTGA(XFileMap& fm, XTextureData& data)
 		}
 		for (int j = 0; j < data.level_data[i].height; j++)
 		{
-			data.level_data[i].ptr_pixel[j] = new xbyte[data.level_data[i].width];
+			data.level_data[i].ptr_pixel[j] = new xbyte[data.level_data[i].width * dt];
+			for (int k = 0; k < data.level_data[i].width; k++)
+			{
+				data.level_data[i].ptr_pixel[j][k * dt + 0] = *(pByteData + cur_point);
+				data.level_data[i].ptr_pixel[j][k * dt + 1] = *(pByteData + cur_point + 1);
+				data.level_data[i].ptr_pixel[j][k * dt + 2] = *(pByteData + cur_point + 2);
+				if(dt == XAssetLoader::RGBADATA)
+					data.level_data[i].ptr_pixel[j][k * dt +  3] = *(pByteData + cur_point + 3);
+				cur_point += dt;
+			}
 		}
 	}
 	delete []pByteData;
@@ -257,13 +267,17 @@ bool XAssetLoader::Load2DTexture(XAsset* pAsset)
 		return false;
 	}
 #ifdef _WIN_PLATFORM
-	if(LoadTGA(fm, ptr_texture_2d->GetTextureData()))
+	if(!LoadTGA(fm, ptr_texture_2d->GetTextureData()))
 	{
 		return false;
 	}
 #elif defined(_XOS_PLATFORM)
 #endif
-
+	
+	XTextureData& data = ptr_texture_2d->GetTextureData();
+	XTexFormatDesc& desc = ptr_texture_2d->GetFormatDesc();
+	desc.width = data.level_data[0].width;
+	desc.height = data.level_data[0].height;
 	return true;
 }
 

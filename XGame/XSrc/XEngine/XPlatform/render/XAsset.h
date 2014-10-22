@@ -205,7 +205,7 @@ public:
 public:
 	XTexture(ENUM_ASSET_TYPE assetType) : XAsset(assetType){}
 public:
-	const XTexFormatDesc& GetFormatDesc(){return m_formatDesc;}
+	XTexFormatDesc& GetFormatDesc(){return m_formatDesc;}
 	//const XStl::string& GetTextureFile(){return m_textureFile;}
 	//void SetTextureFile(const XStl::string& textureFile){m_textureFile = textureFile;}
 	void SetTextureDesc(const XTexFormatDesc& fd){m_formatDesc = fd;}

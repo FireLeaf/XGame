@@ -46,8 +46,10 @@ void XTerrainLoader::LoadChunkArea(const XAnchorPos& pos)
 		{
 			TerrainVertexPTXnN<1>& v = pVData[i * row_col_num + j];
 			v.x = pos.x * ptr_terrain->chunk_area_side + i * ptr_terrain->edges_side;
-			v.y = XRandomFloat(0.0f, 5.0f);
+			v.y = 0.0f;//XRandomFloat(0.0f, 5.0f);
 			v.z = pos.z * ptr_terrain->chunk_area_side + j * ptr_terrain->edges_side;
+			v.uv[0].x = /*5.0f * */(float)i / (float)row_col_num;
+			v.uv[0].y = /*5.0f * */(float)j / (float)row_col_num;
 		}
 	}
 	XVertexPoolDesc vertex_pool_desc;

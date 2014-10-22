@@ -28,6 +28,7 @@ XTerrain::XTerrain()
 
 bool XTerrain::Init(const char* terrain_file)
 {
+	
 	MaterialEntityDesc med;
 	med.vertex_shader_desc.entry = "VS_Main";
 	med.vertex_shader_desc.profile = "vs_2_0";
@@ -48,7 +49,10 @@ bool XTerrain::Init(const char* terrain_file)
 	XTexFormatDesc tfd;
 	XTextureData td;
 	tfd.from = TEXTURE_LOAD_FROM_FILE;
-	td.m_textureFile = "AssetBundle\\texture\\cha.tga";
+	//tfd.lod = 1;
+	td.generate_level = 1;
+	td.m_textureFile = "AssetBundle\\texture\\test.tga";
+	terrain_texture = NULL;
 	terrain_texture = XTextureManager::GetInstance().LoadTexture2D(tfd, td, false);
 
 	edges_side = 1.0f;
@@ -102,6 +106,11 @@ void XTerrain::Render(XRII* rii, XRenderArgs* args)
 					{
 						vs->GetShaderParamTable()->SetValue("view_proj_matrix", &args->mat_view_proj, sizeof(args->mat_view_proj));
 						vs->GetShaderParamTable()->SetValue("world", &mat_world, sizeof(mat_world));
+					}
+					XPixelShader* ps = chunk_area->material_entity->pixel_shader;
+					if (ps)
+					{
+						ps->GetShaderParamTable()->SetValue("terr_texture", terrain_texture);
 					}
 					rii->DrawIndexEntity(chunk_area->geometry_data.vertex_attribute,
 						chunk_area->geometry_data.asset_vertex_pools,

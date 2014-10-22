@@ -27,7 +27,7 @@ void XD3D9Texture2D::UpdateAsset(XAssetMonitor* pMonitor)
 // 			return;
 // 		}
 
-		bool bReCreate = false;
+		bool bReCreate = true;
 
 		if (m_pD3D92DTexture)
 		{
@@ -53,6 +53,19 @@ void XD3D9Texture2D::UpdateAsset(XAssetMonitor* pMonitor)
 				Assert(0);
 				return;
 			}
+// 			HRESULT hr = D3DXCreateTextureFromFile(x_ptr_d3ddevice, pixelData.m_textureFile.c_str(), &m_pD3D92DTexture);
+// 			if (FAILED(hr))
+// 			{
+// 				Assert(0);
+// 				return;
+// 			}
+// 			return;
+		}
+
+		if (!m_pD3D92DTexture)
+		{
+			Assert(0);
+			return;
 		}
 		
 		int iPixelStride = RenderUtil::GetTexStride(m_formatDesc.tex_format);
@@ -73,7 +86,7 @@ void XD3D9Texture2D::UpdateAsset(XAssetMonitor* pMonitor)
 			xint32 pix_pitch = pixelData.level_data[i].width * iPixelStride;
 			for (int j = 0; j < (int)dc.Height && j < pixelData.level_data[i].height; j++)
 			{
-				memcpy(pix_buffer + j * lockRc.Pitch, pixelData.level_data[i].ptr_pixel + j * pix_pitch, xMin(lock_max_pix * iPixelStride, pix_pitch));
+				memcpy(pix_buffer + j * lockRc.Pitch, pixelData.level_data[i].ptr_pixel[j], xMin(lock_max_pix * iPixelStride, pix_pitch));
 			}
 			m_pD3D92DTexture->UnlockRect(i);
 		}
