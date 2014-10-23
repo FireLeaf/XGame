@@ -86,6 +86,8 @@ class XMotionMgr
 
 class XActionMgr : public XMotionMgr//关键帧动画
 {
+public:
+	void ProcMotion(float time_delta);
 protected:
 	XAnimAction* ptr_actions[MAX_SYNC_ACTION];//直到全部动作都播放完了才标志这个动作播完了
 	float time_duration;//当前播放动作的时间
