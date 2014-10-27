@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="XModel"
-	ProjectGUID="{CE5CBB3F-2A9C-4432-B94C-5E57FCDDF8B1}"
-	RootNamespace="XModel"
+	Name="predator_skin_mesh"
+	ProjectGUID="{8F62604B-84DD-4FEC-8730-FFD3BDDA3448}"
+	RootNamespace="predator_skin_mesh"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -41,12 +41,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\XModel\include;..\..\..\XInc;..\..\..\XInc\XExporter"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -61,7 +60,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\$(ProjectName)_d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -77,7 +75,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /y /s /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)\include\*.h&quot; &quot;..\..\..\XInc\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -110,7 +107,7 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -152,20 +149,24 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\XAnimationMesh.cpp"
+				RelativePath=".\stdafx.cpp"
 				>
-			</File>
-			<File
-				RelativePath=".\src\XAnimationModel.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\XMesh.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\XSkeltonFrame.cpp"
-				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -174,39 +175,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\include\XAnimationAction.h"
+				RelativePath=".\predator_skin_mesh.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\XAnimationEvent.h"
+				RelativePath=".\stdafx.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\XAnimationKey.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XAnimationMesh.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XAnimationModel.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XExporterMaterial.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XMesh.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XSkeltonFrame.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\XSkinMesh.h"
+				RelativePath=".\targetver.h"
 				>
 			</File>
 		</Filter>

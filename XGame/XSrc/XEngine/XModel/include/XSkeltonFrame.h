@@ -28,35 +28,10 @@ struct XBone
 class XSkeltonFrame
 {
 public:
-	void Tick(xuint32 time_delta)
-	{
-		
-	}
-
-	void UpdateSkelton(XBone* ptr_skelton, XBone* ptr_parent_skelton)
-	{
-		if (!ptr_skelton)
-		{
-			return;
-		}
-
-		if (ptr_parent_skelton)
-		{
-			ptr_skelton->abs_matrix = ptr_skelton->init_matrix * ptr_parent_skelton->abs_matrix;
-		}
-		else
-		{
-			ptr_skelton->abs_matrix = ptr_skelton->init_matrix;
-		}
-
-		//更新兄弟
-		if(-1 != ptr_skelton->next_sbling)
-			UpdateSkelton(bone_ptr_array[ptr_skelton->next_sbling], ptr_parent_skelton);
-		//更新孩子
-		if(-1 != ptr_skelton->first_child_index)
-			UpdateSkelton(bone_ptr_array[ptr_skelton->first_child_index], ptr_skelton);
-	}
-
+	void Tick(xuint32 time_delta);
+	void UpdateSkelton(XBone* ptr_skelton, XBone* ptr_parent_skelton);
+public:
+	bool Load(const char* );
 public:
 	int GetBoneCount(){return (int)(bone_ptr_array.size());}
 	XBone* GetBone(int index){if(index < 0 || index >= bone_ptr_array.size()) return NULL; return bone_ptr_array[index];}

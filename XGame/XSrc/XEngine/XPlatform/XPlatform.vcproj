@@ -346,6 +346,10 @@
 			Name="3d"
 			>
 			<File
+				RelativePath=".\3d\XActObject.h"
+				>
+			</File>
+			<File
 				RelativePath=".\3d\XCamera.h"
 				>
 			</File>

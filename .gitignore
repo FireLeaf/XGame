@@ -134,3 +134,17 @@
 /XGame/XSrc/XEngine/XTerrain/Debug/*.obj
 /XGame/XSrc/XEngine/XTerrain/Debug/*.idb
 /XGame/XSrc/XEngine/XTerrain/Debug/*.pdb
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/Debug/*.htm
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/Debug/*.obj
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/Debug/*.dep
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/Debug/*.manifest
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/Debug/*.res
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/Debug/*.exp
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/Debug/*.lib
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/Debug/*.ilk
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/*.suo
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/*.user
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/predator_exporter/*.txt
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/predator_exporter/*.user
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/predator_skin_mesh/*.txt
+/XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/predator_skin_mesh/*.user

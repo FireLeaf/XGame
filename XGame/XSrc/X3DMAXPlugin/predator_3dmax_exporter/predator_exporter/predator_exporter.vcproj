@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="XAnimationExporterDll"
-	ProjectGUID="{24241A53-84A7-44E5-B75C-720C838D75EA}"
-	RootNamespace="XAnimationExporterDll"
+	Name="predator_exporter"
+	ProjectGUID="{C331CA4D-AFD9-45FF-A2AC-ECA3BCD1CDCE}"
+	RootNamespace="predator_exporter"
 	Keyword="MFCDLLProj"
 	TargetFrameworkVersion="196613"
 	>
@@ -22,7 +22,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			UseOfMFC="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -44,7 +44,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\IGame&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\CS&quot;;..\XInc\XExporter"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -67,11 +66,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="XPlatform_d.lib core.lib mesh.lib maxutil.lib rtmax.lib viewfile.lib mnmath.lib edmodel.lib geom.lib gfx.lib maxscrpt.lib paramblk2.lib msxml2.lib igame.lib"
-				OutputFile=".\Debug\$(ProjectName).dll"
+				OutputFile="$(OutDir)\predator_exporter.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\..\XLib"
-				ModuleDefinitionFile=".\XAnimationExporterDll.def"
+				ModuleDefinitionFile=".\predator_exporter.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -96,7 +93,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy  /d /s /y &quot;$(TargetPath)&quot; &quot;..\BuildPlugin&quot;&#x0D;&#x0A;xcopy /d /s /y &quot;$(TargetPath)&quot; &quot;$(3DSMAX_2011_PATH)\plugins\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -150,9 +146,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="XPlatform.lib"
 				LinkIncremental="1"
-				ModuleDefinitionFile=".\XAnimationExporterDll.def"
+				ModuleDefinitionFile=".\predator_exporter.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -191,31 +186,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\DlgAnimationExporterMain.cpp"
+				RelativePath=".\predator_exporter.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DlgExporterPage1.cpp"
+				RelativePath=".\predator_exporter.def"
 				>
 			</File>
 			<File
-				RelativePath=".\DlgExporterPage2.cpp"
+				RelativePath=".\scene_enum.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DlgExportPage3.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DlgExportPage4.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MeshExporter.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\MeshExporterUtil.cpp"
+				RelativePath=".\skinmesh.cpp"
 				>
 			</File>
 			<File
@@ -238,14 +221,6 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\XAnimationExporterDll.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\XAnimationExporterDll.def"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
@@ -253,35 +228,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\DlgAnimationExporterMain.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DlgExporterPage1.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DlgExporterPage2.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DlgExportPage3.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DlgExportPage4.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MeshExporter.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MeshExporterUtil.h"
+				RelativePath=".\predator_exporter.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\scene_enum.h"
+				>
+			</File>
+			<File
+				RelativePath=".\skinmesh.h"
 				>
 			</File>
 			<File
@@ -292,10 +251,6 @@
 				RelativePath=".\targetver.h"
 				>
 			</File>
-			<File
-				RelativePath=".\XAnimationExporterDll.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -303,27 +258,11 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\XAnimationExporterDll.rc"
+				RelativePath=".\predator_exporter.rc"
 				>
 			</File>
 			<File
-				RelativePath=".\res\XAnimationExporterDll.rc2"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Common"
-			>
-			<File
-				RelativePath="..\..\XEngine\XModel\include\XAnimationKey.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\XEngine\XModel\include\XExporterMaterial.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\XEngine\XModel\include\XSkeltonFrame.h"
+				RelativePath=".\res\predator_exporter.rc2"
 				>
 			</File>
 		</Filter>
@@ -333,9 +272,5 @@
 		</File>
 	</Files>
 	<Globals>
-		<Global
-			Name="RESOURCE_FILE"
-			Value="XAnimationExporterDll.rc"
-		/>
 	</Globals>
 </VisualStudioProject>

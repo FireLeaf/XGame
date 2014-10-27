@@ -9,21 +9,34 @@
 #ifndef __XANIMATIONMESH__H
 #define __XANIMATIONMESH__H
 
+enum X_ANIMATION_FLAG
+{
+
+};
+
 class XAnimationMesh : public XRenderEntity//动画网格
 {
 public:
 	typedef stdext::hash_map<std::string, XSkinMesh*> NameToSkinMap;
 public:
-	void Tick(xuint32 time_delta);
+	XAnimationMesh();
+
+	void Tick(xuint32 time_delta, int flag);
+	virtual void Render(XRII* rii, XRenderArgs* args);
+
+public:
+	void PlayAnimationAction();
 protected:
 	XSkeltonFrame* ptr_skelton_frame;//骨骼框架
 	NameToSkinMap map_name_to_skin;//名字到蒙皮
 	//std::vector<XMotionMgr*> montion_ptr_array;//各种动作的集合
 	XActionMgr* ptr_play_action;//关键帧动作
 	XEmotionMgr* ptr_play_emotion;//表情之类的动作
-
 	//
 	XMatrix* arr_blend_matrix;//融合之后的矩阵
+
+	//模型联系 
+	std::vector<XAnimationMesh*> child_model_array;
 };
 
 #endif // XAnimationMesh
