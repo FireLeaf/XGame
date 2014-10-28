@@ -21,9 +21,9 @@ void XAnimationMesh::Tick(xuint32 time_delta, int flag)
 	if (ptr_skelton_frame)
 	{
 		ptr_skelton_frame->Tick(time_delta);
-	}
+		for (int i = 0; i < ptr_skelton_frame->GetBoneCount(); i++)
+		{
 
-	for ()
-	{
+		}
 	}
 }

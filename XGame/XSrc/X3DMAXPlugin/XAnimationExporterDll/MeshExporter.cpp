@@ -10,6 +10,16 @@
 #include "MeshExporter.h"
 #include "MeshExporterUtil.h"
 
+XMeshExporter::XMeshExporter()
+{
+	m_iTriCount = 0;
+	m_pExportNode = NULL;
+	m_pExportMesh = NULL;
+	m_pSkinVertices = NULL;
+	m_pStaticVertices = NULL;
+	m_stType = SKIN_NONE;
+}
+
 void XMeshExporter::ExporterTestModel()
 {
 	Interface* ip = GetCOREInterface();
@@ -17,7 +27,7 @@ void XMeshExporter::ExporterTestModel()
 	{
 		return;
 	}
-	FILE* fp = fopen(export_file.c_str(), "wb");
+	FILE* fp = fopen(m_strExportFile.c_str(), "wb");
 	if (!fp)
 	{
 		return;
@@ -55,7 +65,85 @@ void XMeshExporter::ExporterTestModel()
 	fclose(fp);
 }
 
+bool XMeshExporter::InitNode(INode* pNode)
+{
+	if (!pNode)
+	{
+		Assert(0);
+		return false;
+	}
+	m_pExportNode = pNode;
+	m_pExportMesh = MeshExporterUtil::GetMesh(pNode);
+	if (!m_pExportMesh)
+	{
+		Assert(0);
+		return false;
+	}
+
+	if (m_pSkinVertices)
+	{
+		delete m_pSkinVertices[];
+		m_pSkinVertices = NULL;
+	}
+
+	if (m_pStaticVertices)
+	{
+		delete m_pStaticVertices[];
+		m_pStaticVertices = NULL;
+	}
+
+	m_stType = SKIN_NONE;
+
+	if(MeshExporterUtil::FindModifier(pNode, SKIN_CLASSID))
+	{
+		m_stType = SKIN_SKIN;
+		AnalyseSkin();
+	}
+	else if (MeshExporterUtil::FindModifier(pNode, Class_ID(PHYSIQUE_CLASS_ID_A, PHYSIQUE_CLASS_ID_B)))
+	{
+		m_stType = SKIN_PHYSIQUE;
+		AnalysePhysque();
+	}
+	else
+	{
+		AnalyseStatic();
+	}
+
+
+	m_iTriCount = m_pExportMesh->getNumFaces();
+
+	return true;
+}
+
+void XMeshExporter::AnalyseSkin()
+{
+	if (!m_pExportNode || !m_pExportMesh)
+	{
+		return;
+	}
+
+	Modifier* pModifier = MeshExporterUtil::FindModifier(m_pExportNode, SKIN_CLASSID);
+	ISkin* pSkin = (ISkin*)pModifier->GetInterface(I_SKIN);
+	if (!pSkin)
+	{
+		Assert(0);
+		return;
+	}
+	UVVert m_pExportMesh->mapVerts()
+
+}
+
+void XMeshExporter::ExportSkinMtrl(INode* node, std::string& file)
+{
+
+}
+
 void XMeshExporter::ExportSkinMesh(INode* node, std::string& file)
+{
+
+}
+
+void XMeshExporter::ExportSkelton(INode* node, std::string& file)
 {
 
 }

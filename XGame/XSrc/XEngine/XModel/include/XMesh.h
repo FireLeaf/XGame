@@ -26,22 +26,12 @@ W 权重 weights float4
 I 索引 int4
 */
 
-struct X3DVector2 
-{
-	float x,y;
-};
-
-struct X3DVector3
-{
-	float x,y,z;
-};
-
 //带有顶点，UV，法线
 template<int N>
 struct AnimationVertexPTXnN
 {
 	float x,y,z;
-	X3DVector2 uv[N];
+	XVector2 uv[N];
 	float nx, ny, nz;
 };
 
@@ -58,7 +48,7 @@ struct AnimationVertexPTXnNBT
 {
 	float x,y,z;
 	//float u[N], v[N];
-	X3DVector2 uv[N];
+	XVector2 uv[N];
 	float nx, ny, nz;
 	float bx, by, bz;
 	float tx, ty, tz;

@@ -44,6 +44,12 @@ namespace MeshExporterUtil
 		{
 			return true;
 		}
+
+		Control* ct = pNode->GetTMController;
+		if(ct)
+		{
+			return (ct->ClassID() == BIPSLAVE_CONTROL_CLASS_ID) || (ct->ClassID() == BIPBODY_CONTROL_CLASS_ID);
+		}
 		return false;
 
 	}
