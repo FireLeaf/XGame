@@ -115,6 +115,97 @@ bool XMeshExporter::InitNode(INode* pNode)
 	return true;
 }
 
+void XMeshExporter::GetVertexBoneInfo(INode* pNode, ISkin* pSkin, Mesh* pMesh, int vertexIdx, int uvIdx, ExpAnimSkinVertex& vOut)
+{
+	ISkinContextData* pSkinCtx = pSkin->GetContextInterface(pNode);
+	int nBones = pSkinCtx->GetNumAssignedBones(vertexIdx);
+	memcpy(&vOut.pos, pMesh->verts[vertexIdx]/* * pNode->GetObjectTM(0, NULL)*/, sizeof(Point3));
+	memcpy(&vOut.uv[0], pMesh->tVerts[uvIdx]);
+	//vOut.iEffBone = nBones;
+	if (nBones > MAX_EFFECT_BONE)
+	{
+		Assert(0);
+	}
+	for (int i = 0; i < MAX_EFFECT_BONE; i++)
+	{
+		if (i < nBones)
+		{
+			INode* pBone = pSkin->GetBone(pSkinCtx->GetAssignedBone(vertexIdx, i));
+			vOut.w[i] = pSkinCtx->GetBoneWeight(vertexIdx, i);
+			vOut.i[i] = m_skeltonFrame.FindBoneIndex(pBone);
+		}
+		else
+		{
+			vOut.w[i] = 0.0f;
+			vOut.i[i] = -1;
+		}
+	}
+}
+
+void XMeshExporter::GetVertexBoneInfo(INode* pNode, Modifier* pPhyMod, Mesh* pMesh, int vertexIdx, int uvIdx, ExpAnimSkinVertex& vOut)
+{
+	IPhysiqueExport* phyInterface = (IPhysiqueExport*)pPhyMod->GetInterface(I_PHYINTERFACE);
+	if (!phyInterface)
+	{
+		return;
+	}
+
+	IPhyContextExport* pPhysicMC = phyInterface->GetContextInterface(pNode);
+	if (!pPhysicMC)
+	{
+		return;
+	}
+	pPhysicMC->ConvertToRigid(TRUE);
+	pPhysicMC->AllowBlending(TRUE);
+	const int numVertices = pPhysicMC->GetNumberVertices();
+
+	IPhyVertexExport* vtxInterface = pPhysicMC->GetVertexInterface(vertexIdx);
+	if (!vtxInterface)
+	{
+		return;
+	}
+	memcpy(&vOut.pos, pMesh->verts[vertexIdx]/* * pNode->GetObjectTM(0, NULL)*/, sizeof(Point3));
+	memcpy(&vOut.uv[0], pMesh->tVerts[uvIdx]);
+
+	int vtxType = vtxInterface->GetVertexType();
+	if (RIGID_TYPE == vtxType)
+	{
+		//vOut.iEffBone = 1;
+		INode* pBoneNode = ((IPhyRigidVertex*)vtxInterface)->GetNode();
+		vOut.w[0].boneIdx = m_skeltonFrame.FindBoneIndex(pBoneNode);
+		vOut.w[0].weight = 1.0f;
+		for (int i = 1; i < MAX_EFFECT_BONE; i++)
+		{
+			vOut.i[i].boneIdx = -1;
+			vOut.i[i].weight = 0.0f;
+		}
+	}
+	else if(RIGID_BLENDED_TYPE == vtxType)
+	{
+		IPhyBlendedRigidVertex* vtxBlendInt = (IPhyBlendedRigidVertex*)vtxInterface;
+		if ( vtxBlendInt->GetNumberNodes() > MAX_EFFECT_BONE)
+		{
+			Assert(0);
+		}
+		for (int i = 0; i < MAX_EFFECT_BONE; i++)
+		{
+			if (i < vtxBlendInt->GetNumberNodes())
+			{
+				INode* pBoneNode = vtxBlendInt->GetNode(i);
+				int boneIdx = CSkeleton::Get().FindBoneIndex(pBoneNode);
+				vOut.i[i].boneIdx = boneIdx;
+				vOut.i[i].weight = vtxBlendInt->GetWeight(i);
+			}
+			else
+			{
+				vOut.i[i].boneIdx = -1;
+				vOut.i[i].weight = 0.0f;
+			}
+			
+		}
+	}
+}
+
 void XMeshExporter::AnalyseSkin()
 {
 	if (!m_pExportNode || !m_pExportMesh)
@@ -129,8 +220,33 @@ void XMeshExporter::AnalyseSkin()
 		Assert(0);
 		return;
 	}
-	UVVert m_pExportMesh->mapVerts()
+	//mapSupport(mapIndex)
 
+	//UVVert m_pExportMesh->mapVerts()
+	//见链接http://liuxuvslisa.blog.sohu.com/164529178.html
+	//当前只取map
+	m_iTriCount = m_pExportMesh->getNumFaces();
+	m_iVertCount = m_pExportMesh->getNumTVerts();
+	m_pSkinVertices = new ExpAnimSkinVertex(m_iTriCount);
+	m_pIndices = new unsigned short[m_iTriCount * 3];
+	
+// 	for (int i = 0; i < m_iVertCount; i++)
+// 	{
+// 		GetVertexBoneInfo(m_pExportNode, pSkin, m_pExportMesh, i, )
+// 	}
+
+	int v_index = 0;
+	for (int i = 0; i < m_iTriCount; i++)
+	{
+		TVFace& tvFace = m_pExportMesh->tvFace[i];
+		Face& face = m_pExportMesh->faces[i];
+		for (int j = 0; j < 3; j++)
+		{
+			//vert.matID = face.getMatID();
+			GetVertexBoneInfo(m_pExportNode, pSkin, m_pExportMesh, face.v[j], tvFace.getTVert(j), m_pSkinVertices[v_index]);
+			v_index++;
+		}
+	}
 }
 
 void XMeshExporter::ExportSkinMtrl(INode* node, std::string& file)
