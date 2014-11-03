@@ -71,6 +71,7 @@ extern "C" __declspec(dllexport) int	DoExport(const TCHAR *name,ExpInterface *ei
 	CWnd* cWnd=AfxGetApp()->GetMainWnd();
 	DlgAnimationExporterMain daem(cWnd);
 	XMeshExporter::Get().SetExporterFilePath(name);
+	XMeshExporter::Get().InitCurSelNode();
 	daem.DoModal();
 	return TRUE;
 }

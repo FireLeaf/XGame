@@ -11,6 +11,8 @@
 
 #include "cs/BipedApi.h"
 #include "cs/BIPEXP.H"
+#include "XMatrix.h"
+#include "matrix3.h"
 
 namespace MeshExporterUtil
 {
@@ -32,6 +34,8 @@ namespace MeshExporterUtil
 	Modifier * FindModifier(INode *pINode, Class_ID cid);
 
 	Mesh* GetMesh(INode* pNode, int iMaxTime);
+
+	void Matrix3ToXMatrix(const Matrix3& m3, XMatrix& xm);
 }
 
 #endif // MeshExporterUtil

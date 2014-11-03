@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "MeshExporter.h"
 #include "MeshExporterUtil.h"
+#include "Phyexp.h"
 
 XMeshExporter::XMeshExporter()
 {
@@ -65,6 +66,25 @@ void XMeshExporter::ExporterTestModel()
 	fclose(fp);
 }
 
+void XMeshExporter::ExportModel()
+{
+	std::string sk = m_strExportFile + ".sk";
+	std::string sm = m_strExportFile + ".sm";
+	ExportSkelton(sk);
+	ExportSkinMesh(sm);
+}
+
+bool XMeshExporter::InitCurSelNode()
+{
+	Interface* ip = GetCOREInterface();
+	if (ip)
+	{
+		return InitNode(ip->GetSelNode(0));
+	}
+
+	return false;
+}
+
 bool XMeshExporter::InitNode(INode* pNode)
 {
 	if (!pNode)
@@ -73,22 +93,25 @@ bool XMeshExporter::InitNode(INode* pNode)
 		return false;
 	}
 	m_pExportNode = pNode;
-	m_pExportMesh = MeshExporterUtil::GetMesh(pNode);
+	m_pExportMesh = MeshExporterUtil::GetMesh(pNode, 0);
 	if (!m_pExportMesh)
 	{
 		Assert(0);
 		return false;
 	}
 
+	m_skeltonFrame.InitSkelton();
+	m_skeltonFrame.BuildBoneFrame();
+
 	if (m_pSkinVertices)
 	{
-		delete m_pSkinVertices[];
+		delete []m_pSkinVertices;
 		m_pSkinVertices = NULL;
 	}
 
 	if (m_pStaticVertices)
 	{
-		delete m_pStaticVertices[];
+		delete []m_pStaticVertices;
 		m_pStaticVertices = NULL;
 	}
 
@@ -120,7 +143,7 @@ void XMeshExporter::GetVertexBoneInfo(INode* pNode, ISkin* pSkin, Mesh* pMesh, i
 	ISkinContextData* pSkinCtx = pSkin->GetContextInterface(pNode);
 	int nBones = pSkinCtx->GetNumAssignedBones(vertexIdx);
 	memcpy(&vOut.pos, pMesh->verts[vertexIdx]/* * pNode->GetObjectTM(0, NULL)*/, sizeof(Point3));
-	memcpy(&vOut.uv[0], pMesh->tVerts[uvIdx]);
+	memcpy(&vOut.uv[0], pMesh->tVerts[uvIdx], sizeof(vOut.uv[0]));
 	//vOut.iEffBone = nBones;
 	if (nBones > MAX_EFFECT_BONE)
 	{
@@ -165,19 +188,19 @@ void XMeshExporter::GetVertexBoneInfo(INode* pNode, Modifier* pPhyMod, Mesh* pMe
 		return;
 	}
 	memcpy(&vOut.pos, pMesh->verts[vertexIdx]/* * pNode->GetObjectTM(0, NULL)*/, sizeof(Point3));
-	memcpy(&vOut.uv[0], pMesh->tVerts[uvIdx]);
+	memcpy(&vOut.uv[0], pMesh->tVerts[uvIdx], sizeof(vOut.uv[0]));
 
 	int vtxType = vtxInterface->GetVertexType();
 	if (RIGID_TYPE == vtxType)
 	{
 		//vOut.iEffBone = 1;
 		INode* pBoneNode = ((IPhyRigidVertex*)vtxInterface)->GetNode();
-		vOut.w[0].boneIdx = m_skeltonFrame.FindBoneIndex(pBoneNode);
-		vOut.w[0].weight = 1.0f;
+		vOut.i[0]/*.boneIdx*/ = m_skeltonFrame.FindBoneIndex(pBoneNode);
+		vOut.w[0]/*.weight*/ = 1.0f;
 		for (int i = 1; i < MAX_EFFECT_BONE; i++)
 		{
-			vOut.i[i].boneIdx = -1;
-			vOut.i[i].weight = 0.0f;
+			vOut.i[i]/*.boneIdx*/ = -1;
+			vOut.w[i]/*.weight*/ = 0.0f;
 		}
 	}
 	else if(RIGID_BLENDED_TYPE == vtxType)
@@ -192,14 +215,14 @@ void XMeshExporter::GetVertexBoneInfo(INode* pNode, Modifier* pPhyMod, Mesh* pMe
 			if (i < vtxBlendInt->GetNumberNodes())
 			{
 				INode* pBoneNode = vtxBlendInt->GetNode(i);
-				int boneIdx = CSkeleton::Get().FindBoneIndex(pBoneNode);
-				vOut.i[i].boneIdx = boneIdx;
-				vOut.i[i].weight = vtxBlendInt->GetWeight(i);
+				int boneIdx = XSkeleton::Get().FindBoneIndex(pBoneNode);
+				vOut.i[i]/*.boneIdx*/ = boneIdx;
+				vOut.w[i]/*.weight*/ = vtxBlendInt->GetWeight(i);
 			}
 			else
 			{
-				vOut.i[i].boneIdx = -1;
-				vOut.i[i].weight = 0.0f;
+				vOut.i[i]/*.boneIdx*/ = -1;
+				vOut.w[i]/*.weight*/ = 0.0f;
 			}
 			
 		}
@@ -227,7 +250,7 @@ void XMeshExporter::AnalyseSkin()
 	//当前只取map
 	m_iTriCount = m_pExportMesh->getNumFaces();
 	m_iVertCount = m_pExportMesh->getNumTVerts();
-	m_pSkinVertices = new ExpAnimSkinVertex(m_iTriCount);
+	m_pSkinVertices = new ExpAnimSkinVertex[m_iTriCount * 3];
 	m_pIndices = new unsigned short[m_iTriCount * 3];
 	
 // 	for (int i = 0; i < m_iVertCount; i++)
@@ -244,22 +267,40 @@ void XMeshExporter::AnalyseSkin()
 		{
 			//vert.matID = face.getMatID();
 			GetVertexBoneInfo(m_pExportNode, pSkin, m_pExportMesh, face.v[j], tvFace.getTVert(j), m_pSkinVertices[v_index]);
+			m_pIndices[v_index] = v_index;
 			v_index++;
 		}
 	}
 }
 
-void XMeshExporter::ExportSkinMtrl(INode* node, std::string& file)
+void XMeshExporter::AnalysePhysque()
+{
+}
+
+void XMeshExporter::AnalyseStatic()
 {
 
 }
 
-void XMeshExporter::ExportSkinMesh(INode* node, std::string& file)
+void XMeshExporter::ExportSkinMtrl(std::string& file)
 {
-
+	
 }
 
-void XMeshExporter::ExportSkelton(INode* node, std::string& file)
+void XMeshExporter::ExportSkinMesh(std::string& file)
 {
+	XFile fp;
+	if (fp.OpenFile(file.c_str(), "wb"))
+	{
+		int count = m_iTriCount * 3;
+		fp.QuickWriteValue(count);
+		fp.Write(m_pSkinVertices, m_iTriCount * 3 * sizeof(ExpAnimSkinVertex), 1);
+		fp.QuickWriteValue(count);
+		fp.Write(m_pIndices, m_iTriCount * 3 * sizeof(unsigned short), 1);
+	}
+}
 
+void XMeshExporter::ExportSkelton(std::string& file)
+{
+	m_skeltonFrame.SaveSkeleton(file.c_str());
 }

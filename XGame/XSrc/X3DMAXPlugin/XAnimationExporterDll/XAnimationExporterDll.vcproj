@@ -44,8 +44,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\IGame&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\CS&quot;;..\XInc\XExporter"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				AdditionalIncludeDirectories="&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\IGame&quot;;&quot;E:\SDK\3ds Max 2010 SDK\maxsdk\include\CS&quot;;..\..\..\XInc"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;_WIN_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -96,7 +96,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy  /d /s /y &quot;$(TargetPath)&quot; &quot;..\BuildPlugin&quot;&#x0D;&#x0A;xcopy /d /s /y &quot;$(TargetPath)&quot; &quot;$(3DSMAX_2011_PATH)\plugins\&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy  /d /s /y &quot;$(TargetPath)&quot; &quot;..\BuildPlugin\&quot;&#x0D;&#x0A;xcopy /d /s /y &quot;$(TargetPath)&quot; &quot;$(3DSMAX_2011_PATH)\plugins\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration

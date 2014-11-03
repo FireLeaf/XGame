@@ -45,7 +45,7 @@ namespace MeshExporterUtil
 			return true;
 		}
 
-		Control* ct = pNode->GetTMController;
+		Control* ct = pNode->GetTMController();
 		if(ct)
 		{
 			return (ct->ClassID() == BIPSLAVE_CONTROL_CLASS_ID) || (ct->ClassID() == BIPBODY_CONTROL_CLASS_ID);
@@ -241,5 +241,16 @@ namespace MeshExporterUtil
 
 		return NULL;
 	}
-
+	
+	void Matrix3ToXMatrix(const Matrix3& m3, XMatrix& xm)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			Point3 pt = m3[i];
+			xm.f[i][0] = pt.x;
+			xm.f[i][1] = pt.y;
+			xm.f[i][2] = pt.z;
+			xm.f[i][3] = ((i == 3) ? 1.0f : 0.0f);
+		}
+	}
 }

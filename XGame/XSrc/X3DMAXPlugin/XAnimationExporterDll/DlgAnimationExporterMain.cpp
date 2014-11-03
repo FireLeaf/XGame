@@ -140,5 +140,6 @@ void DlgAnimationExporterMain::OnMove(int x, int y)
 void DlgAnimationExporterMain::OnBnClickedButtonExport()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	XMeshExporter::Get().ExporterTestModel();
+	//XMeshExporter::Get().ExporterTestModel();
+	XMeshExporter::Get().ExportModel();
 }

@@ -10,6 +10,12 @@
 #define __MESHEXPORTER__H
 
 #include "MeshExporterUtil.h"
+#include "XVector.h"
+#include "XMath.h"
+#include "XMathUtil.h"
+#include "XType.h"
+#include "XFile.h"
+#include "iskin.h"
 
 #define MAX_EFFECT_BONE 4
 
@@ -86,25 +92,66 @@ struct ActionClip
 
 struct Bone
 {
-	Matrix NodeInitTM;
-	char Name[32], ParentName[32];
+	XMatrix NodeInitOffsetTM;
+	std::string name;
+	std::string parent_name;
+	int index;
 	std::vector<int> child_bones;
 	int parent_bone;
+	INode* pNode;
+	INode* pParentNode;
 };
 
 class XSkeleton
 {
 public:
-	static CSkeleton& Get()
+	static XSkeleton& Get()
 	{
-		static CSkeleton instance;
+		static XSkeleton instance;
 		return instance;
 	}
 public:
 	bool LoadSkeleton(const char* szFileName);
-	int FindBoneIndex(INode* pNode);
+	int FindBoneIndex(const std::string& name)
+	{
+		for (int i = 0; i < (int)m_vecBones.size(); i++)
+		{
+			if (m_vecBones[i].name == name)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	int FindBoneIndex(INode* pNode)
+	{
+		for (int i = 0; i < (int)m_vecBones.size(); i++)
+		{
+			if (m_vecBones[i].pNode == pNode)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
 	void SaveBone(FILE* fp, INode* pNode, bool bRoot);
-	void SaveSkeleton(const char* szFileName, INode* pRootNode);
+	void SaveSkeleton(const char* szFileName)
+	{
+		XFile fp;// = fopen(szFileName, "wb");
+		if (fp.OpenFile(szFileName, "wb"))
+		{
+			for (int i = 0; i < (int)m_vecBones.size(); i++)
+			{
+				fp.QuickWriteValue(m_vecBones[i].parent_bone);
+				fp.QuickWriteValue(m_vecBones[i].NodeInitOffsetTM);
+				fp.QuickWriteValue(m_vecBones[i].child_bones.size());
+				for (int j = 0; j < (int)m_vecBones[i].child_bones.size(); j++)
+				{
+					fp.QuickWriteValue(m_vecBones[i].child_bones[j]);
+				}
+			}
+		}
+	}
 
 	void InitSkelton()
 	{
@@ -112,11 +159,77 @@ public:
 		if (pRootBone)
 		{
 			m_vecBones.clear();
-			INode* pRootBone->
+			AddBone(pRootBone);
 		}
 	}
+
+	void AddBone(INode* pNode, INode* pParentNode = NULL)
+	{
+		if (!pNode)
+		{
+			return;
+		}
+		Bone bone;
+		bone.pNode = pNode;
+		bone.name = pNode->GetName();
+		bone.pParentNode = pParentNode;
+		bone.parent_name = pParentNode ? pParentNode->GetName() : "";
+		m_vecBones.push_back(bone);
+		for (int i  = 0; i < (int)pNode->NumChildren(); i++)
+		{
+			AddBone(pNode->GetChildNode(i), pNode);
+		}
+	}
+
+	void BuildBoneFrame()
+	{
+		for (int i = 0; i < (int)m_vecBones.size(); i++)
+		{
+			Bone& bone = m_vecBones[i];
+			bone.index = i;
+			if (!bone.pParentNode)
+			{
+				bone.parent_bone = -1;
+				XMathMatrixIdentity(bone.NodeInitOffsetTM);
+			}
+			else
+			{
+				int parent_index = FindBoneIndex(bone.pParentNode);
+				if (-1 != parent_index)
+				{
+					bone.index = i;
+					bone.parent_bone = parent_index;
+					Assert(parent_index >= 0 && parent_index < (int)m_vecBones.size());
+					m_vecBones[parent_index].child_bones.push_back(i);
+					Matrix3 matParent = bone.pParentNode->GetNodeTM(0);
+					Matrix3 mat = bone.pNode->GetNodeTM(0);
+					Matrix3 reltive = Inverse(mat * Inverse(matParent));
+					MeshExporterUtil::Matrix3ToXMatrix(reltive, bone.NodeInitOffsetTM);
+				}
+				else
+				{
+					bone.parent_bone = -1;
+					Assert(0);
+				}
+			}
+		}
+	}
+	
 protected:
 	std::vector<Bone> m_vecBones;
+};
+
+enum EXPORT_TYPE
+{
+	EXPORT_STATIC_MODEL,
+	EXPORT_SKIN_MODEL,
+};
+
+enum EXPORT_OPTION
+{
+	OP_EXPORT_SKIN,
+	OP_EXPORT_KEY,
+	OP_EXPORT_SKELTON,
 };
 
 class XMeshExporter
@@ -139,8 +252,10 @@ public:
 	XMeshExporter();
 	void SetExporterFilePath(const char* file){m_strExportFile = file;}
 	void ExporterTestModel();
+	void ExportModel();
 
 	bool InitNode(INode* pNode);//初始化此node
+	bool InitCurSelNode();
 
 	void ExportSkinMtrl(std::string& file);//导出材质
 	void ExportSkinMesh(std::string& file);//导出蒙皮
