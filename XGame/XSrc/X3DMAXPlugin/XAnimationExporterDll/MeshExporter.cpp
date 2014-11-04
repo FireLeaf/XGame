@@ -11,6 +11,7 @@
 #include "MeshExporterUtil.h"
 #include "Phyexp.h"
 
+
 XMeshExporter::XMeshExporter()
 {
 	m_iTriCount = 0;
@@ -215,7 +216,7 @@ void XMeshExporter::GetVertexBoneInfo(INode* pNode, Modifier* pPhyMod, Mesh* pMe
 			if (i < vtxBlendInt->GetNumberNodes())
 			{
 				INode* pBoneNode = vtxBlendInt->GetNode(i);
-				int boneIdx = XSkeleton::Get().FindBoneIndex(pBoneNode);
+				int boneIdx = m_skeltonFrame.FindBoneIndex(pBoneNode);
 				vOut.i[i]/*.boneIdx*/ = boneIdx;
 				vOut.w[i]/*.weight*/ = vtxBlendInt->GetWeight(i);
 			}
@@ -303,4 +304,56 @@ void XMeshExporter::ExportSkinMesh(std::string& file)
 void XMeshExporter::ExportSkelton(std::string& file)
 {
 	m_skeltonFrame.SaveSkeleton(file.c_str());
+}
+
+void XMeshExporter::ExportActionClip()
+{
+	for (int i = 0; i < m_vecActionClip.size(); i++)
+	{
+		XFile fp;
+		std::string file = m_strExportFile + m_vecActionClip[i].strClipName;
+		file += ".ac";
+		if (!fp.OpenFile(file.c_str(), "wb"))
+		{
+			Assert(0);
+			return;
+		}
+		int iTickPerFrame = GetTicksPerFrame();
+		for (int iBone = 0; iBone < m_skeltonFrame->GetBoneCount(); iBone++)
+		{
+			int keyCount = m_vecActionClip[i].iEndFrame - m_vecActionClip[i].iStartFrame + 1;
+			XScaleKey* scale_key_array = new XScaleKey[keyCount];
+			XPosKey* pos_key_array = new XPosKey[keyCount];
+			XRotKey* rot_key_array = new XRotKey[keyCount];
+			for (int j = m_vecActionClip[i].iStartFrame; j <= m_vecActionClip[i].iEndFrame; j++)
+			{
+				Bone* bone = m_skeltonFrame->GetBone(iBone);
+				char bone_name[32] = {'\0'};
+				strncpy(bone_name, bone->name.c_str(), sizeof(bone_name));
+				fp
+				if (!bone)
+				{
+					Assert(0);
+				}
+				else
+				{
+					TimeValue tv = j * iTickPerFrame;
+					Matrix3 mat = bone->pNode->GetNodeTM(tv);
+					if (bone->pParentNode)
+					{
+						Matrix3 matParent = bone->pParentNode->GetNodeTM(tv);
+						mat = mat * Inverse(matParent);
+					}
+					XVector3 tran, scal;
+					XQuaternion quat;
+
+					MeshExporterUtil::DecompMatrix3(mat, tran, scal, quat);
+					
+					//std::vector<XMatKey> mat_key_array;
+					
+
+				}
+			}
+		}
+	}
 }

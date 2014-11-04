@@ -54,7 +54,8 @@ public:
 
 class XQuaternion
 {
-
+public:
+	float x,y,z,w;
 };
 
 #endif // XMatrix

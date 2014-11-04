@@ -105,11 +105,11 @@ struct Bone
 class XSkeleton
 {
 public:
-	static XSkeleton& Get()
-	{
-		static XSkeleton instance;
-		return instance;
-	}
+// 	static XSkeleton& Get()
+// 	{
+// 		static XSkeleton instance;
+// 		return instance;
+// 	}
 public:
 	bool LoadSkeleton(const char* szFileName);
 	int FindBoneIndex(const std::string& name)
@@ -190,7 +190,9 @@ public:
 			if (!bone.pParentNode)
 			{
 				bone.parent_bone = -1;
-				XMathMatrixIdentity(bone.NodeInitOffsetTM);
+				//XMathMatrixIdentity(bone.NodeInitOffsetTM);
+				Matrix3 mat = bone.pNode->GetNodeTM(0);
+				MeshExporterUtil::Matrix3ToXMatrix(mat, bone.NodeInitOffsetTM);
 			}
 			else
 			{
@@ -215,6 +217,15 @@ public:
 		}
 	}
 	
+	void GetBoneCount(){return m_vecBones.size();}
+	Bone* GetBone(int iIndex)
+	{
+		if (iIndex >= 0 || iIndex < m_vecBones.size())
+		{
+			return &(m_vecBones[iIndex]);
+		}
+		return NULL;
+	}
 protected:
 	std::vector<Bone> m_vecBones;
 };

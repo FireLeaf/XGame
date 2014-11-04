@@ -253,4 +253,22 @@ namespace MeshExporterUtil
 			xm.f[i][3] = ((i == 3) ? 1.0f : 0.0f);
 		}
 	}
+
+	void DecompMatrix3(Matrix3 mat, XVector3& tran, XVector3& scal, XQuaternion& quat)
+	{
+		AffineParts ap;
+		decomp_affine(mat, &ap);
+		tran.x = ap.t.x;
+		tran.y = ap.t.y;
+		tran.z = ap.t.z;
+
+		scal.x = ap.k.x;
+		scal.y = ap.k.y;
+		scal.z = ap.k.z;
+
+		quat.x = ap.q.x;
+		quat.y = ap.q.y;
+		quat.z = ap.q.z;
+		quat.w = ap.q.w;
+	}
 }

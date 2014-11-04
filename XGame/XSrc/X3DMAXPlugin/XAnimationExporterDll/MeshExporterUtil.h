@@ -13,6 +13,7 @@
 #include "cs/BIPEXP.H"
 #include "XMatrix.h"
 #include "matrix3.h"
+#include "decomp.h"
 
 namespace MeshExporterUtil
 {
@@ -36,6 +37,8 @@ namespace MeshExporterUtil
 	Mesh* GetMesh(INode* pNode, int iMaxTime);
 
 	void Matrix3ToXMatrix(const Matrix3& m3, XMatrix& xm);
+
+	void DecompMatrix3(Matrix3 mat, XVector3& tran, XVector3& scal, XQuaternion& quat);
 }
 
 #endif // MeshExporterUtil
