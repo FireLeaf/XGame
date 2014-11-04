@@ -212,3 +212,23 @@ float& XMatrix::operator () (int x, int y)
 {
 	return f[x][y];
 }
+
+XQuaternion XQuaternion::operator + (const XQuaternion& q) const
+{
+	XQuaternion qr;
+	qr.x = x + q.x;
+	qr.y = x + q.y;
+	qr.z = x + q.z;
+	qr.w = x + q.w;
+	return qr;
+}
+
+XQuaternion operator * (const XQuaternion& q,float v)
+{
+	XQuaternion qv;
+	qv.x = q.x * v;
+	qv.y = q.y * v;
+	qv.z = q.z * v;
+	qv.w = q.w * v;
+	return qv;
+}

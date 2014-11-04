@@ -30,7 +30,7 @@ public:
 
 	void SetAABB(const XAABB& aabb){this->aabb = aabb;}
 	void SetPos(const XVector3& pos){loc_pos = pos; abs_pos = loc_pos;}
-	void SetParent(const XActObject* parent){this->parent = parent;}
+	void SetParent(XActObject* parent){this->parent = parent;}
 protected:
 	XAABB aabb;
 	XVector3 abs_pos;//¾ø¶ÔÎ»ÖÃ

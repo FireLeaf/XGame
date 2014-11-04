@@ -7,6 +7,9 @@
 /*************************************************************************/
 
 #include "XAnimationMesh.h"
+#include "XSkinMesh.h"
+#include "XAnimationAction.h"
+#include "XSkeltonFrame.h"
 
 XAnimationMesh::XAnimationMesh()
 {

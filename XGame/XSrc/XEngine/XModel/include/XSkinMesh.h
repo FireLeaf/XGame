@@ -8,11 +8,14 @@
 
 #ifndef __XSKINMESH__H
 #define __XSKINMESH__H
+
+#include "XTemplate.h"
+
 template<int N>
 struct AnimationVertexPTXnWI
 {
 	float x,y,z;
-	X3DVector2 uv[N];
+	XVector2 uv[N];
 	float w[4];
 	xbyte i[4];
 };
@@ -30,7 +33,7 @@ template<int N>
 struct AnimationVertexPTXnNBTWI
 {
 	float x,y,z;
-	X3DVector2 uv[N];
+	XVector2 uv[N];
 	float nx, ny, nz;
 	float bx, by, bz;
 	float tx, ty, tz;
@@ -55,7 +58,7 @@ template<int N>
 struct AnimationVertexPTXnNBTWIP
 {
 	float x,y,z;
-	X3DVector2 uv[N];
+	XVector2 uv[N];
 	float nx, ny, nz;
 	float bx, by, bz;
 	float tx, ty, tz;

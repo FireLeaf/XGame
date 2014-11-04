@@ -217,10 +217,10 @@ public:
 		}
 	}
 	
-	void GetBoneCount(){return m_vecBones.size();}
+	int GetBoneCount(){return (int)m_vecBones.size();}
 	Bone* GetBone(int iIndex)
 	{
-		if (iIndex >= 0 || iIndex < m_vecBones.size())
+		if (iIndex >= 0 || iIndex < (int)m_vecBones.size())
 		{
 			return &(m_vecBones[iIndex]);
 		}
@@ -253,6 +253,7 @@ public:
 		SKIN_PHYSIQUE,
 	};
 	typedef AnimationVertexPTXnNWI<1> ExpAnimSkinVertex;
+	typedef std::vector<ActionClip> ActionClipVector;
 public:
 	static XMeshExporter& Get()
 	{
@@ -274,6 +275,13 @@ public:
 	void ExportStaticMesh(std::string& file);//导出静态模型
 
 	void ExportActionClip();//导出动作
+
+public:
+	void AddActionClip(const std::string& name, int iStartFrame, int iEndFrame);
+	void DeleteActionClip(const std::string& name);
+	void UpdateActionClip(const std::string& name, int iStartFrame, int iEndFrame);
+protected:
+	ActionClipVector::iterator FindActionClip(const std::string& name);
 protected:
 	void AnalyseSkin();
 	void AnalysePhysque();
@@ -299,7 +307,7 @@ protected:
 	XVector3* m_pVertNormals;//每个顶点的法线
 	XVector3* m_pFaceNormals;//每个面的法线，和tvFace顺序一致
 	std::vector<int>* m_pVertFaceRefIndexs;//每个顶点被访问的
-	std::vector<ActionClip> m_vecActionClip;//动作
+	ActionClipVector m_vecActionClip;//动作
 };
 
 

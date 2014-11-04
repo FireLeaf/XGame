@@ -14,7 +14,8 @@ public:
 
 // 对话框数据
 	enum { IDD = IDD_DIALOG2 };
-
+protected:
+	void UpdateKeyFrameList();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
@@ -24,4 +25,6 @@ public:
 	afx_msg void OnBnClickedButtonEdit();
 	afx_msg void OnBnClickedButtonDel();
 	CListCtrl m_listKeyFrame;
+	afx_msg void OnLvnItemchangedListAnimation(NMHDR *pNMHDR, LRESULT *pResult);
+	virtual BOOL OnInitDialog();
 };

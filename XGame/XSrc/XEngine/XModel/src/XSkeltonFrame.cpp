@@ -5,8 +5,8 @@
 /*		CreateTime: 2014/10/27 21:01:37
 /*		CopyRight: yc 
 /*************************************************************************/
+#include "XMatrix.h"
 #include "XSkeltonFrame.h"
-
 
 void XSkeltonFrame::Tick(xuint32 time_delta)
 {

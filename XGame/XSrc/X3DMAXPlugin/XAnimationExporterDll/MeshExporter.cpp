@@ -10,7 +10,7 @@
 #include "MeshExporter.h"
 #include "MeshExporterUtil.h"
 #include "Phyexp.h"
-
+#include "XAnimationKey.h"
 
 XMeshExporter::XMeshExporter()
 {
@@ -65,6 +65,76 @@ void XMeshExporter::ExporterTestModel()
 
 	fwrite(indices, sizeof(unsigned short), iFaceNum * 3, fp);
 	fclose(fp);
+}
+
+XMeshExporter::ActionClipVector::iterator XMeshExporter::FindActionClip(const std::string& name)
+{
+	struct ACCmp
+	{
+		ACCmp(const std::string& strClipName):name(strClipName){}
+		bool operator() (const ActionClip& ac)
+		{
+			return (name == ac.strClipName);
+		}
+		std::string name;
+	};
+
+	return (std::find_if(m_vecActionClip.begin(), m_vecActionClip.end(), ACCmp(name)));
+}
+
+void XMeshExporter::AddActionClip(const std::string& name, int iStartFrame, int iEndFrame)
+{
+	ActionClipVector::iterator iter = FindActionClip(name);
+	if (m_vecActionClip.end() == iter)
+	{
+		ActionClip ac;
+		ac.strClipName = name;
+		ac.iStartFrame = iStartFrame;
+		ac.iEndFrame = iEndFrame;
+		m_vecActionClip.push_back(ac);
+	}
+	else
+	{
+		int ret = MessageBox(NULL, "当前有相同名字的动画片段", "警告", MB_OKCANCEL);
+		if (ret == IDOK)
+		{
+			iter->iStartFrame = iStartFrame;
+			iter->iEndFrame = iEndFrame;
+		}
+		else
+		{
+			return;
+		}
+	}
+}
+
+void XMeshExporter::DeleteActionClip(const std::string& name)
+{
+	ActionClipVector::iterator iter = FindActionClip(name);
+	if (m_vecActionClip.end() != iter)
+	{
+		m_vecActionClip.erase(iter);
+	}
+	else
+	{
+		Assert(0);
+	}
+}
+
+void XMeshExporter::UpdateActionClip(const std::string& name, int iStartFrame, int iEndFrame)
+{
+	ActionClipVector::iterator iter = FindActionClip(name);
+	if (m_vecActionClip.end() != iter)
+	{
+		iter->strClipName = name;
+		iter->iStartFrame = iStartFrame;
+		iter->iEndFrame = iEndFrame;
+	}
+	else
+	{
+		Assert(0);
+		AddActionClip(name, iStartFrame, iEndFrame);
+	}
 }
 
 void XMeshExporter::ExportModel()
@@ -308,7 +378,7 @@ void XMeshExporter::ExportSkelton(std::string& file)
 
 void XMeshExporter::ExportActionClip()
 {
-	for (int i = 0; i < m_vecActionClip.size(); i++)
+	for (int i = 0; i < (int)m_vecActionClip.size(); i++)
 	{
 		XFile fp;
 		std::string file = m_strExportFile + m_vecActionClip[i].strClipName;
@@ -319,18 +389,20 @@ void XMeshExporter::ExportActionClip()
 			return;
 		}
 		int iTickPerFrame = GetTicksPerFrame();
-		for (int iBone = 0; iBone < m_skeltonFrame->GetBoneCount(); iBone++)
+		int keyCount = m_vecActionClip[i].iEndFrame - m_vecActionClip[i].iStartFrame + 1;
+		fp.QuickWriteValue(keyCount);
+		for (int iBone = 0; iBone < m_skeltonFrame.GetBoneCount(); iBone++)
 		{
-			int keyCount = m_vecActionClip[i].iEndFrame - m_vecActionClip[i].iStartFrame + 1;
 			XScaleKey* scale_key_array = new XScaleKey[keyCount];
 			XPosKey* pos_key_array = new XPosKey[keyCount];
 			XRotKey* rot_key_array = new XRotKey[keyCount];
 			for (int j = m_vecActionClip[i].iStartFrame; j <= m_vecActionClip[i].iEndFrame; j++)
 			{
-				Bone* bone = m_skeltonFrame->GetBone(iBone);
+				int iCurIndex = j - m_vecActionClip[i].iStartFrame;
+				Bone* bone = m_skeltonFrame.GetBone(iBone);
 				char bone_name[32] = {'\0'};
 				strncpy(bone_name, bone->name.c_str(), sizeof(bone_name));
-				fp
+				fp.Write(bone_name, sizeof(bone_name), 1);
 				if (!bone)
 				{
 					Assert(0);
@@ -347,13 +419,13 @@ void XMeshExporter::ExportActionClip()
 					XVector3 tran, scal;
 					XQuaternion quat;
 
-					MeshExporterUtil::DecompMatrix3(mat, tran, scal, quat);
-					
-					//std::vector<XMatKey> mat_key_array;
-					
-
+					MeshExporterUtil::DecompMatrix3(mat, pos_key_array[iCurIndex].pos, scale_key_array[iCurIndex].scal, rot_key_array[iCurIndex].quat);
 				}
 			}
+
+			fp.Write(scale_key_array, keyCount * sizeof(XScaleKey), 1);
+			fp.Write(pos_key_array, keyCount * sizeof(XPosKey), 1);
+			fp.Write(rot_key_array, keyCount * sizeof(XRotKey), 1);
 		}
 	}
 }

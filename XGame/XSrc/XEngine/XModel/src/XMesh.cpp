@@ -27,8 +27,8 @@ bool XMesh::LoadMesh(const char* file_name)
 	}
 	xint32 vertex_num;
 	file.QuickReadValue(vertex_num);
-	X3DVector3* poses = new X3DVector3[vertex_num];
-	file.Read((void*)poses, sizeof(X3DVector3), vertex_num);
+	XVector3* poses = new XVector3[vertex_num];
+	file.Read((void*)poses, sizeof(XVector3), vertex_num);
 
 	MeshVertexBufferPTX0N* vertex_pool = new MeshVertexBufferPTX0N;
 	geometry_data.vertex_attribute = AssetUtil::GetVertexAttribute(PTX0N_elements);

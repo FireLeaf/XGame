@@ -9,6 +9,12 @@
 #ifndef __XANIMATIONMESH__H
 #define __XANIMATIONMESH__H
 
+#include "XRenderEntity.h"
+class XSkinMesh;
+class XSkeltonFrame;
+class XActionMgr;
+class XEmotionMgr;
+
 enum X_ANIMATION_FLAG
 {
 

@@ -148,3 +148,7 @@
 /XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/predator_exporter/*.user
 /XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/predator_skin_mesh/*.txt
 /XGame/XSrc/X3DMAXPlugin/predator_3dmax_exporter/predator_skin_mesh/*.user
+/XGame/XSrc/X3DMAXPlugin/BuildPlugin/*.dle
+/XGame/XSrc/X3DMAXPlugin/BuildPlugin/*.dll
+/XGame/XSrc/X3DMAXPlugin/XAnimationExporterDll/Debug/*.obj
+/XGame/XSrc/XEngine/XLua/*.user

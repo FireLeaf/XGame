@@ -266,9 +266,9 @@ namespace MeshExporterUtil
 		scal.y = ap.k.y;
 		scal.z = ap.k.z;
 
-		quat.x = ap.q.x;
-		quat.y = ap.q.y;
-		quat.z = ap.q.z;
+		quat.x = -ap.q.x;
+		quat.y = -ap.q.y;
+		quat.z = -ap.q.z;
 		quat.w = ap.q.w;
 	}
 }

@@ -266,6 +266,45 @@ void XMathMatrixPerspectiveFovRH(XMatrix& m, float fovy,float Aspect,float zn, f
 	m(3, 2) = zn * zf / (zf - zn);
 }
 
+//
+void XMathQuatNormalize(XQuaternion& q)
+{
+	//float angle = ;
+}
+
+void XMathQuatToMatrix(XMatrix& m, const XQuaternion& q)
+{
+	m.f[0][0] = 1 - 2 * (q.y * q.y + q.z * q.z);
+	m.f[0][1] = 2 * (q.x * q.y + q.w * q.z);
+	m.f[0][2] = 2 * (q.x * q.z - q.w * q.y);
+	m.f[0][3] = 0.0f;
+
+	m.f[1][0] = 2 * (q.x * q.y - q.w * q.z);
+	m.f[1][1] = 1 - 2 * (q.x * q.x + q.z * q.z);
+	m.f[1][2] = 2 * (q.y * q.z + q.w * q.x);
+	m.f[1][3] = 0.0f;
+
+	m.f[2][0] = 2 * (q.x * q.z + q.w * q.y);
+	m.f[2][1] = 2 * (q.y * q.z - q.w * q.x);
+	m.f[2][2] = 1 - 2 * (q.x * q.x + q.y * q.y);
+	m.f[2][3] = 0.0f;
+
+	m.f[3][0] = 0.0f;
+	m.f[3][1] = 0.0f;
+	m.f[3][2] = 0.0f;
+	m.f[3][3] = 1.0f;
+}
+
+void XMathQuatSlerp(XQuaternion& q, const XQuaternion& q1, const XQuaternion& q2, float t)//球面线性插值
+{
+
+}
+void XMathQuatLerp(XQuaternion& q, const XQuaternion& q1, const XQuaternion& q2, float t)//线性插值
+{
+	q = q1 * t + q2 * (1.0f - t);
+}
+
+//
 void XMathVector3Transform(const XMatrix& m, const XVector3& v, XVector3& o)
 {
 	XVector4 v4(v);

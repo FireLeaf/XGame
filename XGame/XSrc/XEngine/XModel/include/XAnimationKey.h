@@ -24,32 +24,33 @@ struct XAnimationKey
 {
 	X_KEY_TYPE type;
 	float ti;
+	XAnimationKey(X_KEY_TYPE kt): type(kt){}
 };
 
 struct XScaleKey : public XAnimationKey
 {
 	//float sx, sy, sz;
 	XVector3 scal;
-	XScaleKey() : type(X_SCALE_KEY){}
+	XScaleKey() : XAnimationKey(X_SCALE_KEY){}
 };
 
 struct XPosKey : public XAnimationKey
 {
 	//float px, py, pz;
 	XVector3 pos;
-	XPosKey() : type(X_POS_KEY){}
+	XPosKey() : XAnimationKey(X_POS_KEY){}
 };
 
 struct XRotKey : public XAnimationKey
 {
 	XQuaternion quat;
-	XRotKey() : type(X_ROT_KEY){}
+	XRotKey() : XAnimationKey(X_ROT_KEY){}
 };
 
 struct XMatKey : public XAnimationKey
 {
 	XMatrix mat;
-	XMatKey() : type(X_MATRIX_KEY) {}
+	XMatKey() : XAnimationKey(X_MATRIX_KEY) {}
 };
 
 struct XAnimKeySet//关键帧的集合

@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <float.h>
+#include <math.h>
+#include "XVector.h"
 
 #define X_PI 3.14159f
 
@@ -54,6 +56,24 @@ public:
 
 class XQuaternion
 {
+public:
+	XQuaternion():x(0.0f), y(0.0f), z(0.0f), w(1.0f){}
+	XQuaternion(float _x, float _y, float _z, float _w):x(_x), y(_y), z(_z), w(_w){}
+	XQuaternion(const XVector3& axis, float angle)
+	{
+		float sin_value = sinf(angle / 2.0f);
+		w = cosf(angle / 2);
+		x = axis.x * sin_value;
+		y = axis.y * sin_value;
+		z = axis.z * sin_value;
+	}
+public:
+
+	XQuaternion operator + (const XQuaternion&) const;
+	friend XQuaternion operator * (const XQuaternion& , float);
+	//float operator * (const XQuaternion&) const;
+	float Value(){return sqrtf(ValuePow2());}
+	float ValuePow2(){return w * w + x * x + y * y + z * z;}
 public:
 	float x,y,z,w;
 };

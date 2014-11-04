@@ -9,12 +9,16 @@
 #ifndef __XSKELTONFRAME__H
 #define __XSKELTONFRAME__H
 
+#include <string>
+#include "XType.h"
+class XMatrix;
+
 struct XBone
 {
 	std::string name;
 	std::string parent_name;
 	std::string first_child_name;
-	std::string next_sbling;
+	std::string next_sbling_name;
 	int parent_index;
 	int first_child_index;
 	int next_sbling;
@@ -34,7 +38,7 @@ public:
 	bool Load(const char* );
 public:
 	int GetBoneCount(){return (int)(bone_ptr_array.size());}
-	XBone* GetBone(int index){if(index < 0 || index >= bone_ptr_array.size()) return NULL; return bone_ptr_array[index];}
+	XBone* GetBone(int index){if(index < 0 || index >= (int)bone_ptr_array.size()) return NULL; return bone_ptr_array[index];}
 protected:
 	std::vector<XBone*> bone_ptr_array;
 };

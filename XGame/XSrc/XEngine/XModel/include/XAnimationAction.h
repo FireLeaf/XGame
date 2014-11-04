@@ -1,12 +1,14 @@
 /**************************************************************************
-/*		FileName: XAnimationKey.h
+/*		FileName: XAnimationAction.h
 /*		FileDesc: 
 /*		FileAuthor: YangCao
-/*		CreateTime: 2014/10/07 1:54:54
+/*		CreateTime: 2014/11/04 22:25:23
 /*		CopyRight: yc 
 /*************************************************************************/
-#ifndef __XANIMATIONKEY__H
-#define __XANIMATIONKEY__H
+#ifndef __XANIMATIONACTION__H
+#define __XANIMATIONACTION__H
+
+#include "XAnimationKey.h"
 
 struct XAnimActionClip//一个小动画片段
 {
@@ -41,7 +43,7 @@ public:
 		{
 			if (ptr_actions[i] && ptr_actions[i]->enable &&actions_weight[i] > 0.0f)
 			{
-				
+
 			}
 		}
 	}
@@ -72,4 +74,4 @@ protected:
 
 };
 
-#endif // XAnimationKey
+#endif // XAnimationAction

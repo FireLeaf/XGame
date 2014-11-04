@@ -211,6 +211,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DlgInsertAC.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MeshExporter.cpp"
 				>
 			</File>
@@ -273,6 +277,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DlgInsertAC.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MeshExporter.h"
 				>
 			</File>
@@ -326,6 +334,10 @@
 				RelativePath="..\..\XEngine\XModel\include\XSkeltonFrame.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="Dlg"
+			>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
