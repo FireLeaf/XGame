@@ -203,10 +203,11 @@ public:
 					bone.parent_bone = parent_index;
 					Assert(parent_index >= 0 && parent_index < (int)m_vecBones.size());
 					m_vecBones[parent_index].child_bones.push_back(i);
-					Matrix3 matParent = bone.pParentNode->GetNodeTM(0);
+//					Matrix3 matParent = bone.pParentNode->GetNodeTM(0);
 					Matrix3 mat = bone.pNode->GetNodeTM(0);
-					Matrix3 reltive = Inverse(mat * Inverse(matParent));
-					MeshExporterUtil::Matrix3ToXMatrix(reltive, bone.NodeInitOffsetTM);
+// 					Matrix3 reltive = Inverse(mat * Inverse(matParent));
+// 					MeshExporterUtil::Matrix3ToXMatrix(reltive, bone.NodeInitOffsetTM);
+					MeshExporterUtil::Matrix3ToXMatrix(mat, bone.NodeInitOffsetTM);
 				}
 				else
 				{
@@ -280,6 +281,9 @@ public:
 	void AddActionClip(const std::string& name, int iStartFrame, int iEndFrame);
 	void DeleteActionClip(const std::string& name);
 	void UpdateActionClip(const std::string& name, int iStartFrame, int iEndFrame);
+	const ActionClipVector& GetActionClipVector(){return m_vecActionClip;}
+	int GetActionSampleRate(){return m_iSampleRate;}
+	void SetActionSampleRate(int iSampleRate){m_iSampleRate = iSampleRate;}
 protected:
 	ActionClipVector::iterator FindActionClip(const std::string& name);
 protected:
@@ -308,6 +312,7 @@ protected:
 	XVector3* m_pFaceNormals;//每个面的法线，和tvFace顺序一致
 	std::vector<int>* m_pVertFaceRefIndexs;//每个顶点被访问的
 	ActionClipVector m_vecActionClip;//动作
+	int m_iSampleRate;//采样率
 };
 
 

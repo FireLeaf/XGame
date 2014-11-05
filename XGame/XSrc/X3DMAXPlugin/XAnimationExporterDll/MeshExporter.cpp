@@ -20,6 +20,7 @@ XMeshExporter::XMeshExporter()
 	m_pSkinVertices = NULL;
 	m_pStaticVertices = NULL;
 	m_stType = SKIN_NONE;
+	m_iSampleRate = 5;//5帧一采样
 }
 
 void XMeshExporter::ExporterTestModel()
@@ -143,6 +144,7 @@ void XMeshExporter::ExportModel()
 	std::string sm = m_strExportFile + ".sm";
 	ExportSkelton(sk);
 	ExportSkinMesh(sm);
+	ExportActionClip();
 }
 
 bool XMeshExporter::InitCurSelNode()
@@ -381,51 +383,69 @@ void XMeshExporter::ExportActionClip()
 	for (int i = 0; i < (int)m_vecActionClip.size(); i++)
 	{
 		XFile fp;
-		std::string file = m_strExportFile + m_vecActionClip[i].strClipName;
+		std::string file = m_strExportFile + ".";
+		file += m_vecActionClip[i].strClipName;
 		file += ".ac";
 		if (!fp.OpenFile(file.c_str(), "wb"))
 		{
 			Assert(0);
 			return;
 		}
+		fp.QuickWriteValue(m_iSampleRate);//设置采样率
 		int iTickPerFrame = GetTicksPerFrame();
-		int keyCount = m_vecActionClip[i].iEndFrame - m_vecActionClip[i].iStartFrame + 1;
+		int keyRange = m_vecActionClip[i].iEndFrame - m_vecActionClip[i].iStartFrame;
+		int keyCount = keyRange / m_iSampleRate + 1 + ( (keyRange % 5) ? 1 : 0);
 		fp.QuickWriteValue(keyCount);
 		for (int iBone = 0; iBone < m_skeltonFrame.GetBoneCount(); iBone++)
 		{
 			XScaleKey* scale_key_array = new XScaleKey[keyCount];
 			XPosKey* pos_key_array = new XPosKey[keyCount];
 			XRotKey* rot_key_array = new XRotKey[keyCount];
-			for (int j = m_vecActionClip[i].iStartFrame; j <= m_vecActionClip[i].iEndFrame; j++)
+			Bone* bone = m_skeltonFrame.GetBone(iBone);
+			if (!bone)
 			{
-				int iCurIndex = j - m_vecActionClip[i].iStartFrame;
-				Bone* bone = m_skeltonFrame.GetBone(iBone);
-				char bone_name[32] = {'\0'};
-				strncpy(bone_name, bone->name.c_str(), sizeof(bone_name));
-				fp.Write(bone_name, sizeof(bone_name), 1);
-				if (!bone)
+				Assert(0);
+				continue;
+			}
+			char bone_name[32] = {'\0'};
+			strncpy(bone_name, bone->name.c_str(), sizeof(bone_name));
+			fp.Write(bone_name, sizeof(bone_name), 1);
+			for (int j = 0; j < keyCount; j++)
+			{
+			//	int iCurIndex = j - m_vecActionClip[i].iStartFrame;
+				
+				TimeValue tv = 0;
+				if(j < keyCount - 1)
 				{
-					Assert(0);
+					tv = (j * m_iSampleRate + m_vecActionClip[i].iStartFrame) * iTickPerFrame;
 				}
 				else
 				{
-					TimeValue tv = j * iTickPerFrame;
-					Matrix3 mat = bone->pNode->GetNodeTM(tv);
-					if (bone->pParentNode)
-					{
-						Matrix3 matParent = bone->pParentNode->GetNodeTM(tv);
-						mat = mat * Inverse(matParent);
-					}
-					XVector3 tran, scal;
-					XQuaternion quat;
-
-					MeshExporterUtil::DecompMatrix3(mat, pos_key_array[iCurIndex].pos, scale_key_array[iCurIndex].scal, rot_key_array[iCurIndex].quat);
+					Assert(j == keyCount - 1);
+					tv = m_vecActionClip[i].iEndFrame * iTickPerFrame;
 				}
+				
+				Matrix3 mat = bone->pNode->GetNodeTM(tv);
+				if (bone->pParentNode)
+				{
+					Matrix3 matParent = bone->pParentNode->GetNodeTM(tv);
+					mat = mat * Inverse(matParent);
+				}
+				XVector3 tran, scal;
+				XQuaternion quat;
+
+				MeshExporterUtil::DecompMatrix3(mat, pos_key_array[j].pos, scale_key_array[j].scal, rot_key_array[j].quat);
 			}
+
+			
 
 			fp.Write(scale_key_array, keyCount * sizeof(XScaleKey), 1);
 			fp.Write(pos_key_array, keyCount * sizeof(XPosKey), 1);
 			fp.Write(rot_key_array, keyCount * sizeof(XRotKey), 1);
+
+			delete []scale_key_array;
+			delete []pos_key_array;
+			delete []rot_key_array;
 		}
 	}
 }

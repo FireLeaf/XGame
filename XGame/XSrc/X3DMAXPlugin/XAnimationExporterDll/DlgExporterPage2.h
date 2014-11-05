@@ -27,4 +27,6 @@ public:
 	CListCtrl m_listKeyFrame;
 	afx_msg void OnLvnItemchangedListAnimation(NMHDR *pNMHDR, LRESULT *pResult);
 	virtual BOOL OnInitDialog();
+	afx_msg void OnHdnItemdblclickListAnimation(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnEnChangeEditFrameRate();
 };
