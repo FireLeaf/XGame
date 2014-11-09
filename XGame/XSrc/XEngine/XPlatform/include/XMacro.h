@@ -17,5 +17,5 @@
 #define X3DVector3 D3DXVECTOR3
 #define X3DVector2 D3DXVECTOR2
 #define X3DMatrix D3DXMATRIX
-
+#define IS_FLOAT_ZERO(a) (fabsf(a) < FLT_EPSILON)
 #endif

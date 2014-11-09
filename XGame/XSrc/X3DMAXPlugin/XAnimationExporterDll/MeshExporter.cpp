@@ -211,6 +211,20 @@ bool XMeshExporter::InitNode(INode* pNode)
 	return true;
 }
 
+void XMeshExporter::AddBindBone(INode* pNode)
+{
+	if (!pNode && !MeshExporterUtil::IsBone(pNode))
+	{
+		return;
+	}
+	std::string strName = pNode->GetName();
+	BindBoneNameVector::iterator iter = std::find(m_vecBindBoneName.begin(), m_vecBindBoneName.end(), strName);
+	if (iter == m_vecBindBoneName.end())
+	{
+		m_vecBindBoneName.push_back(strName);
+	}
+}
+
 void XMeshExporter::GetVertexBoneInfo(INode* pNode, ISkin* pSkin, Mesh* pMesh, int vertexIdx, int uvIdx, ExpAnimSkinVertex& vOut)
 {
 	ISkinContextData* pSkinCtx = pSkin->GetContextInterface(pNode);
@@ -229,6 +243,7 @@ void XMeshExporter::GetVertexBoneInfo(INode* pNode, ISkin* pSkin, Mesh* pMesh, i
 			INode* pBone = pSkin->GetBone(pSkinCtx->GetAssignedBone(vertexIdx, i));
 			vOut.w[i] = pSkinCtx->GetBoneWeight(vertexIdx, i);
 			vOut.i[i] = m_skeltonFrame.FindBoneIndex(pBone);
+			AddBindBone(pBone);
 		}
 		else
 		{
@@ -275,6 +290,7 @@ void XMeshExporter::GetVertexBoneInfo(INode* pNode, Modifier* pPhyMod, Mesh* pMe
 			vOut.i[i]/*.boneIdx*/ = -1;
 			vOut.w[i]/*.weight*/ = 0.0f;
 		}
+		AddBindBone(pBoneNode);
 	}
 	else if(RIGID_BLENDED_TYPE == vtxType)
 	{
@@ -291,6 +307,7 @@ void XMeshExporter::GetVertexBoneInfo(INode* pNode, Modifier* pPhyMod, Mesh* pMe
 				int boneIdx = m_skeltonFrame.FindBoneIndex(pBoneNode);
 				vOut.i[i]/*.boneIdx*/ = boneIdx;
 				vOut.w[i]/*.weight*/ = vtxBlendInt->GetWeight(i);
+				AddBindBone(pBoneNode);
 			}
 			else
 			{
@@ -365,7 +382,18 @@ void XMeshExporter::ExportSkinMesh(std::string& file)
 	XFile fp;
 	if (fp.OpenFile(file.c_str(), "wb"))
 	{
-		int count = m_iTriCount * 3;
+		//绑定的骨骼
+		int count = m_vecBindBoneName.size();
+		fp.QuickWriteValue(count);
+		for (int i  = 0; i < count; i++)
+		{
+			char szName[32] = {'\0'};
+			strncpy(szName, m_vecBindBoneName[i].c_str(), sizeof(szName) - 1);
+			fp.Write(szName, sizeof(szName), 1);
+		}
+
+		//几何数据
+		count = m_iTriCount * 3;
 		fp.QuickWriteValue(count);
 		fp.Write(m_pSkinVertices, m_iTriCount * 3 * sizeof(ExpAnimSkinVertex), 1);
 		fp.QuickWriteValue(count);

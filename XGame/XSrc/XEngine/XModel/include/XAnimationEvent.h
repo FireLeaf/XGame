@@ -14,6 +14,8 @@
 struct XAnimationEvent 
 {
 	virtual void TrigEvent(int frame/*传入*/) = 0;
+public:
+	xuint32 time_trig;//触发的时间点
 };
 
 class XAnimSound : public XAnimationEvent

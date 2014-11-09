@@ -211,10 +211,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DlgInsertAC.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\MeshExporter.cpp"
 				>
 			</File>
@@ -277,10 +273,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DlgInsertAC.h"
-				>
-			</File>
-			<File
 				RelativePath=".\MeshExporter.h"
 				>
 			</File>
@@ -338,6 +330,14 @@
 		<Filter
 			Name="Dlg"
 			>
+			<File
+				RelativePath=".\DlgInsertAC.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DlgInsertAC.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

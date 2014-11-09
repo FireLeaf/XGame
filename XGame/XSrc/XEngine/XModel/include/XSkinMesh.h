@@ -97,6 +97,10 @@ class XSkinMesh : public XRenderEntity//蒙皮网格
 {
 public:
 	virtual void Render(XRII* rii, XRenderArgs* args);
+
+	bool LoadMesh(const char* file_name);
+public:
+	const std::vector<std::string>& GetBindBoneNames()const{return bind_bone_names;}
 protected:
 	std::vector<std::string> bind_bone_names;//需要绑定到的骨骼名字
 	std::vector<int> bind_bone_idxes;//骨骼的索引

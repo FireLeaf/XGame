@@ -12,8 +12,6 @@
 #include <math.h>
 #include "XType.h"
 
-#define IS_FLOAT_ZERO(a) (fabsf(a) < FLT_EPSILON)
-
 float XMathVector3Dot(const XVector3& v1, const XVector3& v2)
 {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
