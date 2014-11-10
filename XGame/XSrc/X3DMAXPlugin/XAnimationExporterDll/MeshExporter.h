@@ -255,6 +255,8 @@ public:
 	};
 	typedef AnimationVertexPTXnNWI<1> ExpAnimSkinVertex;
 	typedef std::vector<ActionClip> ActionClipVector;
+	typedef std::vector<std::string > BindBoneNameVector;
+	//typedef char[32] ;
 public:
 	static XMeshExporter& Get()
 	{
@@ -293,6 +295,7 @@ protected:
 
 	void GetVertexBoneInfo(INode* pNode, Modifier* pPhyMod, Mesh* pMesh, int vertexIdx, int uvIdx, ExpAnimSkinVertex& vOut);
 	void GetVertexBoneInfo(INode* pNode, ISkin* pSkin, Mesh* pMesh, int vertexIdx, int uvIdx, ExpAnimSkinVertex& vOut);
+	void AddBindBone(INode* pNode);
 
 	void GetKeyFrameNormal(INode* pNode);
 	void GetKeyFrameByIGame(INode* pNode);
@@ -306,6 +309,7 @@ protected:
 	Mesh* m_pExportMesh;
 	SKIN_TYPE m_stType;
 	ExpAnimSkinVertex* m_pSkinVertices;
+	BindBoneNameVector m_vecBindBoneName;
 	AnimationVertexPTXnN<1>* m_pStaticVertices;
 	unsigned short* m_pIndices;
 	XVector3* m_pVertNormals;//每个顶点的法线
