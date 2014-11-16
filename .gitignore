@@ -152,3 +152,11 @@
 /XGame/XSrc/X3DMAXPlugin/BuildPlugin/*.dll
 /XGame/XSrc/X3DMAXPlugin/XAnimationExporterDll/Debug/*.obj
 /XGame/XSrc/XEngine/XLua/*.user
+/XGame/XSrc/XPatcher/XGamePatcher/*.user
+/XGame/XSrc/XPatcher/XGamePatcher/*.vspscc
+/XGame/XSrc/XPatcher/XPatcher/*.user
+/XGame/XSrc/Debug/*.htm
+/XGame/XSrc/Debug/*.manifest
+/XGame/XSrc/Debug/*.obj
+/XGame/XSrc/Debug/*.dep
+/XGame/XSrc/Debug/*.idb
