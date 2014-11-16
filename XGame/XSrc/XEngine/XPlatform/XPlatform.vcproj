@@ -305,6 +305,14 @@
 				RelativePath=".\file\XFile.h"
 				>
 			</File>
+			<File
+				RelativePath=".\file\XFilePackage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\file\XFilePackage.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="math"
