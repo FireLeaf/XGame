@@ -160,3 +160,8 @@
 /XGame/XSrc/Debug/*.obj
 /XGame/XSrc/Debug/*.dep
 /XGame/XSrc/Debug/*.idb
+/XGame/XSrc/3-Party/7zlib/*.user
+/XGame/XSrc/XEngine/XUtil/Debug/*.htm
+/XGame/XSrc/XEngine/XUtil/Debug/*.idb
+/XGame/XSrc/XEngine/XUtil/Debug/*.pdb
+/XGame/XSrc/XEngine/XUtil/*.user
