@@ -170,3 +170,26 @@
 /XGame/XSrc/3-Party/ZLib/Debug/*.idb
 /XGame/XSrc/3-Party/ZLib/Debug/*.pdb
 /XGame/XSrc/3-Party/ZLib/*.user
+/XGame/XSrc/3-Party/7zlib/Debug/*.obj
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug - DLL OpenSSL - DLL LibSSH2/lib/*.obj
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.obj
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.obj
+/XGame/XSrc/3-Party/7zlib/Debug/*.htm
+/XGame/XSrc/3-Party/7zlib/Debug/*.idb
+/XGame/XSrc/3-Party/7zlib/Debug/*.pdb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug - DLL OpenSSL - DLL LibSSH2/lib/*.htm
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug - DLL OpenSSL - DLL LibSSH2/lib/*.idb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug - DLL OpenSSL - DLL LibSSH2/lib/*.pdb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.htm
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.res
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.idb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.pdb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.htm
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.res
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.idb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.pdb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/*.lib
+/XGame/XSrc/3-Party/curl/projects/Windows/VC9/*.ncb
+/XGame/XSrc/3-Party/curl/projects/Windows/VC9/*.suo
+/XGame/XSrc/3-Party/curl/projects/Windows/VC9/lib/*.user
+/XGame/XSrc/3-Party/curl/projects/Windows/VC9/src/*.user
