@@ -114,6 +114,157 @@ bool XFilePackageEasy::SavePackageRecords()
 
 bool XFilePackageEasy::AppendFile(const char* path, const unsigned char* buffer, int length)
 {
+	XEasyPackageRecord* record = FindRecord(path);
+	if (record)
+	{
+		return RewriteFile(path, buffer, length);
+	}
+	record = AddRecord(path);
+	if (!record)
+	{
+		return false;
+	}
+	return AddBufferZlib(record, buffer, length);
+}
 
-	compress()
+bool XFilePackageEasy::ReplaceFile(const char* old_path, const char* cur_path, const unsigned char* buffer, int length)
+{
+	if (0 == strcmp(old_path, cur_path))
+	{
+		return RewriteFile(cur_path, buffer, length);
+	}
+	XEasyPackageRecord* record = FindRecord(old_path);
+	if (!record)//如果老记录没有
+	{
+// 		record = FindRecord(cur_path);
+// 		if (record)
+// 		{
+// 			
+// 		}
+// 		else
+// 		{
+// 			return AppendFile(cur_path, buffer, length);
+// 		}
+		return false;
+	}
+	else
+	{
+		XEasyPackageRecord* cur_record = FindRecord(cur_path);
+		if (cur_record)
+		{
+			//如果由当前记录，那么直接重写
+			return RewriteFile(cur_path, buffer, length);
+		}
+		else
+		{
+			//如果没有当前记录，那么添加一个
+			record->path = cur_path;
+			AppendFile(cur_path, buffer, length);
+		}
+	}
+	return false;
+}
+
+bool XFilePackageEasy::RemoveFile(const char* path)
+{
+	XEasyPackageRecord* record = FindRecord(path);
+	if (record)
+	{
+		package_records.erase((PackageRecords::iterator)record);
+		Assert(NULL == FindRecord(path));
+		return true;
+	}
+	return false;
+}
+
+bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned char* buffer, int length)
+{
+	if (!record)
+	{
+		return false;
+	}
+	int dest_len = (length + 12 ) * 2;
+	unsigned char* dest_buffer = new unsigned char[dest_len];
+	if (!dest_buffer)
+	{
+		Assert(0);
+		return false;
+	}
+
+	int ret = compress(dest_buffer, &dest_len, buffer, length);
+	switch(ret)
+	{
+	case Z_OK:
+		{
+			if (dest_len >= length)//如果压缩后比当前大那么直接弄原数据
+			{
+				record->compress_type = NONE_COMPRESS;
+				record->offset = cur_offset;
+				SeekSet(cur_offset);
+				if(length!= SafeWrite(buffer,1, length, XFILE_PACKAGE_SAFE_SIZE))
+				{
+					//未能完全写入
+					return false;
+				}
+				cur_offset += length;
+			}
+			else//写入压缩的数据
+			{
+				record->compress_type = Z_LIB_COMPRESS;
+				record->offset = cur_offset;
+				SeekSet(cur_offset);
+				if(length!= SafeWrite(dest_buffer,1, dest_len, XFILE_PACKAGE_SAFE_SIZE))
+				{
+					//未能完全写入
+					return false;
+				}
+				cur_offset += dest_len;
+			}
+			delete dest_buffer;
+			return true;
+		}
+		break;
+	case Z_MEM_ERROR:
+		//内存不够
+		break;
+	case Z_BUF_ERROR:
+		//dest_buffer不够长
+		{
+			record->compress_type = NONE_COMPRESS;
+			record->offset = cur_offset;
+			SeekSet(cur_offset);
+			if(length!= SafeWrite(buffer,1, length, XFILE_PACKAGE_SAFE_SIZE))
+			{
+				//未能完全写入
+				return false;
+			}
+			cur_offset += length;
+		}
+		break;
+	case Z_STREAM_ERROR:
+		//
+		break;
+	default:
+		return false;
+		break;
+	}
+	return false;
+}
+
+XFilePackageEasy* XFilePackageEasy::FindRecord(const char* path)
+{
+	struct FindRecordCmp 
+	{
+		FindRecordCmp(const char* path):str_cmp(path){}
+	private:
+		std::string str_cmp;
+	};
+	PackageRecords::iterator iter = std::find_if(package_records.begin(), package_records.end(), FindRecordCmp(path));
+
+	if (iter == package_records.end())
+	{
+		return NULL;
+	}
+
+	return (XFilePackageEasy*)iter;
 }

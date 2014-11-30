@@ -193,3 +193,15 @@
 /XGame/XSrc/3-Party/curl/projects/Windows/VC9/*.suo
 /XGame/XSrc/3-Party/curl/projects/Windows/VC9/lib/*.user
 /XGame/XSrc/3-Party/curl/projects/Windows/VC9/src/*.user
+/XGame/XInc/curl/*.h
+/XGame/XInc/curl/vtls/*.h
+/XGame/XSrc/XDemo/curl_test/*.user
+/XGame/XSrc/XDemo/curl_test/Debug/*.htm
+/XGame/XSrc/XDemo/curl_test/Debug/*.manifest
+/XGame/XSrc/XDemo/curl_test/Debug/*.res
+/XGame/XSrc/XDemo/curl_test/Debug/*.obj
+/XGame/XSrc/XDemo/curl_test/Debug/*.pch
+/XGame/XSrc/XDemo/curl_test/Debug/*.ib_tag
+/XGame/XSrc/XDemo/curl_test/Debug/*.dep
+/XGame/XSrc/XDemo/curl_test/Debug/*.idb
+/XGame/XSrc/XDemo/curl_test/Debug/*.pdb

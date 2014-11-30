@@ -94,6 +94,13 @@ public:
 	{
 		XFILE_PACKAGE_MAGIC1 = 0xabcdef98,
 		XFILE_PACKAGE_MAGIC2 = 0xfedcba11,
+		XFILE_PACKAGE_SAFE_SIZE = 1024,
+	};
+	enum
+	{
+		NONE_COMPRESS,//无压缩
+		Z_LIB_COMPRESS,//zlib压缩
+		7Z_COMPRESS,//7z压缩
 	};
 	struct XEasyFPKHeader 
 	{
@@ -104,6 +111,7 @@ public:
 	struct XEasyPackageRecord 
 	{
 		std::string path;
+		int compress_type;
 		int offset;//单包长度不超过2^31 - 1
 	};
 	/*
@@ -112,6 +120,7 @@ public:
 		records//记录
 		records offset//记录在文件中偏移
 	*/
+	typedef std::vector<XEasyPackageRecord> PackageRecords;
 public:
 	bool InitPackage(const char* fpk_file);
 	
@@ -120,12 +129,18 @@ public:
 	bool SavePackageHeader();
 
 	bool AppendFile(const char* path, const unsigned char* buffer, int length);
-	bool ReplaceFile(const char* src_path, const char* dest_path, const unsigned char* buffer, int length);
+	bool ReplaceFile(const char* old_path, const char* cur_path, const unsigned char* buffer, int length);
+	bool RewriteFile(const char* path, const unsigned char* buffer, int length);
 	bool RemoveFile(const char* path);
+
+	XEasyPackageRecord* FindRecord(const char* path);
 protected:
 	bool LoadPackage(int version);
+	XEasyPackageRecord* AddRecord(const char* path);
+	bool AddBufferZlib(XEasyPackageRecord* record, const unsigned char* buffer, int length);
+	//bool ReplaceRecord(const char* path, )
 protected:
-	std::vector<XEasyPackageRecord> package_records;
+	PackageRecords package_records;
 	int cur_offset;
 };
 

@@ -96,6 +96,11 @@ namespace XSys
 	bool XReleaseThread(XThread*);
 	XThreadPool* XCreateThreadPool(int thread_count);
 	void XReleaseThreadPool(XThreadPool*);
+	bool XIsFileExist(const char* file_path);
+	bool XIsDirectory(const char* path);
+	bool XCreateDirectory(const char* path);
+	bool XDeleteFile(const char* path);
+	bool XDeleteDirectory(const char* path, bool bIsSubDelAll);
 };
 
 #endif // XSys
