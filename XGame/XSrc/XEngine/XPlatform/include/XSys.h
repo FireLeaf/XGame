@@ -101,6 +101,7 @@ namespace XSys
 	bool XCreateDirectory(const char* path);
 	bool XDeleteFile(const char* path);
 	bool XDeleteDirectory(const char* path, bool bIsSubDelAll);
+	bool XSetFileSize(const char* path, long size);
 };
 
 #endif // XSys

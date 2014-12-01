@@ -205,3 +205,6 @@
 /XGame/XSrc/XDemo/curl_test/Debug/*.dep
 /XGame/XSrc/XDemo/curl_test/Debug/*.idb
 /XGame/XSrc/XDemo/curl_test/Debug/*.pdb
+/XGame/XSrc/InternetCode/file_downloader_curl/file_downloader_test/*.user
+/XGame/XSrc/InternetCode/file_downloader_curl/file_downloader/*.user
+/XGame/XSrc/InternetCode/file_downloader_curl/base/*.user

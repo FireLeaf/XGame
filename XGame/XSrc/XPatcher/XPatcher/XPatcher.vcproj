@@ -148,6 +148,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\XPatcherDownload.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -160,6 +164,10 @@
 			</File>
 			<File
 				RelativePath=".\XPatcher.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XPatcherDownload.h"
 				>
 			</File>
 			<File

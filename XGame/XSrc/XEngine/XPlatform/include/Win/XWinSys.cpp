@@ -26,4 +26,27 @@ namespace XSys
 	{
 		return (new XWinMutex());
 	}
+	
+	bool XIsFileExist(const char* file_path)
+	{
+		return ( (_access( file_path , 0 )) != -1 );
+	}
+
+	bool XIsDirectory(const char* path)
+	{
+		return false;
+	}
+	bool XSetFileSize(const char* path, long size)
+	{
+		if (!XIsFileExist(path))
+		{
+			return false;
+		}
+		FILE fp = fopen(path, "wb");
+		if (!fp)
+		{
+			return false;
+		}
+		return (0 == _chsize(fp, size));
+	}
 }

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="file_downloader_api.cpp" />
+    <ClCompile Include="file_downloader_cfg.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="file_downloader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="file_downloader_engine_impl.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="FileDownloaderThread.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="http_webclient.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="file_downloader_api.h" />
+    <ClInclude Include="file_downloader_cfg.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="file_downloader_engine_impl.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="file_downloader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="file_downloader_error_util.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="FileDownloaderThread.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="file_downloader_engine.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="http_webclient.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{b8f92cc0-cd7f-4f64-b974-666e19720554}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
