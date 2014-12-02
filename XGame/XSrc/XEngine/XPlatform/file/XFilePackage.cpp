@@ -7,6 +7,7 @@
 /*************************************************************************/
 
 #include "XFilePackage.h"
+#include "zlib.h"
 
 bool XFilePackageEasy::InitPackage(const char* fpk_file)
 {
@@ -93,6 +94,7 @@ bool XFilePackageEasy::SavePackageHeader()
 	Write(&header, 1 , sizeof(header));
 	
 	cur_offset = Tell();
+	return true;
 }
 
 bool XFilePackageEasy::SavePackageRecords()
@@ -110,6 +112,7 @@ bool XFilePackageEasy::SavePackageRecords()
 		}
 	}
 	QuickWriteValue(records_offset);
+	return true;
 }
 
 bool XFilePackageEasy::AppendFile(const char* path, const unsigned char* buffer, int length)
@@ -170,7 +173,7 @@ bool XFilePackageEasy::RemoveFile(const char* path)
 	XEasyPackageRecord* record = FindRecord(path);
 	if (record)
 	{
-		package_records.erase((PackageRecords::iterator)record);
+		package_records.erase(*(PackageRecords::iterator*)&record);
 		Assert(NULL == FindRecord(path));
 		return true;
 	}
@@ -183,7 +186,7 @@ bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned 
 	{
 		return false;
 	}
-	int dest_len = (length + 12 ) * 2;
+	uLongf dest_len = (length + 12 ) * 2;
 	unsigned char* dest_buffer = new unsigned char[dest_len];
 	if (!dest_buffer)
 	{
@@ -251,11 +254,15 @@ bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned 
 	return false;
 }
 
-XFilePackageEasy* XFilePackageEasy::FindRecord(const char* path)
+XFilePackageEasy::XEasyPackageRecord* XFilePackageEasy::FindRecord(const char* path)
 {
 	struct FindRecordCmp 
 	{
 		FindRecordCmp(const char* path):str_cmp(path){}
+		bool operator()(const XEasyPackageRecord& epr)
+		{
+			return str_cmp == epr.path;
+		}
 	private:
 		std::string str_cmp;
 	};
@@ -266,5 +273,5 @@ XFilePackageEasy* XFilePackageEasy::FindRecord(const char* path)
 		return NULL;
 	}
 
-	return (XFilePackageEasy*)iter;
+	return *(XEasyPackageRecord**)&iter;
 }

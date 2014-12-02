@@ -11,8 +11,6 @@
 
 #include "XFile.h"
 
-#define 
-
 class XFileImageBase : public XFile
 {
 
@@ -100,7 +98,7 @@ public:
 	{
 		NONE_COMPRESS,//Œﬁ—πÀı
 		Z_LIB_COMPRESS,//zlib—πÀı
-		7Z_COMPRESS,//7z—πÀı
+		_7Z_COMPRESS,//7z—πÀı
 	};
 	struct XEasyFPKHeader 
 	{

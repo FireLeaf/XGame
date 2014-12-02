@@ -11,9 +11,13 @@
 
 typedef void (*pfnCallBack)(const void* buffer, int length);
 
-class XDownloadTaskData
+struct XDownloadTaskData
 {
+public:
+	void 
+public:
 	std::string url;
+	FILE* fp;
 	int range_begin;
 	int range_end;
 	int cur_size;
@@ -27,7 +31,9 @@ public:
 	//获取文件大小
 	bool GetFileSize(const char* url, ULONGLONG& file_size, int& response_code);
 
-	bool DownLoadFile(const char* url)
+	bool DownloadFile(const char* url);
+protected:
+	bool HttpRequestFile(const char* url);
 };
 
 #endif // XPatcherDownload

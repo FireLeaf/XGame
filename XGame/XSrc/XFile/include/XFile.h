@@ -80,7 +80,7 @@ public:
 		return ftell(m_fp);
 	}
 
-	inline xint32 Seek( xlong offset, xint32 origin )
+	inline long Seek( xlong offset, xint32 origin )
 	{
 		return fseek(m_fp, offset, origin);
 	}

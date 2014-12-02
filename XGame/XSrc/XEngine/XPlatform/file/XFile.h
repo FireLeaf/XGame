@@ -33,13 +33,31 @@ public:
 			fclose(m_fp);
 		}
 	}
-	xuint32 Read( void *buffer, size_t size, size_t count)
+	size_t Read( void *buffer, size_t size, size_t count)
 	{
 		return fread(buffer, size, count, m_fp);
 	}
-	xuint32 Write( const void *buffer, size_t size, size_t count)
+	size_t Write( const void *buffer, size_t size, size_t count)
 	{
 		return fwrite(buffer, size, count, m_fp);
+	}
+
+	size_t SafeWrite( const void *buffer, size_t size, size_t count, int safe_size)
+	{
+		size_t write_size = 0;
+		size_t all_size = size * count;
+		while(write_size < all_size)
+		{
+			size_t delta_size = all_size - write_size;
+			size_t cur_write = delta_size > safe_size ? safe_size : delta_size;
+			size_t writed = Write( (const void*)((unsigned char*)buffer + cur_write), 1, cur_write);
+			write_size += writed;
+			if (!writed)
+			{
+				break;
+			}
+		}
+		return write_size;
 	}
 
 	xchar *Gets( xchar *buffer, int n)
@@ -47,25 +65,31 @@ public:
 		return fgets(buffer, n, m_fp);
 	}
 
-	xint32 Puts(xchar *buffer)
+	size_t Puts(xchar *buffer)
 	{
 		return fputs(buffer, m_fp);
 	}
 
-	xint32 Flush()
+	size_t Flush()
 	{
 		return fflush(m_fp);
 	}
 
-	xulong Tell()
+	long Tell()
 	{
 		return ftell(m_fp);
 	}
 
-	xint32 Seek( xulong offset, xint32 origin )
+	long Seek( xulong offset, xint32 origin )
 	{
 		return fseek(m_fp, offset, origin);
 	}
+
+	inline long SeekSet(xlong offset)
+	{
+		return Seek(offset, SEEK_SET);
+	}
+
 
 	xulong Length()
 	{
@@ -104,82 +128,6 @@ class XFileMapBase : public XFile
 class XFileMap : public XFileMapBase
 {
 
-};
-
-struct XFilePackageHeader 
-{
-	xint64 magic;//魔法数字
-	xint32 version;//版本号
-
-	xint32 file_count;//文件数量
-	xint32 sub_package_count;//子包数量
-	struct  
-	{
-		xint32 file_count;//子包文件数量
-
-	}sub_package_desc[1];
-};
-
-struct XFileRecord
-{
-	XStl::string name;//文件名
-	xint64 offset;//起始偏移
-	xint64 length;//该文件长度
-};
-
-struct XDirRecord 
-{
-	XStl::string name;//目录名
-	XStl::vector<XFileRecord> file_records;
-	XStl::vector<XDirRecord> dir_records;
-};
-
-struct XSubPackageRecord : public XDirRecord
-{
-	//name为子包名
-};
-
-struct XPackageRecord
-{
-	XStl::string name;
-	XStl::vector<XSubPackageRecord> sub_packages;
-};
-
-struct PackageCmp
-{
-public:
-	PackageCmp(const char* name){this->name = name;}
-	bool operator ()(const XPackageRecord* pr)
-	{
-		if (0 == strcmp(pr->name.c_str(), name.c_str()))
-		{
-			return true;
-		}
-		return false;
-	}
-protected:
-	XStl::string name;
-};
-
-class XFilePackageBase : public XFile
-{
-public:
-	xbool InitPackage(const char* path)
-	{
-// 		if (packages.end() != std:find_if(packages.begin(), packages.end(), PackageCmp(path)))
-// 		{
-// 			return true;
-// 		}
-// 
-// 		CloseFile();
-// 
-// 		if(!OpenFile(path, "rb"))
-// 		{
-// 
-// 		}
-	}
-protected:
-	XStl::vector<XPackageRecord> packages;
 };
 
 

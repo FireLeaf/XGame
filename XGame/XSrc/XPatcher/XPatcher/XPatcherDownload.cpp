@@ -58,3 +58,8 @@ bool XPatcherDownload::GetFileSize(const char* url, ULONGLONG& file_size, int& r
 	}
 	return isOk;
 }
+
+bool XPatcherDownload::DownloadFile(const char* url)
+{
+	
+}

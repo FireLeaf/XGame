@@ -8,6 +8,7 @@
 
 #include "XSys.h"
 #include <windows.h>
+#include <io.h>
 
 class XWinMutex : public XMutex
 {
@@ -42,11 +43,11 @@ namespace XSys
 		{
 			return false;
 		}
-		FILE fp = fopen(path, "wb");
-		if (!fp)
-		{
-			return false;
-		}
-		return (0 == _chsize(fp, size));
+// 		FILE* fp = fopen(path, "wb");
+// 		if (!fp)
+// 		{
+// 			return false;
+// 		}
+// 		return (0 == _chsize(fp, size));
 	}
 }

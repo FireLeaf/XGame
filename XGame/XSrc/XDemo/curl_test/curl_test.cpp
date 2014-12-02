@@ -268,7 +268,6 @@ RUN:
 	curl_easy_setopt( http_handle, CURLOPT_WRITEDATA, &dd );
 	curl_easy_setopt( http_handle, CURLOPT_MAXREDIRS, -1 );
 	curl_easy_setopt( http_handle, CURLOPT_FOLLOWLOCATION, 1);
-	curl_easy_setopt( http_handle, CURLOPT_)
 
 	curl_multi_add_handle( multi_handle, http_handle );
 	const int nPeekIntervalInMs = 20;//ms
