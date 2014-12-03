@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "file_downloader", "file_downloader\file_downloader.vcxproj", "{479850FC-91DC-42C6-BC07-4F10B80444C9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "file_downloader_test", "file_downloader_test\file_downloader_test.vcxproj", "{5D32058E-B8C7-4608-B220-CF12A53E19C0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "base\base.vcxproj", "{6F1159BE-707D-45A7-A785-352A8D6F9D35}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{479850FC-91DC-42C6-BC07-4F10B80444C9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{479850FC-91DC-42C6-BC07-4F10B80444C9}.Debug|Win32.Build.0 = Debug|Win32
+		{479850FC-91DC-42C6-BC07-4F10B80444C9}.Release|Win32.ActiveCfg = Release|Win32
+		{479850FC-91DC-42C6-BC07-4F10B80444C9}.Release|Win32.Build.0 = Release|Win32
+		{5D32058E-B8C7-4608-B220-CF12A53E19C0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5D32058E-B8C7-4608-B220-CF12A53E19C0}.Debug|Win32.Build.0 = Debug|Win32
+		{5D32058E-B8C7-4608-B220-CF12A53E19C0}.Release|Win32.ActiveCfg = Release|Win32
+		{5D32058E-B8C7-4608-B220-CF12A53E19C0}.Release|Win32.Build.0 = Release|Win32
+		{6F1159BE-707D-45A7-A785-352A8D6F9D35}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6F1159BE-707D-45A7-A785-352A8D6F9D35}.Debug|Win32.Build.0 = Debug|Win32
+		{6F1159BE-707D-45A7-A785-352A8D6F9D35}.Release|Win32.ActiveCfg = Release|Win32
+		{6F1159BE-707D-45A7-A785-352A8D6F9D35}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

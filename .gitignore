@@ -170,3 +170,41 @@
 /XGame/XSrc/3-Party/ZLib/Debug/*.idb
 /XGame/XSrc/3-Party/ZLib/Debug/*.pdb
 /XGame/XSrc/3-Party/ZLib/*.user
+/XGame/XSrc/3-Party/7zlib/Debug/*.obj
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug - DLL OpenSSL - DLL LibSSH2/lib/*.obj
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.obj
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.obj
+/XGame/XSrc/3-Party/7zlib/Debug/*.htm
+/XGame/XSrc/3-Party/7zlib/Debug/*.idb
+/XGame/XSrc/3-Party/7zlib/Debug/*.pdb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug - DLL OpenSSL - DLL LibSSH2/lib/*.htm
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug - DLL OpenSSL - DLL LibSSH2/lib/*.idb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug - DLL OpenSSL - DLL LibSSH2/lib/*.pdb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.htm
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.res
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.idb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.pdb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.htm
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.res
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.idb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.pdb
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/*.lib
+/XGame/XSrc/3-Party/curl/projects/Windows/VC9/*.ncb
+/XGame/XSrc/3-Party/curl/projects/Windows/VC9/*.suo
+/XGame/XSrc/3-Party/curl/projects/Windows/VC9/lib/*.user
+/XGame/XSrc/3-Party/curl/projects/Windows/VC9/src/*.user
+/XGame/XInc/curl/*.h
+/XGame/XInc/curl/vtls/*.h
+/XGame/XSrc/XDemo/curl_test/*.user
+/XGame/XSrc/XDemo/curl_test/Debug/*.htm
+/XGame/XSrc/XDemo/curl_test/Debug/*.manifest
+/XGame/XSrc/XDemo/curl_test/Debug/*.res
+/XGame/XSrc/XDemo/curl_test/Debug/*.obj
+/XGame/XSrc/XDemo/curl_test/Debug/*.pch
+/XGame/XSrc/XDemo/curl_test/Debug/*.ib_tag
+/XGame/XSrc/XDemo/curl_test/Debug/*.dep
+/XGame/XSrc/XDemo/curl_test/Debug/*.idb
+/XGame/XSrc/XDemo/curl_test/Debug/*.pdb
+/XGame/XSrc/InternetCode/file_downloader_curl/file_downloader_test/*.user
+/XGame/XSrc/InternetCode/file_downloader_curl/file_downloader/*.user
+/XGame/XSrc/InternetCode/file_downloader_curl/base/*.user

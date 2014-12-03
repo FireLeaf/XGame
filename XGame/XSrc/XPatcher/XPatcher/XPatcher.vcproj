@@ -148,12 +148,32 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\XPatcherDownload.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\XFileFunc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XPatcher.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XPatcherDownload.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XPatcherFile.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"

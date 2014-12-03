@@ -33,13 +33,31 @@ public:
 			fclose(m_fp);
 		}
 	}
-	xuint32 Read( void *buffer, size_t size, size_t count)
+	size_t Read( void *buffer, size_t size, size_t count)
 	{
 		return fread(buffer, size, count, m_fp);
 	}
-	xuint32 Write( const void *buffer, size_t size, size_t count)
+	size_t Write( const void *buffer, size_t size, size_t count)
 	{
 		return fwrite(buffer, size, count, m_fp);
+	}
+
+	size_t SafeWrite( const void *buffer, size_t size, size_t count, int safe_size)
+	{
+		size_t write_size = 0;
+		size_t all_size = size * count;
+		while(write_size < all_size)
+		{
+			size_t delta_size = all_size - write_size;
+			size_t cur_write = delta_size > safe_size ? safe_size : delta_size;
+			size_t writed = Write( (const void*)((unsigned char*)buffer + cur_write), 1, cur_write);
+			write_size += writed;
+			if (!writed)
+			{
+				break;
+			}
+		}
+		return write_size;
 	}
 
 	xchar *Gets( xchar *buffer, int n)
@@ -47,24 +65,29 @@ public:
 		return fgets(buffer, n, m_fp);
 	}
 
-	xint32 Puts(xchar *buffer)
+	size_t Puts(xchar *buffer)
 	{
 		return fputs(buffer, m_fp);
 	}
 
-	xint32 Flush()
+	size_t Flush()
 	{
 		return fflush(m_fp);
 	}
 
-	xulong Tell()
+	long Tell()
 	{
 		return ftell(m_fp);
 	}
 
-	xint32 Seek( xlong offset, xint32 origin )
+	inline long Seek( xlong offset, xint32 origin )
 	{
 		return fseek(m_fp, offset, origin);
+	}
+
+	inline xint32 SeekSet(xlong offset)
+	{
+		return Seek(offset, SEEK_SET);
 	}
 
 	void Rewind()

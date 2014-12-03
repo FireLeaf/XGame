@@ -1,0 +1,1 @@
+运行或者调试的时候，记得将curl.exe libcurl.dll zlib1.dll 放在宿主程序同级目录下，并设置好相应的工作目录

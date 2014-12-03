@@ -60,6 +60,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(ProjectName)_d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -75,6 +76,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="xcopy /y /s /r /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(ProjectDir)*.h&quot; &quot;..\..\..\XInc\zlib\&quot;"
 			/>
 		</Configuration>
 		<Configuration

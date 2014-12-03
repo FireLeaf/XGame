@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\XPlatform\include;..\XPlatform\include\Win;..\XPlatform\render;..\XPlatform\manager;..\XPlatform\file;..\XPlatform\math;..\XPlatform\3d"
+				AdditionalIncludeDirectories="..\XPlatform\include;..\XPlatform\include\Win;..\XPlatform\render;..\XPlatform\manager;..\XPlatform\file;..\XPlatform\math;..\XPlatform\3d;..\..\..\Xinc\zlib"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
