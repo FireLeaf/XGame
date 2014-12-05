@@ -88,6 +88,13 @@ protected:
 class XFilePackageEasy : public XFile//简版
 {
 public:
+	//每个文件写入的格式
+	/*
+		file_name//变长
+		file_size
+		file_content
+		md5
+	*/
 	enum
 	{
 		XFILE_PACKAGE_MAGIC1 = 0xabcdef98,

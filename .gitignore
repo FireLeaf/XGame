@@ -208,3 +208,12 @@
 /XGame/XSrc/InternetCode/file_downloader_curl/file_downloader_test/*.user
 /XGame/XSrc/InternetCode/file_downloader_curl/file_downloader/*.user
 /XGame/XSrc/InternetCode/file_downloader_curl/base/*.user
+/XGame/XSrc/Win32/Debug/*.htm
+/XGame/XSrc/Win32/Debug/*.exe
+/XGame/XSrc/Win32/Debug/*.manifest
+/XGame/XSrc/Win32/Debug/*.ilk
+/XGame/XSrc/Win32/Debug/*.pdb
+/XGame/XSrc/Win32/Debug/*.obj
+/XGame/XSrc/Win32/Debug/*.dep
+/XGame/XSrc/Win32/Debug/*.idb
+/XGame/XSrc/XPatcher/XFPKPacker/*.user
