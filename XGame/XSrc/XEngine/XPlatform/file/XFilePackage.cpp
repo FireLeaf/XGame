@@ -168,6 +168,16 @@ bool XFilePackageEasy::ReplaceFile(const char* old_path, const char* cur_path, c
 	return false;
 }
 
+bool XFilePackageEasy::RewriteFile(const char* path, const unsigned char* buffer, int length)
+{
+	XEasyPackageRecord* cur_record = FindRecord(path);
+	if (cur_record)
+	{
+		return AddBufferZlib(cur_record, buffer, length);
+	}
+	return true;
+}
+
 bool XFilePackageEasy::RemoveFile(const char* path)
 {
 	XEasyPackageRecord* record = FindRecord(path);
@@ -274,4 +284,18 @@ XFilePackageEasy::XEasyPackageRecord* XFilePackageEasy::FindRecord(const char* p
 	}
 
 	return *(XEasyPackageRecord**)&iter;
+}
+
+XFilePackageEasy::XEasyPackageRecord* XFilePackageEasy::AddRecord(const char* path)
+{
+	XEasyPackageRecord* epr = FindRecord(path);
+	if (epr)
+	{
+		return NULL;
+	}
+	
+	XEasyPackageRecord record;
+	record.path = path;
+	package_records.push_back(record);
+	return &(package_records[package_records.size() - 1]);
 }

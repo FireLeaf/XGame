@@ -10,6 +10,7 @@
 
 #include "XPacker.h"
 #include "XMD5.h"
+#include "XBufferStream.h"
 
 XPacker::XPacker()
 {
@@ -29,6 +30,7 @@ bool XPacker::Init(const char* src_dir, const char* fpk)
 	{
 		return false;
 	}
+	return true;
 }
 
 bool XPacker::AddFile(const char* path)
@@ -41,20 +43,18 @@ bool XPacker::AddFile(const char* path)
 	
 	std::string full_path = asset_dir + "/";
 	full_path += path;
-	if ((file = fopen (full_path, "rb")) == NULL)
+	if ((file = fopen (full_path.c_str(), "rb")) == NULL)
 		return false;
-	int len = strlen(path);
-
-	file_package.QuickWriteValue(len);
-	else {
+	else 
+	{
+		int path_len = strlen(path);
+		file_package.QuickWriteValue(path_len);
+		XSimpleVectorStream<unsigned char> isvs;
 		MD5Init (&context);
 		while (len = fread (buffer, 1, 1024, file))
 		{
 			MD5Update (&context, buffer, len);
-			if(len != file_package.Write(buffer, 1, len))
-			{
-				return false;
-			}
+			isvs.PushStream((unsigned char*)buffer, len);
 		}
 		MD5Final (digest, &context);
 		fclose (file);
@@ -63,7 +63,7 @@ bool XPacker::AddFile(const char* path)
 	{
 		return false;
 	}
-
+	return true;
 }
 
 bool XPacker::Fllush()
