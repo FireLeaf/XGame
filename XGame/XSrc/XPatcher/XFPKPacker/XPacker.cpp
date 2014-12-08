@@ -35,35 +35,9 @@ bool XPacker::Init(const char* src_dir, const char* fpk)
 
 bool XPacker::AddFile(const char* path)
 {
-	unsigned char digest[16] = {0};
-	FILE *file;
-	MD5_CTX context;
-	int len;
-	unsigned char buffer[1024];
-	
 	std::string full_path = asset_dir + "/";
 	full_path += path;
-	if ((file = fopen (full_path.c_str(), "rb")) == NULL)
-		return false;
-	else 
-	{
-		int path_len = strlen(path);
-		file_package.QuickWriteValue(path_len);
-		XSimpleVectorStream<unsigned char> isvs;
-		MD5Init (&context);
-		while (len = fread (buffer, 1, 1024, file))
-		{
-			MD5Update (&context, buffer, len);
-			isvs.PushStream((unsigned char*)buffer, len);
-		}
-		MD5Final (digest, &context);
-		fclose (file);
-	}
-	if (16 != file_package.Write(digest, 1, sizeof(digest)))
-	{
-		return false;
-	}
-	return true;
+	return file_package.AddFile(full_path.c_str(), path);
 }
 
 bool XPacker::Fllush()

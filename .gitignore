@@ -218,3 +218,4 @@
 /XGame/XSrc/Win32/Debug/*.idb
 /XGame/XSrc/XPatcher/XFPKPacker/*.user
 /XGame/XSrc/XEngine/XUtil/Debug/*.obj
+/XGame/XInc/zlib/*.h

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'xfpkpacker.h'
 **
-** Created: Sun Dec 7 11:15:58 2014
+** Created: Mon Dec 8 22:10:23 2014
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,18 +23,23 @@ static const uint qt_meta_data_XFPKPacker[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+      12,   11,   11,   11, 0x08,
+      30,   11,   11,   11, 0x08,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_XFPKPacker[] = {
-    "XFPKPacker\0"
+    "XFPKPacker\0\0BtnOpenAssetDir()\0"
+    "BtnGenerateFPK()\0"
 };
 
 const QMetaObject XFPKPacker::staticMetaObject = {
@@ -64,6 +69,14 @@ int XFPKPacker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QMainWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: BtnOpenAssetDir(); break;
+        case 1: BtnGenerateFPK(); break;
+        default: ;
+        }
+        _id -= 2;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE

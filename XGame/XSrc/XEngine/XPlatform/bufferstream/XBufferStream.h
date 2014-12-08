@@ -33,7 +33,7 @@ public:
 			int alloc_count = alloc_time * EACH_INC_STREAM;
 			alloc_count = alloc_count > MAX_INC_STREAM ? MAX_INC_STREAM : alloc_count;
 			alloc_count += (total_len + len - reserve_len);
-			T* ptr = (t*)malloc(alloc_count);
+			T* ptr = (T*)malloc(alloc_count);
 			if (!ptr)
 			{
 				Assert(0);
@@ -50,6 +50,7 @@ public:
 	T* GetData(){return pData;}
 	void ReserveLen(int len){}
 	void ReleaseStream(){if(pData) delete pData; pData = NULL; total_len = 0; reserve_len = 0; offset = 0; alloc_time(0)}
+	int Length(){return total_len;}
 protected:
 	T* pData;
 	int alloc_time;

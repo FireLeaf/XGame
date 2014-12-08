@@ -7,34 +7,60 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>400</height>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>XFPKPacker</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTreeView" name="treeView">
+   <widget class="QTreeView" name="TreeAsset">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
+      <x>30</x>
+      <y>40</y>
       <width>531</width>
       <height>291</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="ButtonGenerateFPX">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>310</y>
+      <y>340</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>生成包</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="EditAssetDir">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>10</y>
+      <width>481</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ButtonOpen">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>51</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>打开</string>
     </property>
    </widget>
   </widget>

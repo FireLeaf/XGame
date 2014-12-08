@@ -8,6 +8,8 @@
 
 #include "XFilePackage.h"
 #include "zlib.h"
+#include "XMD5.h"
+#include "XBufferStream.h"
 
 bool XFilePackageEasy::InitPackage(const char* fpk_file)
 {
@@ -104,6 +106,7 @@ bool XFilePackageEasy::SavePackageRecords()
 	if (package_records.size())
 	{
 		records_offset = cur_offset;
+		QuickWriteValue(package_records.size());
 		for (int i = 0; i < package_records.size(); i++)
 		{
 			QuickWriteValue(package_records[i].path.length());
@@ -190,6 +193,57 @@ bool XFilePackageEasy::RemoveFile(const char* path)
 	return false;
 }
 
+bool XFilePackageEasy::AddFile(const char* full_path, const char* path)
+{
+	if (!full_path || !path)
+	{
+		return false;
+	}
+
+	if (FindRecord(path))//如果有那么直接剃掉
+	{
+		return false;
+	}
+	XEasyPackageRecord* record = AddRecord(path);//增加记录
+	if (!record)
+	{
+		return false;
+	}
+	unsigned char digest[16] = {0};
+	FILE *file = NULL;
+	MD5_CTX context;
+	int len;
+	unsigned char buffer[1024];
+	XSimpleVectorStream<unsigned char> isvs;
+
+	if ((file = fopen (full_path, "rb")) == NULL)
+		return false;
+	else 
+	{
+		int path_len = strlen(path);
+		QuickWriteValue(path_len);//写入文件名长度
+		if(path_len != Write(path, 1, path_len))//写入文件名
+		{
+			return false;
+		}
+		MD5Init (&context);
+		while (len = fread (buffer, 1, 1024, file))
+		{
+			MD5Update (&context, buffer, len);
+			isvs.PushStream((unsigned char*)buffer, len);
+		}
+		MD5Final (digest, &context);
+		fclose (file);
+	}
+	AddBufferZlib(record, (const unsigned char*)isvs.GetData(), isvs.Length());
+	if (16 != Write(digest, 1, sizeof(digest)))//写入md5
+	{
+		return false;
+	}
+	cur_offset = Tell();//重置当前偏移
+	return true;
+}
+
 bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned char* buffer, int length)
 {
 	if (!record)
@@ -226,7 +280,7 @@ bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned 
 				record->compress_type = Z_LIB_COMPRESS;
 				record->offset = cur_offset;
 				SeekSet(cur_offset);
-				if(length!= SafeWrite(dest_buffer,1, dest_len, XFILE_PACKAGE_SAFE_SIZE))
+				if(dest_len!= SafeWrite(dest_buffer,1, dest_len, XFILE_PACKAGE_SAFE_SIZE))
 				{
 					//未能完全写入
 					return false;

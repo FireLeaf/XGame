@@ -11,7 +11,13 @@ class XFPKPacker : public QMainWindow
 public:
 	XFPKPacker(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~XFPKPacker();
+protected:
+	virtual bool InitWindow();
+	virtual void ReleaseWindow();
 
+private slots:
+	void BtnOpenAssetDir();
+	void BtnGenerateFPK();
 private:
 	Ui::XFPKPackerClass ui;
 };

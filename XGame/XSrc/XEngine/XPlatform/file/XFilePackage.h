@@ -137,6 +137,7 @@ public:
 	bool ReplaceFile(const char* old_path, const char* cur_path, const unsigned char* buffer, int length);
 	bool RewriteFile(const char* path, const unsigned char* buffer, int length);
 	bool RemoveFile(const char* path);
+	bool AddFile(const char* full_path, const char* path);
 
 	XEasyPackageRecord* FindRecord(const char* path);
 protected:
