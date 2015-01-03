@@ -32,7 +32,7 @@ void XFPKPacker::BtnOpenAssetDir()
 	if (dir.data())
 	{
 		ui.EditAssetDir->setText(dir);
-
+		ScanDir();
 	}
 }
 
@@ -44,4 +44,9 @@ void XFPKPacker::BtnGenerateFPK()
 		XPacker::Get().Fllush();
 	}
 	
+}
+
+void XFPKPacker::ScanDir()
+{
+	ui.TreeAsset->reset();
 }

@@ -14,7 +14,8 @@ public:
 protected:
 	virtual bool InitWindow();
 	virtual void ReleaseWindow();
-
+protected:
+	void ScanDir();//É¨ÃèÎÄ¼þ
 private slots:
 	void BtnOpenAssetDir();
 	void BtnGenerateFPK();
