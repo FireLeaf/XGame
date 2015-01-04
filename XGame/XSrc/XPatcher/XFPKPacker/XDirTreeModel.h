@@ -11,6 +11,9 @@
 #ifndef __COCONAT_XDIRTREEMODEL_H_
 #define __COCONAT_XDIRTREEMODEL_H_
 
-class
+// class XDirTreeModel : QDirViewModel
+// {
+// 
+// };
 
 #endif

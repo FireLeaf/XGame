@@ -8,6 +8,7 @@
 
 #ifndef __XBUFFERSTREAM__H
 #define __XBUFFERSTREAM__H
+#include "XTemplate.h"
 
 class XBufferStream
 {
@@ -24,6 +25,11 @@ class XSimpleVectorStream
 	};
 public:
 	XSimpleVectorStream() : pData(NULL), total_len(0), reserve_len(0), offset(0), alloc_time(0){}
+	~XSimpleVectorStream(){Release();}
+	void Release()
+	{
+		ReleaseStream();
+	}
 	//XSimpleVectorStream& operator << (const char*);
 	void PushStream(const T* t, int len)
 	{
@@ -35,7 +41,7 @@ public:
 			alloc_count += (total_len + len - reserve_len);
 			T* ptr = (T*)malloc(alloc_count);
 			if (!ptr)
-			{
+			{ 
 				Assert(0);
 				return;
 			}
@@ -45,11 +51,32 @@ public:
 			pData = ptr;
 			total_len += len;
 		}
+		else
+		{
+			memcpy(pData + total_len, (const void*)t, len);
+			total_len += len;
+		}
 	}
 public:
 	T* GetData(){return pData;}
-	void ReserveLen(int len){}
-	void ReleaseStream(){if(pData) delete pData; pData = NULL; total_len = 0; reserve_len = 0; offset = 0; alloc_time(0)}
+	void ReserveLen(int len)
+	{
+		T* ptr = (T*)malloc(len);
+		if (!ptr)
+		{
+			Assert(0);
+			return;
+		}
+		total_len = xMin(reserve_len, total_len);
+		if (pData)
+		{
+			memcpy(ptr, pData, total_len);
+			delete pData;
+		}
+		pData = ptr;
+		reserve_len = len;
+	}
+	void ReleaseStream(){if(pData) delete pData; pData = NULL; total_len = 0; reserve_len = 0; offset = 0; alloc_time = 0;}
 	int Length(){return total_len;}
 protected:
 	T* pData;

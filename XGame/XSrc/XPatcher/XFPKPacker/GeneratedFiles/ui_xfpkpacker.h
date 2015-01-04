@@ -34,6 +34,7 @@ public:
     QPushButton *ButtonGenerateFPX;
     QLineEdit *EditAssetDir;
     QPushButton *ButtonOpen;
+    QLineEdit *EditFPKName;
     QMenuBar *menuBar;
     QMenu *menu;
     QToolBar *mainToolBar;
@@ -59,6 +60,9 @@ public:
         ButtonOpen = new QPushButton(centralWidget);
         ButtonOpen->setObjectName(QString::fromUtf8("ButtonOpen"));
         ButtonOpen->setGeometry(QRect(30, 10, 51, 23));
+        EditFPKName = new QLineEdit(centralWidget);
+        EditFPKName->setObjectName(QString::fromUtf8("EditFPKName"));
+        EditFPKName->setGeometry(QRect(130, 340, 231, 20));
         XFPKPackerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(XFPKPackerClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));

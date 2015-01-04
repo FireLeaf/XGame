@@ -219,3 +219,5 @@
 /XGame/XSrc/XPatcher/XFPKPacker/*.user
 /XGame/XSrc/XEngine/XUtil/Debug/*.obj
 /XGame/XInc/zlib/*.h
+/XGame/XSrc/XEngine/XTerrain/Debug/*.bat
+/XGame/XSrc/XPatcher/XFPKPacker/*.fpk

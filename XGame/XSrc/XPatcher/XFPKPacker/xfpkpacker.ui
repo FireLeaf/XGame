@@ -63,6 +63,16 @@
      <string>打开</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="EditFPKName">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>340</y>
+      <width>231</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

@@ -11,12 +11,22 @@
 #ifndef __COCONAT_XQTDIRTREE_H_
 #define __COCONAT_XQTDIRTREE_H_
 
-class XQtDirTree : public QTreeView
+#include "qt/qtreeview.h"
+#include "qt/qdirmodel.h"
+
+class XQtDirTree
 {
 public:
-	XQtDirTree(QWidget *parent = 0);
+	XQtDirTree();
+	bool Init(QTreeView* tc);
+	void Release();
 public:
 	void ScanDir(const char* szPath);
+private:
+	QTreeView* tree_ctrl;
+	QDirModel* dir_model;
+	QModelIndex watch_index;
+	QString scan_path;
 };
 
 #endif

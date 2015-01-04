@@ -210,13 +210,13 @@ bool XFilePackageEasy::AddFile(const char* full_path, const char* path)
 		return false;
 	}
 	unsigned char digest[16] = {0};
-	FILE *file = NULL;
+	XFile file;
 	MD5_CTX context;
 	int len;
 	unsigned char buffer[1024];
 	XSimpleVectorStream<unsigned char> isvs;
 
-	if ((file = fopen (full_path, "rb")) == NULL)
+	if ((file.OpenFile (full_path, "rb")) == NULL)
 		return false;
 	else 
 	{
@@ -227,13 +227,15 @@ bool XFilePackageEasy::AddFile(const char* full_path, const char* path)
 			return false;
 		}
 		MD5Init (&context);
-		while (len = fread (buffer, 1, 1024, file))
+		long file_len = file.Length();
+		isvs.ReserveLen((int)file_len);
+		while (len = file.Read (buffer, 1, 1024))
 		{
 			MD5Update (&context, buffer, len);
 			isvs.PushStream((unsigned char*)buffer, len);
 		}
 		MD5Final (digest, &context);
-		fclose (file);
+		file.CloseFile();
 	}
 	AddBufferZlib(record, (const unsigned char*)isvs.GetData(), isvs.Length());
 	if (16 != Write(digest, 1, sizeof(digest)))//–¥»Îmd5

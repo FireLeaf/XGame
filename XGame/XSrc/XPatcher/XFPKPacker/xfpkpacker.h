@@ -3,6 +3,7 @@
 
 #include <QtGui/QMainWindow>
 #include "ui_xfpkpacker.h"
+#include "XQtDirTree.h"
 
 class XFPKPacker : public QMainWindow
 {
@@ -21,6 +22,7 @@ private slots:
 	void BtnGenerateFPK();
 private:
 	Ui::XFPKPackerClass ui;
+	XQtDirTree dir_tree;
 };
 
 #endif // XFPKPACKER_H
