@@ -3,6 +3,7 @@
 #include "XPacker.h"
 #include "qt/qdir.h"
 #include "qt/qfileinfo.h"
+#include "qt/qmessagebox.h"
 
 XFPKPacker::XFPKPacker(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -98,7 +99,7 @@ void XFPKPacker::BtnGenerateFPK()
 		AddFileInfo(dir, QString(""));
 		XPacker::Get().Fllush();
 	}
-	
+	QMessageBox::information(NULL, QString("恭喜"), QString("打包完成"));
 }
 
 void XFPKPacker::ScanDir()

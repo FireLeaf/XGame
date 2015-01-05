@@ -42,6 +42,24 @@ public:
 		return fwrite(buffer, size, count, m_fp);
 	}
 
+	size_t SafeRead( void* buffer, size_t size, size_t count, int safe_size)
+	{
+		size_t read_size = 0;
+		size_t all_size = size * count;
+		while(read_size < all_size)
+		{
+			size_t delta_size = all_size - read_size;
+			size_t cur_read = delta_size > safe_size ? safe_size : delta_size;
+			size_t readed = Read( (void*)((unsigned char*)buffer + read_size), 1, cur_read);
+			read_size += readed;
+			if (!readed)
+			{
+				break;
+			}
+		}
+		return read_size;
+	}
+
 	size_t SafeWrite( const void *buffer, size_t size, size_t count, int safe_size)
 	{
 		size_t write_size = 0;
@@ -50,10 +68,11 @@ public:
 		{
 			size_t delta_size = all_size - write_size;
 			size_t cur_write = delta_size > safe_size ? safe_size : delta_size;
-			size_t writed = Write( (const void*)((unsigned char*)buffer + cur_write), 1, cur_write);
+			size_t writed = Write( (const void*)((unsigned char*)buffer + write_size), 1, cur_write);
 			write_size += writed;
 			if (!writed)
 			{
+				Assert(0);
 				break;
 			}
 		}

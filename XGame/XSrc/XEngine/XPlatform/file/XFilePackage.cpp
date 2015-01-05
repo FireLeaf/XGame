@@ -49,7 +49,7 @@ bool XFilePackageEasy::LoadPackage(int version)
 		return true;//
 	}
 
-	if(records_offset != Seek(records_offset, SEEK_SET))
+	if(0 != Seek(records_offset, SEEK_SET))
 	{
 		return false;
 	}
@@ -65,6 +65,9 @@ bool XFilePackageEasy::LoadPackage(int version)
 		epp.path.resize(path_length + 1);
 		Read(&epp.path[0], 1, path_length);
 		epp.path[path_length] = '\0';
+		QuickReadValue(epp.compress_type);
+		QuickReadValue(epp.buf_len);
+		QuickReadValue(epp.org_len);
 		QuickReadValue(epp.offset);
 		package_records.push_back(epp);
 	}
@@ -111,6 +114,9 @@ bool XFilePackageEasy::SavePackageRecords()
 		{
 			QuickWriteValue(package_records[i].path.length());
 			Write(package_records[i].path.c_str(), 1, package_records[i].path.length());
+			QuickWriteValue(package_records[i].compress_type);
+			QuickWriteValue(package_records[i].buf_len);
+			QuickWriteValue(package_records[i].org_len);
 			QuickWriteValue(package_records[i].offset);
 		}
 	}
@@ -259,7 +265,7 @@ bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned 
 		Assert(0);
 		return false;
 	}
-
+	record->org_len = length;
 	int ret = compress(dest_buffer, &dest_len, buffer, length);
 	switch(ret)
 	{
@@ -269,9 +275,11 @@ bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned 
 			{
 				record->compress_type = NONE_COMPRESS;
 				record->offset = cur_offset;
+				record->buf_len = length;
 				SeekSet(cur_offset);
 				if(length!= SafeWrite(buffer,1, length, XFILE_PACKAGE_SAFE_SIZE))
 				{
+					delete dest_buffer;
 					//未能完全写入
 					return false;
 				}
@@ -281,9 +289,12 @@ bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned 
 			{
 				record->compress_type = Z_LIB_COMPRESS;
 				record->offset = cur_offset;
+				record->buf_len = dest_len;
 				SeekSet(cur_offset);
 				if(dest_len!= SafeWrite(dest_buffer,1, dest_len, XFILE_PACKAGE_SAFE_SIZE))
 				{
+					Assert(0);
+					delete dest_buffer;
 					//未能完全写入
 					return false;
 				}
@@ -301,22 +312,30 @@ bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned 
 		{
 			record->compress_type = NONE_COMPRESS;
 			record->offset = cur_offset;
+			record->buf_len = length;
 			SeekSet(cur_offset);
 			if(length!= SafeWrite(buffer,1, length, XFILE_PACKAGE_SAFE_SIZE))
 			{
+				delete dest_buffer;
+				Assert(0);
 				//未能完全写入
 				return false;
 			}
 			cur_offset += length;
+			delete dest_buffer;
+			return true;
 		}
 		break;
 	case Z_STREAM_ERROR:
 		//
 		break;
 	default:
+		delete dest_buffer;
 		return false;
 		break;
 	}
+
+	delete dest_buffer;
 	return false;
 }
 
@@ -354,4 +373,88 @@ XFilePackageEasy::XEasyPackageRecord* XFilePackageEasy::AddRecord(const char* pa
 	record.path = path;
 	package_records.push_back(record);
 	return &(package_records[package_records.size() - 1]);
+}
+
+bool XFilePackageEasy::ReadFileContent(const char* path, void** buff, int* len)
+{
+	XEasyPackageRecord* record = FindRecord(path);
+	if (!record)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool XFilePackageEasy::ReadFileContent(const XEasyPackageRecord* record, void** buff, int* len)
+{
+	if (!record)
+	{
+		return false;
+	}
+	xulong file_len = Length();
+	if (record->offset < 0 || record->offset > file_len || record->buf_len < 0 || record->offset + record->buf_len > file_len)
+	{
+		return false;
+	}
+	SeekSet(record->offset);
+	
+	*buff = (void*)(malloc(record->buf_len));
+	if (!*buff)
+	{
+		return false;
+	}
+	if(record->buf_len != SafeRead(*buff,1, record->buf_len, XFILE_PACKAGE_SAFE_SIZE))
+	{
+		delete *buff;
+		*buff = NULL;
+		Assert(0);
+		//未能完全读取
+		return false;
+	}
+	switch(record->compress_type)
+	{
+	case NONE_COMPRESS:
+		{
+			if (len)
+			{
+				*len = record->buf_len;
+			}
+		}
+		break;
+	case Z_LIB_COMPRESS:
+		{
+			void* uncomp_buff = (void*)(malloc(record->org_len));
+			if (!uncomp_buff)
+			{
+				Assert(0);
+				delete *buff;
+				*buff = NULL;
+				return false;
+			}
+			uLongf uncomp_len = record->org_len;
+			int ret = uncompress((unsigned char*)uncomp_buff, &uncomp_len, (const unsigned char*)*buff, record->buf_len);
+			switch(ret)
+			{
+			case Z_OK:
+				{
+					if (len)
+					{
+						*len = record->org_len;
+					}
+					delete *buff;
+					*buff = uncomp_buff;
+				}
+				break;
+			default:
+				Assert(0);
+				break;
+			}
+		}
+		break;
+	case _7Z_COMPRESS:
+		break;
+	default:
+		break;
+	}
+	return true;
 }

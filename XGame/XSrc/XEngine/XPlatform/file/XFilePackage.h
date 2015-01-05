@@ -117,7 +117,10 @@ public:
 	{
 		std::string path;
 		int compress_type;
+		int buf_len;//数据长度
+		int org_len;//原来数据的长度
 		int offset;//单包长度不超过2^31 - 1
+		XEasyPackageRecord():compress_type(NONE_COMPRESS), buf_len(-1), offset(-1){}
 	};
 	/*
 		header//文件头
@@ -140,6 +143,10 @@ public:
 	bool AddFile(const char* full_path, const char* path);
 
 	XEasyPackageRecord* FindRecord(const char* path);
+	PackageRecords& GetPackageRecords(){return package_records;}
+public:
+	bool ReadFileContent(const XEasyPackageRecord* record, void** buff, int* len);
+	bool ReadFileContent(const char* path, void** buff, int* len);
 protected:
 	bool LoadPackage(int version);
 	XEasyPackageRecord* AddRecord(const char* path);

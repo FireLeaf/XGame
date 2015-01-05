@@ -27,7 +27,22 @@ namespace XSys
 	{
 		return (new XWinMutex());
 	}
+
+	bool XCreateFile(const char* file_path)
+	{
+		HANDLE hFile = CreateFileA(file_path, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL , NULL);
+		if ( INVALID_HANDLE_VALUE != hFile)
+		{
+			CloseHandle(hFile);
+		}
+		return true;
+	}
 	
+	bool XCreateDirectory(const char* path)
+	{
+		return (TRUE == CreateDirectoryA(path, NULL));
+	}
+
 	bool XIsFileExist(const char* file_path)
 	{
 		return ( (_access( file_path , 0 )) != -1 );
