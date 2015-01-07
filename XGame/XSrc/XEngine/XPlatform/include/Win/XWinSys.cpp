@@ -52,17 +52,30 @@ namespace XSys
 	{
 		return false;
 	}
+
+	bool XSetFileSize(FILE* fp, long size)
+	{
+		return (0 == _chsize(XFileNo(fp), size));
+	}
+
 	bool XSetFileSize(const char* path, long size)
 	{
 		if (!XIsFileExist(path))
 		{
 			return false;
 		}
-// 		FILE* fp = fopen(path, "wb");
-// 		if (!fp)
-// 		{
-// 			return false;
-// 		}
-// 		return (0 == _chsize(fp, size));
+		FILE* fp = fopen(path, "wb");
+		if (!fp)
+		{
+			return false;
+		}
+		bool bRet = (0 == _chsize(XFileNo(fp), size));
+		fclose(fp);
+		return bRet;
+	}
+
+	int XFileNo(FILE* fp)
+	{
+		return _fileno(fp);
 	}
 }

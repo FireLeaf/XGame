@@ -30,6 +30,7 @@ struct DownloadFileBlock
 {
 	std::string url;
 	std::string dest;
+	FILE* fp;
 	int length;
 	int use_seconds;
 };

@@ -225,3 +225,13 @@
 /XGame/XSrc/Release/*.obj
 /XGame/XSrc/Release/*.idb
 /XGame/XSrc/XPatcher/XFPKUnPacker/*.user
+/XGame/XSrc/XDemo/file_demo/Debug/*.htm
+/XGame/XSrc/XDemo/file_demo/Debug/*.manifest
+/XGame/XSrc/XDemo/file_demo/Debug/*.res
+/XGame/XSrc/XDemo/file_demo/Debug/*.obj
+/XGame/XSrc/XDemo/file_demo/Debug/*.pch
+/XGame/XSrc/XDemo/file_demo/Debug/*.dep
+/XGame/XSrc/XDemo/file_demo/Debug/*.idb
+/XGame/XSrc/XDemo/file_demo/Debug/*.pdb
+/XGame/XSrc/XDemo/file_demo/*.txt
+/XGame/XSrc/XDemo/file_demo/*.user
