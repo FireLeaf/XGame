@@ -235,3 +235,8 @@
 /XGame/XSrc/XDemo/file_demo/Debug/*.pdb
 /XGame/XSrc/XDemo/file_demo/*.txt
 /XGame/XSrc/XDemo/file_demo/*.user
+/XGame/XSrc/XPatcher/XPatcher/Debug/*.htm
+/XGame/XSrc/XPatcher/XPatcher/Debug/*.obj
+/XGame/XSrc/XPatcher/XPatcher/Debug/*.idb
+/XGame/XSrc/XPatcher/XPatcher/Debug/*.pdb
+/XGame/XSrc/InternetCode/file_downloader_curl/*.suo

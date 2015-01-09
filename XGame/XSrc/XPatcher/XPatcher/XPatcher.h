@@ -26,11 +26,18 @@ enum PATCHER_STATE
 	STATE_COMPLETE,
 };
 
+enum HttpDownloadErrorReason
+{
+	HDErrorNone = 0,
+	HDErrorTimeout = 1,
+	HDErrorInterrupt = 2,
+	HDErrorInternal = 3,
+};
+
 struct DownloadFileBlock 
 {
 	std::string url;
 	std::string dest;
-	FILE* fp;
 	int length;
 	int use_seconds;
 };
@@ -41,6 +48,15 @@ struct UploadFileBlock
 	std::string src;
 	int length;
 	int use_seconds;
+};
+
+class DownloadWatcher//下载监听者
+{
+public:
+	virtual void OnDownloadBegin(int ) = 0;//开始下载
+	virtual void OnDownloadChange(int total_size, int cur_size, int real_speed) = 0;//
+	virtual void OnDownloadEnd() = 0;//
+	virtual void OnDownloadFinish() = 0;
 };
 
 typedef void (*pfnDownloadCallback)(DownloadFileBlock dfb);
@@ -77,6 +93,7 @@ public:
 	};
 public:
 	void TrigEvent(const PatcherEvent& pe);
+
 	
 	void QueryPatcherState(PatcherState& ps);
 
