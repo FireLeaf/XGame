@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -152,6 +152,10 @@
 				RelativePath=".\XLua.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\XLuaPubFunc.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -160,6 +164,14 @@
 			>
 			<File
 				RelativePath=".\XLua.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XLuaDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XLuaPubFunc.h"
 				>
 			</File>
 		</Filter>
@@ -358,10 +370,6 @@
 			</File>
 			<File
 				RelativePath=".\LuaLib\ltm.h"
-				>
-			</File>
-			<File
-				RelativePath=".\LuaLib\lua.c"
 				>
 			</File>
 			<File

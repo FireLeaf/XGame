@@ -11,6 +11,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+
 
 /* This file uses only the official API of Lua.
 ** Any function declared here could be written as an application function.
@@ -957,3 +960,4 @@ LUALIB_API void luaL_checkversion_ (lua_State *L, lua_Number ver) {
   lua_pop(L, 1);
 }
 
+#pragma warning( pop )

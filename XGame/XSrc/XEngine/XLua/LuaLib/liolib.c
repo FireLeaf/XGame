@@ -4,6 +4,9 @@
 ** See Copyright Notice in lua.h
 */
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+
 
 /*
 ** This definition must come before the inclusion of 'stdio.h'; it
@@ -664,3 +667,4 @@ LUAMOD_API int luaopen_io (lua_State *L) {
   return 1;
 }
 
+#pragma warning( pop )

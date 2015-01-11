@@ -11,6 +11,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+
 #define lstrlib_c
 #define LUA_LIB
 
@@ -1017,3 +1020,4 @@ LUAMOD_API int luaopen_string (lua_State *L) {
   return 1;
 }
 
+#pragma warning( pop )

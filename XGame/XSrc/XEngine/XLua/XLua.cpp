@@ -6,6 +6,9 @@
  *		CopyRight:
  ***************************************************/
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+
 #include "XLua.h"
 
 CXLua::CXLua()
@@ -23,11 +26,11 @@ int CXLua::CreateLuaRuntime()
 	m_pLuaState = luaL_newstate();
 	if(m_pLuaState == NULL)
 	{
-		//OutputDebugStr("cannot create state: not enough memory");
-		//return EXIT_FAILURE;
-		return 1;
+		OutputDebug("cannot create state: not enough memory");
+		return EXIT_FAILURE;
 	}
 
-	//return EXIT_SUCCESS;
-	return 0;
+	return EXIT_SUCCESS;
 }
+
+#pragma warning( pop )

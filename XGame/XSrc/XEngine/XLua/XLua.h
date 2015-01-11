@@ -9,8 +9,7 @@
 #ifndef __XLUA_H__
 #define __XLUA_H__
 
-#pragma warning( push )
-#pragma warning( disable : 4996 )
+#include "XLuaPubFunc.h"
 
 // 包含 Lua 头文件
 extern "C" {
@@ -32,7 +31,5 @@ private:
 	// Lua 栈
 	lua_State* m_pLuaState;
 };
-
-#pragma warning( pop )
 
 #endif // XLua

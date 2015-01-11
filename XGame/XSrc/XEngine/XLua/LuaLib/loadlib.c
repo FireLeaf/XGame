@@ -8,6 +8,9 @@
 ** systems.
 */
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+
 
 /*
 ** if needed, includes windows header before everything else
@@ -723,3 +726,4 @@ LUAMOD_API int luaopen_package (lua_State *L) {
   return 1;  /* return 'package' table */
 }
 
+#pragma warning( pop )

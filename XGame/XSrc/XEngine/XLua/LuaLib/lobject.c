@@ -9,6 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+
 #define lobject_c
 #define LUA_CORE
 
@@ -285,3 +288,5 @@ void luaO_chunkid (char *out, const char *source, size_t bufflen) {
   }
 }
 
+
+#pragma warning( pop )
