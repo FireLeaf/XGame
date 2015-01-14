@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -152,6 +152,10 @@
 				RelativePath=".\XLua.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\XLuaPubFunc.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
@@ -162,12 +166,252 @@
 				RelativePath=".\XLua.h"
 				>
 			</File>
+			<File
+				RelativePath=".\XLuaDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XLuaPubFunc.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+		</Filter>
+		<Filter
+			Name="LuaLib"
+			>
+			<File
+				RelativePath=".\LuaLib\lapi.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lapi.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lauxlib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lauxlib.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lbaselib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lbitlib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lcode.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lcode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lcorolib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lctype.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lctype.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ldblib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ldebug.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ldebug.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ldo.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ldo.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ldump.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lfunc.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lfunc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lgc.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lgc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\linit.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\liolib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\llex.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\llex.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\llimits.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lmathlib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lmem.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lmem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\loadlib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lobject.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lobject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lopcodes.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lopcodes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\loslib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lparser.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lparser.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lstate.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lstate.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lstring.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lstring.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lstrlib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ltable.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ltable.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ltablib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ltm.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\ltm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lua.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lua.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\luaconf.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lualib.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lundump.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lundump.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lvm.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lvm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lzio.c"
+				>
+			</File>
+			<File
+				RelativePath=".\LuaLib\lzio.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
