@@ -65,11 +65,13 @@ bool GetFileSize(const char* url, long long& file_size, int& response_code)
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	curl_global_init(CURL_GLOBAL_ALL);
 	long long szFile = 0;
 	int responseCode = 0;
-	const char* url = "http://127.0.0.1/fileres/[迅雷下载www.xunbo.cc]行尸走肉.第二季.1024高清EP04.mkv";
+	const char* url = "http://127.0.0.1/fileres/%e6%88%b7%e5%8f%a3.docx";
 	GetFileSize(url, szFile, responseCode);
-	DownloadFile(url, "hello.mkv");
+	DownloadFile(url, "hello.docx");
+	curl_global_cleanup();
 	return 0;
 // 	 CURL *curl;
 //  

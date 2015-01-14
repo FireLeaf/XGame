@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="XPatcher"
-	ProjectGUID="{4367F33F-ADD6-494D-856A-076FE324DCAC}"
-	RootNamespace="XPatcher"
+	Name="XGLESRender"
+	ProjectGUID="{3A8B09BC-4FA3-4F10-971A-6F3478B72C07}"
+	RootNamespace="XGLESRender"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -41,8 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\XInc\"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_WIN_PLATFORM;CURL_STATICLIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_ANDROID_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -61,9 +60,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="libcurl_d.lib XPlatform_d.lib"
-				OutputFile="$(OutDir)\$(ProjectName)_d.lib"
-				AdditionalLibraryDirectories="..\..\..\XLib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -79,7 +75,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /y /s /r /d &quot;$(TargetPath)&quot; &quot;..\..\..\XLib\&quot;&#x0D;&#x0A;xcopy /y /s /r /d &quot;$(InputDir)*.h&quot; &quot;..\..\..\XInc\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -154,7 +149,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\XPatcherDownload.cpp"
+				RelativePath=".\XGLES2Asset.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XGLES2AssetMonitor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XGLES2RenderContext.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XGLES2RenderMonitor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\XGLES2RII.cpp"
 				>
 			</File>
 		</Filter>
@@ -164,19 +175,31 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\XFileFunc.h"
+				RelativePath=".\XGLES2Asset.h"
 				>
 			</File>
 			<File
-				RelativePath=".\XPatcher.h"
+				RelativePath=".\XGLES2AssetMonitor.h"
 				>
 			</File>
 			<File
-				RelativePath=".\XPatcherDownload.h"
+				RelativePath=".\XGLES2Header.h"
 				>
 			</File>
 			<File
-				RelativePath=".\XPatcherFile.h"
+				RelativePath=".\XGLES2RenderContext.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XGLES2RenderMonitor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XGLES2RenderUtil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XGLES2RII.h"
 				>
 			</File>
 		</Filter>
