@@ -58,11 +58,11 @@ bool XPatcherDownload::GetFileSize(const char* url, ULONGLONG& file_size, int& r
 			break;
 		}
 
-		double sz = 0.0f;
-		res = curl_easy_getinfo( http_handle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &sz );
+		double db = 0.0f;
+		res = curl_easy_getinfo( http_handle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &db );
 		if ( CURLE_OK != res ) break;
 
-		file_size = static_cast<ULONGLONG>(sz);
+		file_size = static_cast<ULONGLONG>(db);
 
 		isOk = true;
 	}while ( false );
@@ -204,7 +204,7 @@ XHttpDownload::XHttpDownload(const char* url, const char* local_path, int thread
 
 XHttpDownload::~XHttpDownload()
 {
-
+	Release();
 }
 
 size_t WriteData( void* data, size_t size, size_t nmemb, void* pClientData )
@@ -231,10 +231,19 @@ size_t WriteData( void* data, size_t size, size_t nmemb, void* pClientData )
 		Assert(0);
 		return 0;
 	}
+	else if (http_task->begin + dwWriten == http_task->end)
+	{
+		http_task->status = XHttpDownload::STATUS_FINISH;
+	}
 
 	if (http_task->fp)
 	{
+		static int count = 0;
 		int writed = fwrite(data, 1, dwWriten, http_task->fp);
+		char buf[64] = {'\0'};
+		count += writed;
+		sprintf(buf, "Ð´Èë:%d,%d ", writed, count);
+		printf(buf);
 		return writed;
 	}
 	return 0;
@@ -274,7 +283,7 @@ bool XHttpDownload::InitDownload()
 		HttpTask* http_task = new HttpTask;
 		http_task->fp = fp;
 		http_task->begin = i * each_size;
-		http_task->end = xMin((int)(i + each_size), (int)file_size);
+		http_task->end = xMin((int)( (i + 1) * each_size), (int)file_size);
 		http_task->cur = 0;
 		http_task->seconds = 0;
 		http_task->hd = this;
@@ -292,12 +301,7 @@ bool XHttpDownload::InitDownload()
 		code = curl_easy_setopt( http_task->http_handle, CURLOPT_FOLLOWLOCATION, 1);
 
 		CURLMcode mcode = curl_multi_add_handle( http_task->multi_handle, http_task->http_handle );
-		int running_handles = 0;
-		while ( CURLM_CALL_MULTI_PERFORM == curl_multi_perform(http_task->multi_handle, &running_handles) );
-		if (!running_handles)
-		{
-			return false;
-		}
+		while ( CURLM_CALL_MULTI_PERFORM == curl_multi_perform(http_task->multi_handle, &http_task->running_handles) );
 		http_tasks.push_back(http_task);
 	}
 	return true;
@@ -305,6 +309,7 @@ bool XHttpDownload::InitDownload()
 
 void XHttpDownload::UpdateDownload()
 {
+	bool finish = true;
 	for (int i = 0; i < http_tasks.size(); i++)
 	{
 		if (!http_tasks[i] )
@@ -312,7 +317,7 @@ void XHttpDownload::UpdateDownload()
 			running = false;
 			return;
 		}
-		if (http_tasks[i]->status == STATUS_FINISH)
+		if (http_tasks[i]->status == STATUS_FINISH || !http_tasks[i]->running_handles)
 		{
 			continue;
 		}
@@ -321,12 +326,11 @@ void XHttpDownload::UpdateDownload()
 			running = false;
 			return;
 		}
-		
+		finish = false;
 		const int nPeekIntervalInMs = 20;//ms
 		const int nTimeout4NoDataInSec = 60;//s
 		const int nMaxFailedCount = nTimeout4NoDataInSec * 1000 / nPeekIntervalInMs;
 		int nSuccessiveFailedCount = 0;
-		int running_handles = 0;
 
 		fd_set fdread;
 		fd_set fdwrite;
@@ -358,8 +362,8 @@ void XHttpDownload::UpdateDownload()
 				}
 				else
 				{
-					while( CURLM_CALL_MULTI_PERFORM == curl_multi_perform( http_tasks[i]->multi_handle, &running_handles ) );
-					running = running_handles > 0;
+					while( CURLM_CALL_MULTI_PERFORM == curl_multi_perform( http_tasks[i]->multi_handle, &http_tasks[i]->running_handles ) );
+					//running = running_handles > 0;
 				}
 			}
 			break;
@@ -367,17 +371,45 @@ void XHttpDownload::UpdateDownload()
 			{
 				failed_count = 0;
 				/* timeout or readable/writable sockets */
-				while( CURLM_CALL_MULTI_PERFORM == curl_multi_perform( http_tasks[i]->multi_handle, &running_handles ) );
-				running = running_handles > 0;
+				while( CURLM_CALL_MULTI_PERFORM == curl_multi_perform( http_tasks[i]->multi_handle, &http_tasks[i]->running_handles ) );
+				//running = running_handles > 0;
 			}
 			break;
 		}
 	}
+
+	if (finish)
+	{
+		running = false;
+	}
+}
+
+void XHttpDownload::Release()
+{
+	for (int i = 0; i < http_tasks.size(); i++)
+	{
+		if (http_tasks[i])
+		{
+			if(http_tasks[i]->fp) fclose(http_tasks[i]->fp);
+			if(http_tasks[i]->http_handle && http_tasks[i]->multi_handle)
+			{
+				curl_multi_remove_handle( http_tasks[i]->multi_handle, http_tasks[i]->http_handle );
+				curl_multi_cleanup( http_tasks[i]->multi_handle );
+				curl_easy_cleanup( http_tasks[i]->http_handle );
+			}
+			else
+			{
+				Assert(0);
+			}
+			delete http_tasks[i];
+		}
+	}
+	http_tasks.clear();
 }
 
 void XHttpDownload::EndDownload()
 {
-	
+	Release();
 }
 
 bool XHttpDownload::Run()

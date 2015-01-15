@@ -57,7 +57,9 @@ public:
 		CURLM* multi_handle;
 		int status;//当前状态
 		int seconds;//花费时间
+		int running_handles;
 		XHttpDownload* hd;
+		HttpTask(){memset(this, 0, sizeof(HttpTask));}
 	};
 public:
 	XHttpDownload(const char* url, const char* local_path, int thread_num);
@@ -67,6 +69,7 @@ protected:
 	bool InitDownload();//初始化下载
 	void UpdateDownload();//更新下载
 	void EndDownload();
+	void Release();
 public:
 	ULONGLONG cur_size;
 protected:
