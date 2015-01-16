@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <stdio.h>
 #include <string>
+#include "XLog.h"
 // extern "C"
 // {
 	#include "curl/curl.h"
@@ -68,7 +69,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	curl_global_init(CURL_GLOBAL_ALL);
 	long long szFile = 0;
 	int responseCode = 0;
-	const char* url = "http://127.0.0.1/fileres/%e6%88%b7%e5%8f%a3.docx";
+	const char* url = "http://img.my.csdn.net/uploads/201005/30/0_1275231052eqfF.gif";
 	GetFileSize(url, szFile, responseCode);
 	DownloadFile(url, "hello.docx");
 	curl_global_cleanup();

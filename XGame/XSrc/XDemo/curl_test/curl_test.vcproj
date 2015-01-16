@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\..\XInc\"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;CURL_STATICLIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;CURL_STATICLIB;_WIN_PLATFORM"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

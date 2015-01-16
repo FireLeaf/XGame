@@ -257,3 +257,7 @@
 /XGame/XSrc/XDemo/patcher_demo/*.user
 /XGame/XSrc/XEngine/XGLESRender/*.txt
 /XGame/XSrc/XEngine/XGLESRender/*.user
+/XGame/XSrc/XDemo/curl_test/*.docx
+/XGame/XSrc/XDemo/patcher_demo/*.gif
+/XGame/XSrc/XDemo/patcher_demo/*.bmp
+/XGame/XSrc/XDemo/patcher_demo/*.log

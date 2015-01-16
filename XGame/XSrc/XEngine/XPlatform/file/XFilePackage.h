@@ -55,6 +55,16 @@ struct XPackageRecord
 	XStl::vector<XSubPackageRecord> sub_packages;
 };
 
+class XFileMemory//在内存中的文件
+{
+public:
+	bool OpenFile(const char* path);
+protected:
+	void* buf;
+	int file_length;
+};
+
+
 struct PackageCmp
 {
 public:

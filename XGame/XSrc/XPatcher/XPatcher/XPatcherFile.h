@@ -9,6 +9,8 @@
 #ifndef __XPATCHERFILE__H
 #define __XPATCHERFILE__H
 
+#include "XFilePackage.h"
+
 class XPathcherFile : public XFilePackageEasy
 {
 	enum PatcherAction
@@ -16,6 +18,7 @@ class XPathcherFile : public XFilePackageEasy
 		PA_ADD_FILE,//添加文件
 		PA_REP_FILE,//更换文件
 		PA_DEL_FILE,//删除文件
+		PA_MOD_FILE,//更新文件
 	};
 	struct PatcherItem 
 	{
@@ -27,6 +30,10 @@ class XPathcherFile : public XFilePackageEasy
 		int buf_len;//压缩
 		int org_len;//原来压缩长度
 	};
+public:
+	bool ApplyPatcher();
+protected:
+	std::vector<PatcherItem> patcher_items;
 };
 
 #endif // XPatcherFile

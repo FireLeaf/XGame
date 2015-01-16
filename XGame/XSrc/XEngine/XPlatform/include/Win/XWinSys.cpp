@@ -23,6 +23,11 @@ protected:
 
 namespace XSys
 {
+	void XLogOutput(const char* log)
+	{
+		OutputDebugStringA(log);
+	}
+
 	XMutex* XCreateMutex()
 	{
 		return (new XWinMutex());
