@@ -156,6 +156,10 @@
 				RelativePath=".\XLuaPubFunc.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\XLuaRegistry.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -172,6 +176,10 @@
 			</File>
 			<File
 				RelativePath=".\XLuaPubFunc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XLuaRegistry.h"
 				>
 			</File>
 		</Filter>
