@@ -90,6 +90,9 @@ protected:
 	
 namespace XSys
 {
+	//日志打印调试器或控制台上
+	void XLogOutput(const char* log);
+
 	XMutex* XCreateMutex();
 	void XDeleteMutex(XMutex*);
 	XThread* XCreateThread(pfnJobProc func, XJobDesc* desc);
