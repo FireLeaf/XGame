@@ -26,6 +26,8 @@ typedef int (*LuaFunction)(struct lua_State* pLuaState);
 class CXLua
 {
 public:
+	typedef void (*pFnErrorHandler)(const char* pError);
+public:
 	// Lua 运行环境初始化
 	CXLua();
 	// 释放 Lua_State
@@ -46,9 +48,14 @@ public:
 	// C++ 向 Lua 栈存入返回值, LuaGlue 函数返回值个数和入栈个数一致, 支持多个返回值
 	void PushString(const char* pString);
 	void PushNumber(double value);
+
+	void SetErrorHandler(pFnErrorHandler pErrHandler) { m_pErrorHandler = pErrHandler; }
+
+	lua_State* GetScriptContext() { return m_pLuaState; }
 private:
 	// Lua 栈
 	lua_State* m_pLuaState;
+	pFnErrorHandler m_pErrorHandler;
 };
 
 #endif // XLua

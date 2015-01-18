@@ -156,10 +156,6 @@
 				RelativePath=".\XLuaPubFunc.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\XLuaRegistry.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -171,15 +167,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Xlua.inl"
+				>
+			</File>
+			<File
 				RelativePath=".\XLuaDefine.h"
 				>
 			</File>
 			<File
 				RelativePath=".\XLuaPubFunc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\XLuaRegistry.h"
 				>
 			</File>
 		</Filter>
@@ -420,6 +416,10 @@
 				RelativePath=".\LuaLib\lzio.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="inline"
+			>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
