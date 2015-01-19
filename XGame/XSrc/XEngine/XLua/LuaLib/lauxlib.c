@@ -11,8 +11,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef WIN32
 #pragma warning( push )
 #pragma warning( disable : 4996 )
+#endif
 
 
 /* This file uses only the official API of Lua.
@@ -960,4 +962,6 @@ LUALIB_API void luaL_checkversion_ (lua_State *L, lua_Number ver) {
   lua_pop(L, 1);
 }
 
+#ifdef WIN32
 #pragma warning( pop )
+#endif

@@ -4,8 +4,10 @@
 ** See Copyright Notice in lua.h
 */
 
+#ifdef WIN32
 #pragma warning( push )
 #pragma warning( disable : 4996 )
+#endif
 
 
 /*
@@ -667,4 +669,6 @@ LUAMOD_API int luaopen_io (lua_State *L) {
   return 1;
 }
 
+#ifdef WIN32
 #pragma warning( pop )
+#endif

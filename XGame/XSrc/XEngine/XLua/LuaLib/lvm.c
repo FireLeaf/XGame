@@ -9,8 +9,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef WIN32
 #pragma warning( push )
 #pragma warning( disable : 4996 )
+#endif
 
 #define lvm_c
 #define LUA_CORE
@@ -868,4 +870,6 @@ void luaV_execute (lua_State *L) {
   }
 }
 
+#ifdef WIN32
 #pragma warning( pop )
+#endif

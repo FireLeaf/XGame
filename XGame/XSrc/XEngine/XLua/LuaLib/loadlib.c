@@ -8,8 +8,10 @@
 ** systems.
 */
 
+#ifdef WIN32
 #pragma warning( push )
 #pragma warning( disable : 4996 )
+#endif
 
 
 /*
@@ -726,4 +728,6 @@ LUAMOD_API int luaopen_package (lua_State *L) {
   return 1;  /* return 'package' table */
 }
 
+#ifdef WIN32
 #pragma warning( pop )
+#endif

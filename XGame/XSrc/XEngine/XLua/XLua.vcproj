@@ -167,10 +167,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Xlua.inl"
-				>
-			</File>
-			<File
 				RelativePath=".\XLuaDefine.h"
 				>
 			</File>
@@ -420,6 +416,10 @@
 		<Filter
 			Name="inline"
 			>
+			<File
+				RelativePath=".\Xlua.inl"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

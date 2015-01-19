@@ -12,6 +12,8 @@
 #include "XLuaDefine.h"
 
 
+// ╣Вйтпео╒
 void OutputDebug(char* format, ...);
+
 
 #endif
