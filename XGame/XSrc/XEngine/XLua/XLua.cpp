@@ -36,16 +36,7 @@ void CXLua::CreateLuaRuntime()
 	}
 
 	// ³õÊ¼»¯ Lua ³ÌÐò¿â
-	luaopen_base(m_pLuaState);
-	luaopen_package(m_pLuaState);
-	luaopen_coroutine(m_pLuaState);
-	luaopen_table(m_pLuaState);
-	luaopen_io(m_pLuaState);
-	luaopen_os(m_pLuaState);
-	luaopen_string(m_pLuaState);
-	luaopen_bit32(m_pLuaState);
-	luaopen_math(m_pLuaState);
-	luaopen_debug(m_pLuaState);
+	luaL_openlibs(m_pLuaState);
 }
 
 void CXLua::HandleError(char* format, ...)
@@ -120,7 +111,7 @@ const char* CXLua::GetErrorString()
 		return NULL;
 }
 
-bool CXLua::AddFunction(const char* pFunctionName, LuaFunction pFunction)
+bool CXLua::AddFunction(const char* pFunctionName, lua_CFunction pFunction)
 {
 	if(!m_pLuaState)
 		return false;

@@ -12,16 +12,7 @@
 #include "XLuaPubFunc.h"
 
 // 包含 Lua 头文件
-extern "C" {
-#include "LuaLib/lua.h"
-#include "LuaLib/lualib.h"
-#include "LuaLib/lauxlib.h"
-};
-
-#define LuaGlue extern "C" int
-extern "C" {
-typedef int (*LuaFunction)(struct lua_State* pLuaState);
-};
+#include "LuaLib/lua.hpp"
 
 class CXLua
 {
@@ -40,7 +31,7 @@ public:
 	bool RunScript(const char* pFileName);
 	bool RunString(const char* pCommand);
 
-	bool AddFunction(const char* pFunctionName, LuaFunction pFunction);
+	bool AddFunction(const char* pFunctionName, lua_CFunction pFunction);
 
 	// 获取 Lua 传递给 LuaGlue 函数的参数, 参数位置从1开始
 	const char* GetStringArgument(int num, const char* pDefault = NULL);
