@@ -83,6 +83,7 @@ bool CXLua::RunString(const char* pCommand)
 	if(!m_pLuaState)
 		return false;
 
+	// 编译了Lua代码，如果没有错误，则返回0，同时将编译后的程序块压入虚拟栈中。
 	if(luaL_loadbuffer(m_pLuaState, pCommand, strlen(pCommand), NULL) != 0)
 	{
 		HandleError("Lua Error - Script Load. Script Name:[%s] Error Message:[%s]", pCommand, GetErrorString());
@@ -90,6 +91,7 @@ bool CXLua::RunString(const char* pCommand)
 		return false;
 	}
 
+	// 将程序块从栈中弹出，并在保护模式下运行该程序块。执行成功返回0，否则将错误信息压入栈中。
 	if(lua_pcall(m_pLuaState, 0, LUA_MULTRET, 0) != 0)
 	{
 		HandleError("Lua Error - Script Run. Script Name:[%s] Error Message:[%s]", pCommand, GetErrorString());
@@ -137,24 +139,56 @@ double CXLua::GetNumberArgument(int num, double dDefault /*= 0.0*/)
 		return dDefault;
 }
 
-bool CXLua::PushString(const char* pString)
+// 期望得到extra数量的空闲槽位
+int CXLua::CheckStack( int extra )
 {
-	if(!m_pLuaState)
-		return false;
-
-	lua_pushstring(m_pLuaState, pString);
-
-	return true;
+	if(m_pLuaState)
+		return lua_checkstack(m_pLuaState, extra);
+	return -1;
 }
 
-bool CXLua::PushNumber(double value)
+void CXLua::StackDump()
 {
-	if(!m_pLuaState)
-		return false;
+	// 返回栈中元素的个数
+	// 索引: 第一个压入栈的为1，第二个为2; -1表示为栈顶元素，-2为栈顶下面的元素
+	if(m_pLuaState)
+	{
+		int iType = 0;
+		char szBuf[256] = {0};
 
-	lua_pushnumber(m_pLuaState, value);
-
-	return true;
+		int top = lua_gettop(m_pLuaState);
+		for(int i = 1; i <= top; ++i)
+		{
+			iType = lua_type(m_pLuaState, i);
+			switch(iType)
+			{
+			case LUA_TSTRING:
+				{
+					sprintf(szBuf, "%d - [%s]\n", i, lua_tostring(m_pLuaState, i));
+					OutputDebug(szBuf);
+				}
+				break;
+			case LUA_TBOOLEAN:
+				{
+					sprintf(szBuf, "%d - [%s]\n", i, lua_toboolean(m_pLuaState, i)?"true":"false");
+					OutputDebug(szBuf);
+				}
+				break;
+			case LUA_TNUMBER:
+				{
+					sprintf(szBuf, "%d - [%g]\n", i, lua_tonumber(m_pLuaState, i));
+					OutputDebug(szBuf);
+				}
+				break;
+			default:
+				{
+					sprintf(szBuf, "%d - [%s]\n", i, lua_typename(m_pLuaState,iType));
+					OutputDebug(szBuf);
+				}
+				break;
+			}
+		}
+	}
 }
 
 #ifdef WIN32
