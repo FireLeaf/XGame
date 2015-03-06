@@ -44,6 +44,9 @@ public:
 	// 判断是否有足够的栈空间可用，一般，Lua会预留20个槽位
 	int CheckStack(int extra);
 
+	// Push a std::string on the top of the stack.
+	bool PushSTDString(const std::string& v);
+
 public:
 	void SetErrorHandler(pFnErrorHandler pErrHandler);
 

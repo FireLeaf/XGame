@@ -13,6 +13,16 @@
 
 #include "XLua.h"
 
+/* Dummy pointer for getting unique keys for Lua's registry. */
+static char const dlgclbkKey = 0;
+static char const executeKey = 0;
+static char const getsideKey = 0;
+static char const gettextKey = 0;
+static char const gettypeKey = 0;
+static char const getraceKey = 0;
+static char const getunitKey = 0;
+static char const unitvarKey = 0;
+
 CXLua::CXLua()
 {
 	m_pErrorHandler = NULL;
@@ -189,6 +199,17 @@ void CXLua::StackDump()
 			}
 		}
 	}
+}
+
+bool CXLua::PushSTDString( const std::string& v )
+{
+	if(m_pLuaState)
+	{
+		//new(lua_newuserdata(m_pLuaState, sizeof(std::string)))
+		return true;
+	}
+	else
+		return false;
 }
 
 #ifdef WIN32
