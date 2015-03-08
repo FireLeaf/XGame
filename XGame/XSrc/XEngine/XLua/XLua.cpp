@@ -205,7 +205,10 @@ bool CXLua::PushSTDString( const std::string& v )
 {
 	if(m_pLuaState)
 	{
-		//new(lua_newuserdata(m_pLuaState, sizeof(std::string)))
+		// 带位置的new运算符表达式:
+		// 在lua_newuserdata已申请的内存上构造一个对象，初始化列表v
+		new(lua_newuserdata(m_pLuaState, sizeof(std::string))) std::string(v);
+
 		return true;
 	}
 	else
