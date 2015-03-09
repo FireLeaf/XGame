@@ -153,6 +153,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\XLuaJailbreakException.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\XLuaPubFunc.cpp"
 				>
 			</File>
@@ -168,6 +172,10 @@
 			</File>
 			<File
 				RelativePath=".\XLuaDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\XLuaJailbreakException.h"
 				>
 			</File>
 			<File

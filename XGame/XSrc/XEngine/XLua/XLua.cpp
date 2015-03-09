@@ -6,7 +6,7 @@
  *		CopyRight:
  ***************************************************/
 
-#ifdef WIN32
+#ifdef _MSC_VER
 #pragma warning( push )
 #pragma warning( disable : 4996 )
 #endif
@@ -14,14 +14,7 @@
 #include "XLua.h"
 
 /* Dummy pointer for getting unique keys for Lua's registry. */
-static char const dlgclbkKey = 0;
 static char const executeKey = 0;
-static char const getsideKey = 0;
-static char const gettextKey = 0;
-static char const gettypeKey = 0;
-static char const getraceKey = 0;
-static char const getunitKey = 0;
-static char const unitvarKey = 0;
 
 CXLua::CXLua()
 {
@@ -47,6 +40,12 @@ void CXLua::CreateLuaRuntime()
 
 	// 初始化 Lua 程序库
 	luaL_openlibs(m_pLuaState);
+
+	// Put some callback functions in the scripting environment.
+	/*static const luaL_Reg callbacks[] = {
+		{ "test", cfun_test}
+	}
+	luaL_register(m_pLuaState, "XGame", callbacks);*/
 }
 
 void CXLua::HandleError(char* format, ...)
@@ -201,20 +200,93 @@ void CXLua::StackDump()
 	}
 }
 
-bool CXLua::PushSTDString( const std::string& v )
+/**
+ * Loads the "package" package into the Lua environment.
+ * This action is inherently unsafe, as Lua scripts will now be able to
+ * load C libraries on their own, hence granting them the same privileges
+ * as the binary itsef.
+ */
+void CXLua::LoadPackage()
 {
-	if(m_pLuaState)
-	{
-		// 带位置的new运算符表达式:
-		// 在lua_newuserdata已申请的内存上构造一个对象，初始化列表v
-		new(lua_newuserdata(m_pLuaState, sizeof(std::string))) std::string(v);
-
-		return true;
-	}
-	else
-		return false;
+	lua_State* L = m_pLuaState;
+	lua_pushcfunction(L, luaopen_package);
+	lua_pushstring(L, "package");
+	lua_call(L, 1, 0);
 }
 
-#ifdef WIN32
+/**
+ * Runs a script on a stack containing @a nArgs arguments.
+ * @return true if the script was successful and @a nRets return values are available.
+ */
+bool CXLua::Execute( const char* prog, int iArgs, int iRets )
+{
+	lua_State* L = m_pLuaState;
+
+	// Compile script into a variadic function.
+	int iRes = luaL_loadstring(L, prog);
+	if(iRes)
+	{
+		const char* m = lua_tostring(L, -1);
+		//OutputDebug(m);
+		lua_pop(L, 1);
+		return false;
+	}
+
+	// Place the function before its arguments.
+	if(iArgs)
+		lua_insert(L, -1 - iArgs);
+
+	return LuaWPcall(iArgs, iRets);
+}
+
+/**
+ * Calls a Lua function stored below its @a nArgs arguments at the top of the stack.
+ * @param nRets LUA_MULTRET for unbounded return values.
+ * @return true if the call was successful and @a nRets return values are available.
+ */
+bool CXLua::LuaWPcall( int iArgs, int iRets)
+{
+	if(!m_pLuaState)
+		return false;
+
+	// Load the error handler before the function and its arguments.
+	lua_pushlightuserdata(m_pLuaState, static_cast<void *>(const_cast<char *>(&executeKey)));
+
+	lua_rawget(m_pLuaState, LUA_REGISTRYINDEX);
+	lua_insert(m_pLuaState, -2 - iArgs);
+
+	int iErrorHandlerIndex = lua_gettop(m_pLuaState) - iArgs - 1;
+
+	// Call the function.
+	int iRes = lua_pcall(m_pLuaState, iArgs, iRets, -2 - iArgs);
+	XluaJailbreakException::Rethow();
+
+	if(iRes)
+	{
+		/*
+		 * When an exception is thrown which doesn't derive from
+		 * std::exception m will be NULL pointer.
+		 */
+		const char* pCh = lua_tostring(m_pLuaState, -1);
+		if(pCh)
+		{
+			OutputDebug("Lua error: %s", pCh);
+		}
+		else
+		{
+			OutputDebug("Lua caught unknown exception.");
+		}
+
+		lua_pop(m_pLuaState, 2);
+		return false;
+	}
+
+	// Remove the error handler.
+	lua_remove(m_pLuaState, iErrorHandlerIndex);
+
+	return true;
+}
+
+#ifdef _MSC_VER
 #pragma warning( pop )
 #endif

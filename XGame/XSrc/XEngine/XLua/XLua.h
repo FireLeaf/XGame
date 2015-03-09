@@ -10,6 +10,7 @@
 #define __XLUA_H__
 
 #include "XLuaPubFunc.h"
+#include "XLuaJailbreakException.h"
 
 // 包含 Lua 头文件
 #include "LuaLib/lua.hpp"
@@ -27,9 +28,13 @@ public:
 public:
 	const char* GetErrorString();
 
+	bool LuaWPcall(int iArgs, int iRets);
+
 	// 执行包含 Lua 代码字符串、文件
 	bool RunScript(const char* pFileName);
 	bool RunString(const char* pCommand);
+	// execute(cfg["code"].str().c_str(), 0, 0);
+	bool Execute(const char* prog, int iArgs, int iRets);
 
 	// lua_CFunction 函数返回值个数和入栈个数一致, 支持多个返回值
 	bool AddFunction(const char* pFunctionName, lua_CFunction pFunction);
@@ -44,8 +49,7 @@ public:
 	// 判断是否有足够的栈空间可用，一般，Lua会预留20个槽位
 	int CheckStack(int extra);
 
-	// Push a std::string on the top of the stack.
-	bool PushSTDString(const std::string& v);
+	void LoadPackage();
 
 public:
 	void SetErrorHandler(pFnErrorHandler pErrHandler);
