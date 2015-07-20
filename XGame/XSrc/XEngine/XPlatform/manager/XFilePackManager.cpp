@@ -65,7 +65,7 @@ bool XFilePackManage::AddFile(const char* pack_name, const char* file_path, cons
 		return false;
 	}
 
-	return fpe->AppendFile(file_path, (const unsigned char*)buffer, length);
+	return fpe->AppendFileFromData(file_path, (const unsigned char*)buffer, length);
 }
 
 bool XFilePackManage::DelFile(const char* pack_name, const char* file_path)
@@ -87,5 +87,5 @@ bool XFilePackManage::ModFile(const char* pack_name, const char* file_path, cons
 		return false;
 	}
 
-	return fpe->RewriteFile(file_path, (const unsigned char*)buffer, length);
+	return fpe->RewriteFileFromData(file_path, (const unsigned char*)buffer, length);
 }

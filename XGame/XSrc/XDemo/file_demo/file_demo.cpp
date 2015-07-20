@@ -2,14 +2,16 @@
 //
 
 #include "stdafx.h"
-#include "io.h"
-#include "string"
+//#include "io.h"
+//#include <string>
+#include "XFilePackage.h"
+#include <string>
 
 void SetFileSize(const char* file, long size)
 {
 	FILE* fp = fopen(file, "wb");
-	if (fp)
-		_chsize(_fileno(fp), size);
+	//if (fp)
+	//	_chsize(_fileno(fp), size);
 	fclose(fp);
 }
 
@@ -38,8 +40,46 @@ void WriteFileDis(const char* path)
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	const char* path = "C:\\Users\\pc\\Desktop\\mp.mb";
-	WriteFileDis(path);
+	//const char* path = "C:\\Users\\pc\\Desktop\\mp.mb";
+	//WriteFileDis(path);
+	XFilePackageEasy package;
+	if (!package.InitPackage("E:\\ProjectXGame\\XGame\\XSrc\\XPatcher\\XFPKPacker\\È­»Ê97.fpk"))
+	{
+		return -1;
+	}
+
+	while(true)
+	{
+		char buf[1024] = "";
+		char op = '\0';
+		char file[1023] = "";
+		scanf("%s", buf);
+		if (strcmp(buf, "quit") == 0)
+		{
+			break;
+		}
+		try
+		{
+			int ret = sscanf(buf, "%c:%s", &op, file);
+			if (op == '-')
+			{
+				package.RemoveFile(file);
+			}
+			else if(op == '+')
+			{
+				char srcfile[1024] = "";
+				sscanf(buf, "%c:%[^-]-%[^-]", &op, srcfile, file);
+				package.AddFile(srcfile, file);
+			}
+		}
+		catch(...)
+		{
+
+		}
+	}
+	package.SavePackageRecords();
+	package.Flush();
+	package.CloseFile();
 	return 0;
 }
 

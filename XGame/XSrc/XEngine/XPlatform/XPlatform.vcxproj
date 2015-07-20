@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A3B6213F-D19B-44A3-8D3D-DC57C25AB048}</ProjectGuid>
+    <RootNamespace>XPlatform</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\XPlatform\include;..\XPlatform\include\Win;..\XPlatform\render;..\XPlatform\manager;..\XPlatform\file;..\XPlatform\math;..\XPlatform\3d;..\XPlatform\bufferstream;..\XPlatform\util;..\..\..\Xinc\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_WIN_PLATFORM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName)_d.lib</OutputFile>
+    </Lib>
+    <PostBuildEvent>
+      <Command>xcopy /y /s /r /d "$(TargetPath)" "..\..\..\XLib\"
+xcopy /y /s /r /d "$(ProjectDir)\include\*" "..\..\..\XInc\"
+xcopy /y /s /r /d "$(ProjectDir)\render\*.h" "..\..\..\XInc\"
+xcopy /y /s /r /d "$(ProjectDir)\include\win\*.h" "..\..\..\XInc\"
+xcopy /y /s /r /d "$(ProjectDir)\file\*.h" "..\..\..\XInc\"
+xcopy /y /s /r /d "$(ProjectDir)\manager\*.h" "..\..\..\XInc\"
+xcopy /y /s /r /d "$(ProjectDir)\math\*.h" "..\..\..\XInc\"
+xcopy /y /s /r /d "$(ProjectDir)\3d\*.h" "..\..\..\XInc\"
+xcopy /y /s /r /d "$(ProjectDir)\bufferstream\*.h" "..\..\..\XInc\"
+xcopy /y /s /r /d "$(ProjectDir)\util\*.h" "..\..\..\XInc\"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>D:\XGame\XSrc\XEngine\XPlatform\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>xcopy /c /y /s /d "$(TargetPath)" "..\..\..\XLib"
+xcopy /c /y /s /r /d "$(ProjectDir)\include\*" "..\..\..\XInc"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XUtil\XUtil.vcxproj">
+      <Project>{120b17ad-6d07-4c50-97f3-63120899244a}</Project>
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="file\XFileGroup.cpp" />
+    <ClCompile Include="file\XFileMapping.cpp" />
+    <ClCompile Include="src\XSys.cpp" />
+    <ClCompile Include="src\XType.cpp" />
+    <ClCompile Include="include\Win\XWinSys.cpp" />
+    <ClCompile Include="include\Win\XWinSysThread.cpp" />
+    <ClCompile Include="include\Android\XAndroidSys.cpp" />
+    <ClCompile Include="include\Android\XAndroidSysThread.cpp" />
+    <ClCompile Include="render\XAssetLoader.cpp" />
+    <ClCompile Include="render\XAssetUtil.cpp" />
+    <ClCompile Include="render\XRenderScene.cpp" />
+    <ClCompile Include="manager\XFilePackManager.cpp" />
+    <ClCompile Include="manager\XTextureManager.cpp" />
+    <ClCompile Include="manager\XThreadLoader.cpp" />
+    <ClCompile Include="file\XFile.cpp" />
+    <ClCompile Include="file\XFilePackage.cpp" />
+    <ClCompile Include="math\XMath.cpp" />
+    <ClCompile Include="math\XMathUtil.cpp" />
+    <ClCompile Include="math\XMatrix.cpp" />
+    <ClCompile Include="math\XVector.cpp" />
+    <ClCompile Include="util\XLog.cpp" />
+    <ClCompile Include="util\XMD5.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="file\XFileGroup.h" />
+    <ClInclude Include="file\XFileMapping.h" />
+    <ClInclude Include="include\XMacro.h" />
+    <ClInclude Include="include\XRefObject.h" />
+    <ClInclude Include="include\XSys.h" />
+    <ClInclude Include="include\XTemplate.h" />
+    <ClInclude Include="include\XType.h" />
+    <ClInclude Include="include\Win\XWinType.h" />
+    <ClInclude Include="include\Android\XAndroidType.h" />
+    <ClInclude Include="render\XAsset.h" />
+    <ClInclude Include="render\XAssetLoader.h" />
+    <ClInclude Include="render\XAssetMonitor.h" />
+    <ClInclude Include="render\XAssetUtil.h" />
+    <ClInclude Include="render\XRenderContext.h" />
+    <ClInclude Include="render\XRenderEntity.h" />
+    <ClInclude Include="render\XRenderMonitor.h" />
+    <ClInclude Include="render\XRenderScene.h" />
+    <ClInclude Include="render\XRenderUtil.h" />
+    <ClInclude Include="render\XRII.h" />
+    <ClInclude Include="manager\XFilePackManager.h" />
+    <ClInclude Include="manager\XTextureManager.h" />
+    <ClInclude Include="manager\XThreadLoader.h" />
+    <ClInclude Include="file\XFile.h" />
+    <ClInclude Include="file\XFilePackage.h" />
+    <ClInclude Include="math\XMath.h" />
+    <ClInclude Include="math\XMathUtil.h" />
+    <ClInclude Include="math\XMatrix.h" />
+    <ClInclude Include="math\XVector.h" />
+    <ClInclude Include="3d\XActObject.h" />
+    <ClInclude Include="3d\XCamera.h" />
+    <ClInclude Include="bufferstream\XBufferStream.h" />
+    <ClInclude Include="util\XLog.h" />
+    <ClInclude Include="util\XMD5.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

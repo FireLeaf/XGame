@@ -2,6 +2,7 @@
 #include "qt/QFileDialog.h"
 #include "XUnPacker.h"
 #include "XFile.h"
+#include "qt/qmessagebox.h"
 
 XFPKUnPacker::XFPKUnPacker(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -45,4 +46,5 @@ void XFPKUnPacker::OnBtnUnPack()
 	{
 		XUnPacker::Get().UnPack(fpk, dir);
 	}
+	QMessageBox::information(NULL, QString("恭喜"), QString("解包完成"));
 }

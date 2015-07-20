@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "XType.h"
 #include <algorithm>
+#include <map>
 class XFile
 {
 public:

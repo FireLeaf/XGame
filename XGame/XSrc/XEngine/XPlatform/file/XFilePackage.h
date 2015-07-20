@@ -10,6 +10,7 @@
 #define __XFILEPACKAGE__H
 
 #include "XFile.h"
+#include<set>
 
 class XFileImageBase : public XFile
 {
@@ -132,6 +133,17 @@ public:
 		int offset;//单包长度不超过2^31 - 1
 		XEasyPackageRecord():compress_type(NONE_COMPRESS), buf_len(-1), offset(-1){}
 	};
+
+	struct ChipRecord//碎片 
+	{
+		int reserve_len;
+		int offset;
+		ChipRecord(int res_len, int off):reserve_len(res_len), offset(off){}
+		const bool operator < (const ChipRecord& right) const
+		{
+			return reserve_len < right.reserve_len;
+		}
+	};
 	/*
 		header//文件头
 		all file_content//所有文件内容
@@ -139,6 +151,12 @@ public:
 		records offset//记录在文件中偏移
 	*/
 	typedef std::vector<XEasyPackageRecord> PackageRecords;
+	typedef std::set<ChipRecord> ChipRecords;
+	struct PackageTail 
+	{
+		PackageRecords package_records;
+		ChipRecords chip_records;
+	};
 public:
 	bool InitPackage(const char* fpk_file);
 	
@@ -146,25 +164,27 @@ public:
 	bool SavePackageRecords();
 	bool SavePackageHeader();
 
-	bool AppendFile(const char* path, const unsigned char* buffer, int length);
-	bool ReplaceFile(const char* old_path, const char* cur_path, const unsigned char* buffer, int length);
-	bool RewriteFile(const char* path, const unsigned char* buffer, int length);
+	bool AppendFileFromData(const char* path, const unsigned char* buffer, int length);
+//	bool ReplaceFileFromData(const char* old_path, const char* cur_path, const unsigned char* buffer, int length);
+	bool RewriteFileFromData(const char* path, const unsigned char* buffer, int length);
 	bool RemoveFile(const char* path);
 	bool AddFile(const char* full_path, const char* path);
 
 	XEasyPackageRecord* FindRecord(const char* path);
-	PackageRecords& GetPackageRecords(){return package_records;}
+	PackageRecords& GetPackageRecords(){return package_tail.package_records;}
 public:
 	bool ReadFileContent(const XEasyPackageRecord* record, void** buff, int* len);
 	bool ReadFileContent(const char* path, void** buff, int* len);
 protected:
 	bool LoadPackage(int version);
+	bool FindMatchRecord(XFilePackageEasy::ChipRecord& chip_record, int length);
 	XEasyPackageRecord* AddRecord(const char* path);
 	bool AddBufferZlib(XEasyPackageRecord* record, const unsigned char* buffer, int length);
 	//bool ReplaceRecord(const char* path, )
 protected:
-	PackageRecords package_records;
-	int cur_offset;
+	PackageTail package_tail;
+	//int cur_offset;
+	int file_tail;
 };
 
 #endif // XFilePackage

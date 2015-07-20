@@ -58,7 +58,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="qtmain.lib QtCore4.lib QtGui4.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
-				AdditionalLibraryDirectories="$(QTDIR)\lib"
+				AdditionalLibraryDirectories="&quot;$(QTDIR)\lib&quot;"
 				GenerateDebugInformation="false"
 				SubSystem="2"
 			/>
@@ -108,7 +108,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\qtmain&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtGui&quot;;.\;..\..\..\XInc\"
+				AdditionalIncludeDirectories="&quot;.\GeneratedFiles&quot;;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\qtmain&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtGui&quot;;&quot;.\&quot;;&quot;..\..\..\XInc\&quot;"
 				PreprocessorDefinitions="UNICODE;WIN32;QT_LARGEFILE_SUPPORT;QT_CORE_LIB;QT_GUI_LIB;QT_DLL;_WIN_PLATFORM"
 				RuntimeLibrary="3"
 				TreatWChar_tAsBuiltInType="false"
@@ -127,7 +127,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="qtmaind.lib QtCored4.lib QtGuid4.lib XUtil_d.lib XPlatform_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
-				AdditionalLibraryDirectories="&quot;$(QTDIR)\lib&quot;;..\..\..\XLib"
+				AdditionalLibraryDirectories="&quot;$(QTDIR)\lib&quot;;&quot;..\..\..\XLib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 			/>
@@ -297,6 +297,28 @@
 			<File
 				RelativePath=".\GeneratedFiles\ui_xfpkpacker.h"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
 			</File>
 			<Filter
 				Name="Release"
@@ -345,10 +367,54 @@
 			<File
 				RelativePath=".\XPacker.h"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\XPackerUtil.h"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -361,6 +427,28 @@
 			<File
 				RelativePath=".\XDirTreeModel.h"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\XQtDirTree.cpp"
@@ -369,6 +457,28 @@
 			<File
 				RelativePath=".\XQtDirTree.h"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="&#27491;&#22312;&#25191;&#34892;&#33258;&#23450;&#20041;&#29983;&#25104;&#27493;&#39588;"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>
@@ -394,8 +504,12 @@
 			Value=""
 		/>
 		<Global
+			Name="Qt5Version Win32"
+			Value="QT4.7.4"
+		/>
+		<Global
 			Name="QtVersion Win32"
-			Value="4.8.6"
+			Value="4.7.4"
 		/>
 		<Global
 			Name="RccDir"
