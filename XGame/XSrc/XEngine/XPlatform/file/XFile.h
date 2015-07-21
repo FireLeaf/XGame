@@ -14,6 +14,12 @@
 #include <map>
 class XFile
 {
+	enum
+	{
+		NONE_COMPRESS,//Œﬁ—πÀı
+		Z_LIB_COMPRESS,//zlib—πÀı
+		_7Z_COMPRESS,//7z—πÀı
+	};
 public:
 	XFile(){m_fp = NULL;}
 	virtual ~XFile()
@@ -135,6 +141,26 @@ public:
 	xint32 QuickWriteValue(const T& t)
 	{
 		return Write(&t, 1, sizeof(T));
+	}
+
+	bool QuickReadString(std::string& value)
+	{
+		int iLength = 0;
+		QuickReadValue<int>(iLength);
+		if (iLength > 0)
+		{
+			value.resize(iLength + 1);
+			Read(&value[0], 1, iLength);
+			value[iLength] = '\0';
+		}
+	}
+
+	bool QuickWriteString(const std::string& value)
+	{
+		int iLength = (int)value.length();
+		QuickWriteValue<int>(iLength);
+		if(iLength > 0)
+			Write((const void*)value.c_str(), 1, iLength);
 	}
 protected:
 	FILE* m_fp;

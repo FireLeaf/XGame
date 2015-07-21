@@ -112,12 +112,6 @@ public:
 		XFILE_PACKAGE_MAGIC2 = 0xfedcba11,
 		XFILE_PACKAGE_SAFE_SIZE = 1024,
 	};
-	enum
-	{
-		NONE_COMPRESS,//Œﬁ—πÀı
-		Z_LIB_COMPRESS,//zlib—πÀı
-		_7Z_COMPRESS,//7z—πÀı
-	};
 	struct XEasyFPKHeader 
 	{
 		int magic1;
@@ -176,7 +170,7 @@ public:
 	bool ReadFileContent(const XEasyPackageRecord* record, void** buff, int* len);
 	bool ReadFileContent(const char* path, void** buff, int* len);
 protected:
-	bool LoadPackage(int version);
+	virtual bool LoadPackage(int version);
 	bool FindMatchRecord(XFilePackageEasy::ChipRecord& chip_record, int length);
 	XEasyPackageRecord* AddRecord(const char* path);
 	bool AddBufferZlib(XEasyPackageRecord* record, const unsigned char* buffer, int length);

@@ -16,9 +16,12 @@
 bool XFilePackageEasy::InitPackage(const char* fpk_file)
 {
 	CloseFile();
-	if (!OpenFile(fpk_file, "ab+"))
+	if (!OpenFile(fpk_file, "r+b"))
 	{
-		return false;
+		if (!OpenFile(fpk_file, "rb"))
+		{
+			return false;
+		}
 	}
 	SeekSet(0);
 	
@@ -295,10 +298,11 @@ bool XFilePackageEasy::FindMatchRecord(XFilePackageEasy::ChipRecord& chip_record
 				package_tail.chip_records.insert(ChipRecord( new_reserve, iter->offset + length));
 			}
 			chip_record = *iter;
-			return true;
+			package_tail.chip_records.erase(iter);
+			return false;
 		}
 	}
-	return false;
+	return true;
 }
 
 bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned char* buffer, int length)
@@ -334,14 +338,13 @@ bool XFilePackageEasy::AddBufferZlib(XEasyPackageRecord* record, const unsigned 
 				bCompress = true;
 			}
 			ChipRecord chip_record(0, 0);
-			if( (bAppend = FindMatchRecord(chip_record, record->buf_len)) )
+			if( !(bAppend = FindMatchRecord(chip_record, record->buf_len)) )
 			{
 				record->offset = chip_record.offset;
 			}
 			else
 			{
 				record->offset = file_tail;
-				bAppend = true;
 			}
 			SeekSet(record->offset);
 			if(record->buf_len != SafeWrite(bCompress ? dest_buffer : buffer,1, record->buf_len, XFILE_PACKAGE_SAFE_SIZE))
@@ -435,7 +438,7 @@ bool XFilePackageEasy::ReadFileContent(const char* path, void** buff, int* len)
 	{
 		return false;
 	}
-	return true;
+	return ReadFileContent(record, buff, len);
 }
 
 bool XFilePackageEasy::ReadFileContent(const XEasyPackageRecord* record, void** buff, int* len)

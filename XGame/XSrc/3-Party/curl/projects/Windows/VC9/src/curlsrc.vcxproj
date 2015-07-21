@@ -672,6 +672,7 @@
     <OutDir>..\..\..\..\build\Win32\VC9\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)src\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL Debug|x64'">
     <OutDir>..\..\..\..\build\Win64\VC9\$(Configuration)\</OutDir>

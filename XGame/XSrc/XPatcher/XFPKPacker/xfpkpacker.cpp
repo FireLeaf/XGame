@@ -51,7 +51,7 @@ void AddFileInfo(QDir& file_dir, QString parent_path)
 	for (int file_index = 0; file_index < file_list.size(); file_index++)
 	{
 		const QFileInfo& file_info = file_list.at(file_index);
-		std::string file_path = file_info.fileName().toStdString();
+		std::string file_path = file_info.fileName().toLocal8Bit();
 		if (file_path == "." || file_path == "..")
 		{
 			continue;
@@ -76,7 +76,8 @@ void AddFileInfo(QDir& file_dir, QString parent_path)
 			QString cur_file_path = parent_path;
 			cur_file_path.append("/");
 			cur_file_path.append(file_info.fileName());
-			XPacker::Get().AddFile(cur_file_path.toStdString().c_str());
+			std::string strCurFile = cur_file_path.toLocal8Bit();
+			XPacker::Get().AddFile(strCurFile.c_str());
 		}
 	}
 }
@@ -94,7 +95,10 @@ void XFPKPacker::BtnGenerateFPK()
 	}
 //	dir.setFilter(QDir::AllDirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
 //	dir.setSorting(QDir::Name | QDir::Reversed);
-	if(XPacker::Get().Init(asset_path.toStdString().c_str(), fpk_name.toStdString().c_str()));
+	//QString::toStdString»á±ÀÀ£
+	std::string strAssetPath = asset_path.toLocal8Bit();
+	std::string strFpkName = fpk_name.toLocal8Bit();
+	if(XPacker::Get().Init(strAssetPath.c_str(), strFpkName.c_str()));
 	{
 		AddFileInfo(dir, QString(""));
 		XPacker::Get().Fllush();
@@ -105,7 +109,7 @@ void XFPKPacker::BtnGenerateFPK()
 void XFPKPacker::ScanDir()
 {
 	QString dir = ui.EditAssetDir->text();
-	std::string str = dir.toStdString();
+	std::string str = dir.toLocal8Bit();
 	const char* ch = str.c_str();
 	dir_tree.ScanDir(ch);
 }

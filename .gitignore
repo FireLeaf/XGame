@@ -261,3 +261,8 @@
 /XGame/XSrc/XDemo/patcher_demo/*.gif
 /XGame/XSrc/XDemo/patcher_demo/*.bmp
 /XGame/XSrc/XDemo/patcher_demo/*.log
+/XGame/XSrc/3-Party/7zlib/Debug/*.tlog
+/XGame/XSrc/3-Party/ZLib/Debug/*.tlog
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.tlog
+/XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.tlog
+/XGame/XSrc/XEngine/XLua/Debug/*.obj

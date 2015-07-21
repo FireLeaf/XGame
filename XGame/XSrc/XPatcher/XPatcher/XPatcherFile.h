@@ -11,7 +11,7 @@
 
 #include "XFilePackage.h"
 
-class XPathcherFile : public XFilePackageEasy
+class XPathcherFile : public XFile
 {
 	enum PatcherAction
 	{
@@ -20,20 +20,55 @@ class XPathcherFile : public XFilePackageEasy
 		PA_DEL_FILE,//删除文件
 		PA_MOD_FILE,//更新文件
 	};
-	struct PatcherItem 
+
+	enum 
 	{
-		std::string path;//路径
+		PATCH_SAFE_SIZE = 1024,
+	};
+
+	struct DeleteItem 
+	{
+		std::string path;//路径,如果不是包里那么统一放在更新目录下
 		std::string package;//仅当在某个包里是才填
-		bool in_package;//是否是在包里
-		int action;//操作
-		int offset;//文件内容的偏移
+		DeleteItem()
+		{
+			path = "";
+			package = "";
+		}
+	};
+	
+	struct AddItem 
+	{
+		int compress_type;
+		std::string path;//路径,如果不是包里那么统一放在更新目录下
+		std::string package;//仅当在某个包里是才填
 		int buf_len;//压缩
 		int org_len;//原来压缩长度
+		AddItem()
+		{
+			compress_type = NONE_COMPRESS;
+			path = "";
+			package = "";
+			buf_len = 0;
+			org_len = 0;
+		}
 	};
 public:
-	bool ApplyPatcher();
+	bool LoadPatch(const char* path);
+	bool ApplyPatch(XFilePackManage* pFilePackMan);
+	bool AddFile(const char* src_file, const char* file, const char* package = NULL);
+	bool DelFiles(std::vector<DeleteItem>& vecDelItems);
+	bool DelFile(const DeleteItem& delItem);
+	bool DelFile(const char* file, const char* package = NULL);
+	bool CreatePatch(const char* path);
+	bool FlushPath();
 protected:
-	std::vector<PatcherItem> patcher_items;
+	bool ReadFileContent(const AddItem& addItem, void** buff);
+	bool CompressFileData(void** data, int len, int& outlen, int& compress_type);
+protected:
+	std::vector<DeleteItem> patch_del_items;
+	//std::vector<AddItem> patch_add_items;
+
 };
 
 #endif // XPatcherFile

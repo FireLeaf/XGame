@@ -661,6 +661,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LIB Debug|Win32'">
     <OutDir>..\..\..\..\build\Win32\VC9\$(Configuration)\</OutDir>
     <IntDir>$(OutDir)lib\</IntDir>
+    <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LIB Debug|x64'">
     <OutDir>..\..\..\..\build\Win64\VC9\$(Configuration)\</OutDir>

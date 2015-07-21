@@ -56,7 +56,7 @@ bool XUnPacker::UnPack(const QString& fpk, const QString& dest_dir)
 // 		return false;
 // 	}
 	XFilePackageEasy fpe;
-	std::string fpk_path = fpk.toStdString().c_str();
+	std::string fpk_path = fpk.toLocal8Bit();
 	if (!fpe.InitPackage(fpk_path.c_str()))
 	{
 		return false;
@@ -68,8 +68,9 @@ bool XUnPacker::UnPack(const QString& fpk, const QString& dest_dir)
 		XFile file;
 		QString file_path = dest_dir;
 		file_path.append(records[i].path.c_str());
-		CreateFileAndDirectory(file_path.toStdString().c_str());
-		if (file.OpenFile(file_path.toStdString().c_str(), "wb"))
+		std::string strFilePath = file_path.toLocal8Bit();
+		CreateFileAndDirectory(strFilePath.c_str());
+		if (file.OpenFile(strFilePath.c_str(), "wb"))
 		{
 			void* buffer = NULL;
 			int len = 0;
@@ -79,6 +80,7 @@ bool XUnPacker::UnPack(const QString& fpk, const QString& dest_dir)
 				{
 					Assert(0);
 				}
+				delete buffer;
 			}
 			file.Flush();
 		}
