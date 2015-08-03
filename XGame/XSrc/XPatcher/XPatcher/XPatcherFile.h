@@ -10,7 +10,7 @@
 #define __XPATCHERFILE__H
 
 #include "XFilePackage.h"
-
+#include "XFilePackManager.h"
 class XPathcherFile : public XFile
 {
 	enum PatcherAction
@@ -57,14 +57,15 @@ public:
 	bool LoadPatch(const char* path);
 	bool ApplyPatch(XFilePackManage* pFilePackMan);
 	bool AddFile(const char* src_file, const char* file, const char* package = NULL);
+	bool AddFile(const void* buf, int len, const char* file, const char* package = NULL);
 	bool DelFiles(std::vector<DeleteItem>& vecDelItems);
 	bool DelFile(const DeleteItem& delItem);
 	bool DelFile(const char* file, const char* package = NULL);
 	bool CreatePatch(const char* path);
 	bool FlushPath();
 protected:
-	bool ReadFileContent(const AddItem& addItem, void** buff);
-	bool CompressFileData(void** data, int len, int& outlen, int& compress_type);
+	bool ReadFileContent(const AddItem& addItem, void** buff, int* len);
+	bool CompressFileData(const void** data, int len, int& outlen, int& compress_type, void** outBuffer);
 protected:
 	std::vector<DeleteItem> patch_del_items;
 	//std::vector<AddItem> patch_add_items;

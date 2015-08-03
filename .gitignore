@@ -266,3 +266,8 @@
 /XGame/XSrc/3-Party/curl/build/Win32/VC9/DLL Debug/src/*.tlog
 /XGame/XSrc/3-Party/curl/build/Win32/VC9/LIB Debug/lib/*.tlog
 /XGame/XSrc/XEngine/XLua/Debug/*.obj
+/XGame/XSrc/XDemo/fileoperrator/Debug/*.tlog
+/XGame/XSrc/Debug/*.tlog
+/XGame/XSrc/Win32/Debug/*.tlog
+/XGame/XSrc/XDemo/file_demo/Debug/*.tlog
+/XGame/XSrc/XPatcher/XPatchMaker/Debug/*.tlog

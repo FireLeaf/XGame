@@ -53,6 +53,13 @@ public:
 		return true;
 	}
 
+	virtual void Join()
+	{
+		if (m_hThread)
+		{
+			WaitForSingleObject(m_hThread, INFINITE);
+		}
+	}
 	virtual void Suppend(){}
 	virtual void Stop(){}
 	virtual void Resume(){}

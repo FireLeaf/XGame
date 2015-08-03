@@ -67,10 +67,9 @@ class XPatcher
 public:
 	struct AssetVersion 
 	{
-		//int main_version;
-		//int mid_version;
-		//int low_version;
-		int version;
+		int main_version;
+		int sub_version;
+		int asset_version;
 	};
 
 	struct PatcherEvent

@@ -14,6 +14,7 @@
 #include "XFilePackage.h"
 #include <string>
 
+#define FPK_COUNT 2
 class XFilePackManage
 {
 public:
@@ -27,7 +28,7 @@ public:
 public:
 	static XFilePackManage& Get();
 public:
-	bool AddPack(const char* pack_path);//增加一个包
+	bool AddPack(const char* pack_path, const char* pack_dir);//增加一个包
 	//
 	bool AddFile(const char* pack_name, const char* file_path, const void* buffer, int length);
 	bool DelFile(const char* pack_name, const char* file_path);

@@ -170,7 +170,7 @@ public:
 	bool ReadFileContent(const XEasyPackageRecord* record, void** buff, int* len);
 	bool ReadFileContent(const char* path, void** buff, int* len);
 protected:
-	virtual bool LoadPackage(int version);
+	bool LoadPackage(int version);
 	bool FindMatchRecord(XFilePackageEasy::ChipRecord& chip_record, int length);
 	XEasyPackageRecord* AddRecord(const char* path);
 	bool AddBufferZlib(XEasyPackageRecord* record, const unsigned char* buffer, int length);

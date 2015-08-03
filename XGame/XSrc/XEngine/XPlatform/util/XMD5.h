@@ -35,6 +35,7 @@ void MD5UpdaterString(MD5_CTX *context,const char *string);
 int MD5FileUpdateFile (MD5_CTX *context,char *filename);
 void MD5Final (unsigned char digest[16], MD5_CTX *context);
 void MDString (char *string,unsigned char digest[16]);
-int MD5File (char *filename,unsigned char digest[16]);
+int MD5File (const char *filename, unsigned char digest[16]);
+int MD5Memory(unsigned char* input, int len, unsigned char digest[16]);
 
 #endif

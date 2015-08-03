@@ -332,9 +332,19 @@ void MDString (char *string,unsigned char digest[16])
 	MD5Update (&context, (unsigned char *)string, len);
 	MD5Final (digest, &context);
 }
+
+int MD5Memory(unsigned char* input, int len, unsigned char digest[16])
+{
+	MD5_CTX context;
+	MD5Init (&context);
+	MD5Update (&context, input, len);
+	MD5Final (digest, &context);
+	return 0;
+}
+
 /* Digests a file and prints the result.
  */
-int MD5File (char *filename,unsigned char digest[16])
+int MD5File (const char *filename,unsigned char digest[16])
 {
 	FILE *file;
 	MD5_CTX context;

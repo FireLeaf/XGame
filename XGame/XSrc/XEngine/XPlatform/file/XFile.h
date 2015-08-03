@@ -14,6 +14,7 @@
 #include <map>
 class XFile
 {
+public:
 	enum
 	{
 		NONE_COMPRESS,//ÎÞÑ¹Ëõ
@@ -153,6 +154,7 @@ public:
 			Read(&value[0], 1, iLength);
 			value[iLength] = '\0';
 		}
+		return true;
 	}
 
 	bool QuickWriteString(const std::string& value)
@@ -161,6 +163,7 @@ public:
 		QuickWriteValue<int>(iLength);
 		if(iLength > 0)
 			Write((const void*)value.c_str(), 1, iLength);
+		return true;
 	}
 protected:
 	FILE* m_fp;

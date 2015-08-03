@@ -1,6 +1,6 @@
 #include "xfpkpacker.h"
 #include <QtGui/QApplication>
-#include <QTextCodec>
+#include <QtCore/QTextCodec>
 
 int main(int argc, char *argv[])
 {

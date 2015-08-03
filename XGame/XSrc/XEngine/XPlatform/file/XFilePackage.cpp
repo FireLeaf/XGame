@@ -40,8 +40,10 @@ bool XFilePackageEasy::InitPackage(const char* fpk_file)
 		CloseFile();
 		return false;
 	}
+	//return true;
 	
-	return LoadPackage(header.version);
+	bool bRet = LoadPackage(header.version);
+	return bRet;
 }
 
 bool XFilePackageEasy::LoadPackage(int version)

@@ -97,15 +97,10 @@ xcopy /c /y /s /r /d "$(ProjectDir)\include\*" "..\..\..\XInc"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XUtil\XUtil.vcxproj">
-      <Project>{120b17ad-6d07-4c50-97f3-63120899244a}</Project>
-      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="file\XFileGroup.cpp" />
     <ClCompile Include="file\XFileMapping.cpp" />
+    <ClCompile Include="include\C11\XC11Sys.cpp" />
+    <ClCompile Include="include\C11\XC11SysThread.cpp" />
     <ClCompile Include="src\XSys.cpp" />
     <ClCompile Include="src\XType.cpp" />
     <ClCompile Include="include\Win\XWinSys.cpp" />

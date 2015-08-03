@@ -10,6 +10,8 @@
 
 #include "XFilePackManager.h"
 
+const char* g_FpkName[64] = {"app", "res",};
+
 XFilePackManage::XFilePackManage()
 {
 
@@ -38,13 +40,15 @@ XFilePackageEasy* XFilePackManage::FindPack(const char* pack_name)
 	return NULL;
 }
 
-bool XFilePackManage::AddPack(const char* pack_path)
+bool XFilePackManage::AddPack(const char* pack_name, const char* pack_dir)
 {
+	std::string strpackname = pack_name;
+	std::string strpackpath = std::string(pack_dir) + strpackname;
 	XFilePackageEasy* new_fpe = new XFilePackageEasy;
-	if (new_fpe->InitPackage(pack_path))
+	if (new_fpe->InitPackage(strpackpath.c_str()))
 	{
 		FilePackItem* item = new FilePackItem;
-		item->pack_name = pack_path;
+		item->pack_name = pack_name;
 		item->file_pack_easy = new_fpe;
 		file_pack_items.push_back(item);
 		return true;
