@@ -205,7 +205,7 @@ void XMaker::GenerateMD5(QDir& file_dir, QString parent_path, XMaker::PathToMd5M
 			bool is_fpk = false;
 			for (int i = 0; i < FPK_COUNT; i++)
 			{
-				if(file_info.baseName() == g_FpkName[i])
+				if(file_info.fileName() == (g_FpkName[i] + QString(".fpk")) )
 				{
 					is_fpk = true;
 					XFilePackageEasy fpe;
@@ -317,7 +317,7 @@ void XMaker::CompareFile(QDir& file_dir, QString parent_path, XPathcherFile& pat
 			bool is_fpk = false;
 			for (int i = 0; i < FPK_COUNT; i++)
 			{
-				if(file_info.baseName() == g_FpkName[i])
+				if(file_info.fileName() == (g_FpkName[i] + QString(".fpk")) )
 				{
 					is_fpk = true;
 					XFilePackageEasy fpe;
@@ -395,6 +395,7 @@ bool XMaker::GenerateUploadFile()
 	{
 		return false;
 	}
+	patch.DelFiles(std::vector<DeleteItem>());
 	std::string ver_dir = asset_root_dir.toLocal8Bit();
 	ver_dir += "/upload/";
 	ver_dir += "asset_version.txt";
