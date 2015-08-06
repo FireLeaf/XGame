@@ -283,6 +283,7 @@ bool XMaker::LoadPreUploadFile()
 
 void XMaker::CompareFile(QDir& file_dir, QString parent_path, XPathcherFile& patchfile)
 {
+	int add_file_count = 0;
 	QFileInfoList file_list = file_dir.entryInfoList(QDir::AllDirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
 	//file_dir.setSorting(QDir::Name | QDir::Reversed);
 	for (int file_index = 0; file_index < file_list.size(); file_index++)
@@ -351,6 +352,7 @@ void XMaker::CompareFile(QDir& file_dir, QString parent_path, XPathcherFile& pat
 							patchfile.AddFile(buffer, len, records[j].path.c_str(), g_FpkName[i]);
 							QString strPatchInfo = QString("patch_msg: add file[") + records[j].path.c_str();
 							strPatchInfo += QString("] to package -> ") + QString(g_FpkName[i]);
+							add_file_count++;
 							QuickUploadInfo(strPatchInfo);
 							delete buffer;
 						}
@@ -369,11 +371,13 @@ void XMaker::CompareFile(QDir& file_dir, QString parent_path, XPathcherFile& pat
 				}
 				cache_path_to_md5[pathkey] = value;
 				patchfile.AddFile(std::string(file_info.absoluteFilePath().toLocal8Bit()).c_str(), std::string(pathkey.toLocal8Bit()).c_str(), NULL);
+				add_file_count++;
 				QString strPatchInfo = QString("patch_msg: add file ->") + std::string(pathkey.toLocal8Bit()).c_str();
 				QuickUploadInfo(strPatchInfo);
 			}
 		}
 	}
+	patchfile.QuickWriteValue(add_file_count);
 }
 
 bool XMaker::GenerateUploadFile()
