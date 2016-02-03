@@ -121,6 +121,7 @@ xcopy /c /y /s /r /d "$(ProjectDir)\include\*" "..\..\..\XInc"
     <ClCompile Include="math\XVector.cpp" />
     <ClCompile Include="util\XLog.cpp" />
     <ClCompile Include="util\XMD5.cpp" />
+    <ClCompile Include="util\XMemory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="file\XFileGroup.h" />
@@ -156,6 +157,7 @@ xcopy /c /y /s /r /d "$(ProjectDir)\include\*" "..\..\..\XInc"
     <ClInclude Include="bufferstream\XBufferStream.h" />
     <ClInclude Include="util\XLog.h" />
     <ClInclude Include="util\XMD5.h" />
+    <ClInclude Include="util\XMemory.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
